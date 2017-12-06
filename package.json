@@ -1,0 +1,26 @@
+{
+  "name": "icosite",
+  "version": "1.0.0",
+  "description": "Docademic ICO site for MTC",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://enrique_si@bitbucket.org/sidrese/ico_site.git"
+  },
+  "author": "Docademic",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/sidrese/ico_site#readme",
+  "devDependencies": {
+    "browser-sync": "^2.18.13",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^3.9.0",
+    "gulp-uglify": "^3.0.0"
+  },
+  "dependencies": {
+    "pump": "^2.0.0"
+  }
+}
