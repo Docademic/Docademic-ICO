@@ -26,6 +26,9 @@ build
 # https://docs.npmjs.com/cli/shrinkwrap#caveats
 node_modules
 
+# Build directory
+dist
+
 # Debug log from npm
 npm-debug.log
 .idea
