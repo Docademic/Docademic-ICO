@@ -6,7 +6,8 @@
 }
 
 .full{
-	overflow-x: hidden
+	overflow-x: hidden;
+	overflow-y: visible;
 }
 .navbar{
 	-webkit-transform: translateY(-60px);

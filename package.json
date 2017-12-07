@@ -28,7 +28,5 @@
     "pump": "^2.0.0",
     "run-sequence": "^2.2.0"
   },
-  "dependencies": {
-
-  }
+  "dependencies": {}
 }
