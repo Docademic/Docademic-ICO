@@ -17,8 +17,7 @@ const paths = {
     css: './assets/css/*.css',
     js: './assets/js/*.js',
     assets: './assets/',
-    assetImgs: './assets/img',
-    assetImgsO: './assets/img_o'
+    assetImgs: './assets/img'
 };
 
 gulp.task('default', function () {
@@ -78,29 +77,33 @@ gulp.task('minify-html', function () {
 
 gulp.task('img-copy', function () {
     return pump([
-        gulp.src(paths.assetImgsO + '/*.png'),
-        minimage({optimizationLevel: 5}),
+        gulp.src(paths.assetImgs + '/*.png'),
         gulp.dest(DEST + '/assets/img')
     ]);
 });
 
 gulp.task('img-team-copy', function () {
     return pump([
-        gulp.src(paths.assetImgsO + '/team/*.png'),
-        minimage({optimizationLevel: 5}),
+        gulp.src(paths.assetImgs + '/team/*.png'),
         gulp.dest(DEST + '/assets/img/team')
     ]);
 });
 
-gulp.task('img-index-copy', function () {
+gulp.task('img-fav-copy', function () {
     return pump([
-        gulp.src('./*.png'),
-        minimage({optimizationLevel: 5}),
+        gulp.src([paths.assets + 'fav/*.png',paths.assets + 'fav/*.ico']),
+        gulp.dest(DEST+ '/assets/fav')
+    ]);
+});
+
+gulp.task('other-files-copy', function(){
+    return pump([
+        gulp.src(['./browserconfig.xml','./manifest.json']),
         gulp.dest(DEST)
     ]);
 });
 
-gulp.task('copy-imgs', ['img-index-copy', 'img-copy', 'img-team-copy']);
+gulp.task('copy-imgs', ['img-copy', 'img-team-copy', 'img-fav-copy']);
 
 /*gulp.task('replace-html-index', function () {
     return pump([
@@ -120,7 +123,7 @@ gulp.task('clean', function () {
 });
 
 gulp.task('build', function (callback) {
-    runSequence('clean','minify-css', 'minify-js', 'minify-html', 'copy-imgs', function (error) {
+    runSequence('clean','minify-css', 'minify-js', 'minify-html', 'other-files-copy','copy-imgs', function (error) {
             if (error) {
                 console.log(error.message);
             } else {
