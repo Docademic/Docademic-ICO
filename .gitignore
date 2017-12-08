@@ -29,6 +29,9 @@ node_modules
 # Build directory
 dist
 
+# Browserified app.js
+assets/js/main.js
+
 # Debug log from npm
 npm-debug.log
 .idea
