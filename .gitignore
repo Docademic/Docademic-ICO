@@ -38,3 +38,5 @@ npm-debug.log
 
 # Test files
 test.js
+
+package-lock.json
