@@ -9,23 +9,62 @@ const URLS = {
 
 const request = require('request');
 
-const subscribeUser = (name, email) => {
+const hideLightbox = () => {
+    console.log('Hide Lightbox');
+    document.getElementById("register-modal").className =
+        document.getElementById("register-modal").className.replace
+        (/(?:^|\s)show(?!\S)/g, '');
+};
 
-    let body = {
-        name: name,
-        email: email
-    };
-    subscribe((err, response, body) => {
-        if (err) {
-            console.error(err.message);
-        } else {
-            if (body.success) {
-                alert(body.message);
+const hideTextMessage = () => {
+    console.log('Hide text msg');
+    if (document.getElementById("message").className.includes('green')) {
+        document.getElementById("message").className =
+            document.getElementById("message").className.replace
+            (/(?:^|\s)green(?!\S)/g, '');
+    }
+
+    if (document.getElementById("message").className.includes('red')) {
+        document.getElementById("message").className =
+            document.getElementById("message").className.replace
+            (/(?:^|\s)red(?!\S)/g, '');
+    }
+
+};
+
+const showTextMessage = (color, messsage) => {
+    console.log('Show text msg');
+    document.getElementById("message").className += color;
+    document.getElementById('messageText').innerHTML = messsage;
+};
+
+const subscribeUser = (name, email, captcha) => {
+
+    if (name && email && captcha) {
+        console.log('All fields');
+        let body = {
+            name: name,
+            email: email,
+            captcha: captcha
+        };
+        subscribe((err, response, body) => {
+            if (err) {
+                console.error(err.message);
             } else {
-                alert(body.message);
+                if (body.success) {
+                    showTextMessage('green',body.message);
+                    setTimeout(function() { hideLightbox(); }, 3000);
+                } else {
+                    showTextMessage('red',body.message);
+                    setTimeout(function() { hideTextMessage(); }, 2000);
+                }
             }
-        }
-    }, body);
+        }, body);
+    } else {
+        console.log('No fields');
+        showTextMessage('red','Please fill out all fields');
+        setTimeout(function() { hideTextMessage(); }, 2000);
+    }
 };
 
 const confirmUser = (token) => {
@@ -91,7 +130,8 @@ window.addEventListener("load", function () {
         // ...and take over its submit event.
         form.addEventListener("submit", function (event) {
             event.preventDefault();
-            subscribeUser(form.elements["name"].value, form.elements["email"].value);
+            //console.log(form.elements);
+            subscribeUser(form.elements["name"].value, form.elements["email"].value, form.elements["g-recaptcha-response"].value);
         });
     }
 });
