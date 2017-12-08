@@ -3,7 +3,6 @@ const pump = require('pump');
 const minhtml = require('gulp-htmlmin');
 const minjs = require('gulp-uglify');
 const mincss = require('gulp-clean-css');
-const minimage = require('gulp-imagemin');
 const htmlreplace = require('gulp-html-replace');
 const concat = require('gulp-concat');
 const sourcemaps = require('gulp-sourcemaps');
@@ -126,6 +125,18 @@ gulp.task('browserify', function () {
     ]);
 });
 
+gulp.task('browserify-build', function () {
+    return pump([
+        gulp.src('./assets/js/app.js'),
+        browserify({
+            insertGlobals: true,
+            debug: false
+        }),
+        rename('main.js'),
+        gulp.dest('./dist/assets/js')
+    ]);
+});
+
 gulp.task('copy-imgs', ['img-copy', 'img-team-copy', 'img-fav-copy']);
 
 /*gulp.task('replace-html-index', function () {
@@ -139,6 +150,7 @@ gulp.task('copy-imgs', ['img-copy', 'img-team-copy', 'img-fav-copy']);
     ]);
 });*/
 
+
 gulp.task('clean', function () {
     return del([
         'dist',
@@ -147,7 +159,7 @@ gulp.task('clean', function () {
 });
 
 gulp.task('test-build', function (callback) {
-    runSequence('clean', 'browserify', 'serve', function (error) {
+    runSequence('clean', 'browserify', function (error) {
             if (error) {
                 console.log(error.message);
             } else {
@@ -159,7 +171,7 @@ gulp.task('test-build', function (callback) {
 });
 
 gulp.task('build', function (callback) {
-    runSequence('clean', 'browserify', 'minify-css', 'minify-js', 'minify-html', 'other-files-copy', 'copy-imgs', 'copy-app-js', function (error) {
+    runSequence('clean', 'browserify-build', 'minify-css', 'minify-js', 'minify-html', 'other-files-copy', 'copy-imgs', function (error) {
             if (error) {
                 console.log(error.message);
             } else {
