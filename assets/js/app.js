@@ -9,15 +9,22 @@ const URLS = {
 
 const request = require('request');
 
+const resetForm = () => {
+    var form = document.getElementById("suscribeForm");
+    form.elements["name"].value = '';
+    form.elements["email"].value = '';
+    form.elements["g-recaptcha-response"].value = '';
+    grecaptcha.reset();
+};
+
 const hideLightbox = () => {
-    console.log('Hide Lightbox');
     document.getElementById("register-modal").className =
         document.getElementById("register-modal").className.replace
         (/(?:^|\s)show(?!\S)/g, '');
+    hideTextMessage();
 };
 
 const hideTextMessage = () => {
-    console.log('Hide text msg');
     if (document.getElementById("message").className.includes('green')) {
         document.getElementById("message").className =
             document.getElementById("message").className.replace
@@ -33,7 +40,6 @@ const hideTextMessage = () => {
 };
 
 const showTextMessage = (color, messsage) => {
-    console.log('Show text msg');
     document.getElementById("message").className += color;
     document.getElementById('messageText').innerHTML = messsage;
 };
@@ -52,18 +58,29 @@ const subscribeUser = (name, email, captcha) => {
                 console.error(err.message);
             } else {
                 if (body.success) {
-                    showTextMessage('green',body.message);
-                    setTimeout(function() { hideLightbox(); }, 3000);
+                    showTextMessage('green', body.message);
+                    setTimeout(function () {
+                        hideLightbox();
+                        resetForm();
+                    }, 3000);
+
                 } else {
-                    showTextMessage('red',body.message);
-                    setTimeout(function() { hideTextMessage(); }, 2000);
+                    showTextMessage('red', body.message);
+                    grecaptcha.reset();
+                    setTimeout(function () {
+                        hideTextMessage();
+                    }, 2000);
+
                 }
             }
         }, body);
     } else {
         console.log('No fields');
-        showTextMessage('red','Please fill out all fields');
-        setTimeout(function() { hideTextMessage(); }, 2000);
+        showTextMessage('red', 'Please fill out all fields');
+        grecaptcha.reset();
+        setTimeout(function () {
+            hideTextMessage();
+        }, 2000);
     }
 };
 
