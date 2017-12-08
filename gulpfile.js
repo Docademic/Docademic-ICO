@@ -88,8 +88,8 @@ gulp.task('minify-html-c', function () {
         gulp.src('./confirm/*.html'),
         minhtml({collapseWhitespace: true}),
         htmlreplace({
-            'css': 'assets/css/styles.min.css',
-            'js': 'assets/js/bundle.min.js'
+            'css': '/assets/css/styles.min.css',
+            'js': '/assets/js/bundle.min.js'
         }),
         gulp.dest(DEST + 'confirm')
     ]);
@@ -123,6 +123,12 @@ gulp.task('other-files-copy', function () {
     ]);
 });
 
+gulp.task('config-copy', function () {
+    return gulp.src('./config.json.example')
+        .pipe(rename('config.json'))
+        .pipe(gulp.dest(DEST));
+});
+
 gulp.task('browserify', function () {
     return gulp.src('./assets/js/app.js')
         .pipe(sourcemaps.init({loadMaps: true}))
@@ -144,7 +150,7 @@ gulp.task('clean', function () {
 });
 
 gulp.task('build', function (callback) {
-    runSequence('clean', 'browserify', 'minify-css', 'minify-js', 'minify-html', 'minify-html-c', 'other-files-copy', 'copy-imgs', function (error) {
+    runSequence('clean', 'browserify', 'minify-css', 'minify-js', 'minify-html', 'minify-html-c', 'other-files-copy', 'config-copy', 'copy-imgs', function (error) {
             if (error) {
                 console.log(error.message);
             } else {
