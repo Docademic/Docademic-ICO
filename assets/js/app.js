@@ -145,25 +145,24 @@ window.addEventListener("load", function () {
     $.getJSON("/config.json", function(json) {
         if(json.HOST){
             URLS.HOST = json.HOST;
+            if (window.location.href.includes('confirm')) {
+
+                let token = window.location.search.replace('?', '');
+                confirmUser(token);
+            } else {
+                var form = document.getElementById("suscribeForm");
+                // ...and take over its submit event.
+                form.addEventListener("submit", function (event) {
+                    event.preventDefault();
+                    subscribeUser(form.elements["name"].value, form.elements["email"].value, form.elements["g-recaptcha-response"].value);
+                });
+            }
         }else{
             console.error("config.json must contain HOST variable");
         }
     }).fail(function() {
         console.error( "Must have config.json file in root directoy" );
     });
-
-    if (window.location.href.includes('confirm')) {
-
-        let token = window.location.search.replace('?', '');
-        confirmUser(token);
-    } else {
-        var form = document.getElementById("suscribeForm");
-        // ...and take over its submit event.
-        form.addEventListener("submit", function (event) {
-            event.preventDefault();
-            subscribeUser(form.elements["name"].value, form.elements["email"].value, form.elements["g-recaptcha-response"].value);
-        });
-    }
 });
 
 
