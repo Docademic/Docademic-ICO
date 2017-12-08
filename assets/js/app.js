@@ -4,7 +4,7 @@
 const URLS = {
     subscribe: '/api/ico/subscribe',
     confirm: '/api/ico/confirm/',
-    HOST: 'https://labs.docademic.com:3020'
+    HOST: ''
 };
 
 const request = require('request');
@@ -85,14 +85,22 @@ const subscribeUser = (name, email, captcha) => {
 };
 
 const confirmUser = (token) => {
+    let title = $("#title");
+	let success = $("#success-card");
+	let error = $("#error-card");
+	let errorText = $("#error-text");
     confirm((err, response, body) => {
         if (err) {
             console.error(err.message);
         } else {
             if (body.success) {
-                alert(body.message);
+                title.html("Thanks "+ body.data.user.name+"!");
+                success.show();
+                
             } else {
-                alert(body.message);
+	            title.html("Oops, something goes wrong");
+	            errorText.html(body.message);
+	            error.show();
             }
         }
     }, token);
@@ -136,6 +144,11 @@ const makeRequest = function (url, method, body, callback) {
 
 window.addEventListener("load", function () {
     // Access the form element...
+    $.getJSON("config.json", function(json) {
+        URLS.HOST = json.HOST;
+        console.log(URLS.HOST); // this will show the info it in firebug console
+    });
+
     if (window.location.href.includes('confirm')) {
         //console.log('In Confirm');
         let token = window.location.search.replace('?', '');

@@ -1,13 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Hey</title>
+	<meta charset="UTF-8">
+	<title>MTC Confirmation</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta name="viewport"
+	      content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,width=device-width,user-scalable=no"/>
+	
+	<link rel="canonical" hreflang="en" href="https://ico.docademic.com/"/>
+	
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" href="/assets/fav/favicon-32x32.png" sizes="32x32">
+	<link rel="icon" type="image/png" href="/assets/fav/favicon-16x16.png" sizes="16x16">
+	<link rel="manifest" href="/manifest.json">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg">
+	<meta name="apple-mobile-web-app-title" content="Docademic">
+	<meta name="application-name" content="Docademic">
+	<meta name="theme-color" content="#fafafa">
+	
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+	      integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+	<link rel="stylesheet" href="//cdn.docademic.com/scripts/style.css">
+	<!-- build:css -->
+	<link rel="stylesheet" href="/assets/css/mtc.css">
+	<!-- endbuild -->
 </head>
 <body>
-
+<div class="full bluegray">
+	<div class="row justify-content-center align-items-center">
+		<div class="col-sm-4">
+			<div class="img-container mx-auto" style="max-width: 200px;">
+				<img src="/assets/img/logo.png" alt="Docademic">
+			</div>
+			<div class="card xl mt-4">
+				<div class="card-header blue">
+					<h3 class="t-white text-center" id="title">
+						Confirming...
+					</h3>
+				</div>
+				<div class="card-container" id="success-card" style="display: none">
+					<p style="font-size: 22px;">
+						You have successfully confirm your email <br/>
+						We will keep you updated
+					</p>
+				</div>
+				<div class="card-container" id="error-card" style="display: none">
+					<p style="font-size: 22px;" class="t-red" id="error-text">
+					
+					</p>
+				</div>
+			</div>
+			<div class="row justify-content-center mt-4">
+				<div class="col-4">
+					<a href="//ico.docademic.com" class="btn blue">
+						Ok
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 </body>
+<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
 <!-- build:js -->
-<script src="assets/js/main.js" ></script>
+<script src="/assets/js/main.js"></script>
 <!-- endbuild -->
 </html>
