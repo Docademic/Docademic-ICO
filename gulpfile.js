@@ -7,6 +7,8 @@ const minimage = require('gulp-imagemin');
 const htmlreplace = require('gulp-html-replace');
 const concat = require('gulp-concat');
 const sourcemaps = require('gulp-sourcemaps');
+const browserify = require('gulp-browserify');
+const rename = require('gulp-rename');
 const browserSync = require('browser-sync');
 const runSequence = require('run-sequence');
 const reload = browserSync.reload;
@@ -30,7 +32,9 @@ gulp.task('serve', function () {
             baseDir: '.'
         }
     });
-    gulp.watch(['*.html', paths.css, paths.js], reload);
+    gulp.watch('./assets/js/app.js', ['browserify']);
+    gulp.watch(['*.html', './confirm/*.html', './assets/js/main.js', paths.css, paths.js], reload);
+
 });
 
 gulp.task('serve-b', function () {
@@ -54,11 +58,18 @@ gulp.task('minify-css', function () {
 
 gulp.task('minify-js', function () {
     return pump([
-        gulp.src(paths.js),
+        gulp.src([paths.js, '!./assets/js/app.js', '!./assets/js/main.js']),
         sourcemaps.init(),
         minjs(),
         concat('bundle.min.js'),
         sourcemaps.write(),
+        gulp.dest(DEST + '/assets/js')
+    ]);
+});
+
+gulp.task('copy-app-js', function () {
+    return pump([
+        gulp.src('./assets/js/main.js'),
         gulp.dest(DEST + '/assets/js')
     ]);
 });
@@ -91,15 +102,27 @@ gulp.task('img-team-copy', function () {
 
 gulp.task('img-fav-copy', function () {
     return pump([
-        gulp.src([paths.assets + 'fav/*.png',paths.assets + 'fav/*.ico']),
-        gulp.dest(DEST+ '/assets/fav')
+        gulp.src([paths.assets + 'fav/*.png', paths.assets + 'fav/*.ico']),
+        gulp.dest(DEST + '/assets/fav')
     ]);
 });
 
-gulp.task('other-files-copy', function(){
+gulp.task('other-files-copy', function () {
     return pump([
-        gulp.src(['./browserconfig.xml','./manifest.json']),
+        gulp.src(['./browserconfig.xml', './manifest.json']),
         gulp.dest(DEST)
+    ]);
+});
+
+gulp.task('browserify', function () {
+    return pump([
+        gulp.src('./assets/js/app.js'),
+        browserify({
+            insertGlobals: true,
+            debug: false
+        }),
+        rename('main.js'),
+        gulp.dest('./assets/js')
     ]);
 });
 
@@ -118,12 +141,25 @@ gulp.task('copy-imgs', ['img-copy', 'img-team-copy', 'img-fav-copy']);
 
 gulp.task('clean', function () {
     return del([
-        'dist'
+        'dist',
+        './assets/js/main.js'
     ]);
 });
 
+gulp.task('test-build', function (callback) {
+    runSequence('clean', 'browserify', 'serve', function (error) {
+            if (error) {
+                console.log(error.message);
+            } else {
+                console.log('TEST BUILD FINISHED SUCCESSFULLY');
+            }
+            callback(error);
+        }
+    );
+});
+
 gulp.task('build', function (callback) {
-    runSequence('clean','minify-css', 'minify-js', 'minify-html', 'other-files-copy','copy-imgs', function (error) {
+    runSequence('clean', 'browserify', 'minify-css', 'minify-js', 'minify-html', 'other-files-copy', 'copy-imgs', 'copy-app-js', function (error) {
             if (error) {
                 console.log(error.message);
             } else {
