@@ -29,14 +29,22 @@ const subscribeUser = (name, email) => {
 };
 
 const confirmUser = (token) => {
+    let title = $("#title");
+	let success = $("#success-card");
+	let error = $("#error-card");
+	let errorText = $("#error-text");
     confirm((err, response, body) => {
         if (err) {
             console.error(err.message);
         } else {
             if (body.success) {
-                alert(body.message);
+                title.html("Thanks "+ body.data.user.name+"!");
+                success.show();
+                
             } else {
-                alert(body.message);
+	            title.html("Oops, something goes wrong");
+	            errorText.html(body.message);
+	            error.show();
             }
         }
     }, token);
