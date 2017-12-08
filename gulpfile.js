@@ -1,12 +1,13 @@
 const gulp = require('gulp');
 const pump = require('pump');
 const minhtml = require('gulp-htmlmin');
-const minjs = require('gulp-uglify');
+const uglifyes = require('gulp-uglifyes');
 const mincss = require('gulp-clean-css');
-const minimage = require('gulp-imagemin');
 const htmlreplace = require('gulp-html-replace');
 const concat = require('gulp-concat');
 const sourcemaps = require('gulp-sourcemaps');
+const browserify = require('gulp-browserify');
+const rename = require('gulp-rename');
 const browserSync = require('browser-sync');
 const runSequence = require('run-sequence');
 const reload = browserSync.reload;
@@ -25,20 +26,27 @@ gulp.task('default', function () {
 });
 
 gulp.task('serve', function () {
-    browserSync({
-        server: {
-            baseDir: '.'
+    runSequence('browserify', function (error) {
+            browserSync({
+                server: {
+                    baseDir: '.'
+                }
+            });
+            gulp.watch('./assets/js/app.js', ['browserify', reload]);
+            gulp.watch(['*.html', './confirm/*.html', './assets/js/main.js', paths.css], reload);
         }
-    });
-    gulp.watch(['*.html', paths.css, paths.js], reload);
+    );
 });
 
 gulp.task('serve-b', function () {
-    browserSync({
-        server: {
-            baseDir: './dist'
+    runSequence('build', function (error) {
+            browserSync({
+                server: {
+                    baseDir: './dist'
+                }
+            });
         }
-    });
+    );
 });
 
 gulp.task('minify-css', function () {
@@ -54,9 +62,9 @@ gulp.task('minify-css', function () {
 
 gulp.task('minify-js', function () {
     return pump([
-        gulp.src(paths.js),
+        gulp.src([paths.js, '!./assets/js/app.js']),
         sourcemaps.init(),
-        minjs(),
+        uglifyes(),
         concat('bundle.min.js'),
         sourcemaps.write(),
         gulp.dest(DEST + '/assets/js')
@@ -72,6 +80,18 @@ gulp.task('minify-html', function () {
             'js': 'assets/js/bundle.min.js'
         }),
         gulp.dest(DEST)
+    ]);
+});
+
+gulp.task('minify-html-c', function () {
+    return pump([
+        gulp.src('./confirm/*.html'),
+        minhtml({collapseWhitespace: true}),
+        htmlreplace({
+            'css': 'assets/css/styles.min.css',
+            'js': 'assets/js/bundle.min.js'
+        }),
+        gulp.dest(DEST + 'confirm')
     ]);
 });
 
@@ -91,30 +111,31 @@ gulp.task('img-team-copy', function () {
 
 gulp.task('img-fav-copy', function () {
     return pump([
-        gulp.src([paths.assets + 'fav/*.png',paths.assets + 'fav/*.ico']),
-        gulp.dest(DEST+ '/assets/fav')
+        gulp.src([paths.assets + 'fav/*.png', paths.assets + 'fav/*.ico']),
+        gulp.dest(DEST + '/assets/fav')
     ]);
 });
 
-gulp.task('other-files-copy', function(){
+gulp.task('other-files-copy', function () {
     return pump([
-        gulp.src(['./browserconfig.xml','./manifest.json']),
+        gulp.src(['./browserconfig.xml', './manifest.json']),
         gulp.dest(DEST)
     ]);
+});
+
+gulp.task('browserify', function () {
+    return gulp.src('./assets/js/app.js')
+        .pipe(sourcemaps.init({loadMaps: true}))
+        .pipe(browserify({
+            insertGlobals: true,
+            debug: false
+        }))
+        .pipe(sourcemaps.write('./'))
+        .pipe(rename('main.js'))
+        .pipe(gulp.dest('./assets/js'));
 });
 
 gulp.task('copy-imgs', ['img-copy', 'img-team-copy', 'img-fav-copy']);
-
-/*gulp.task('replace-html-index', function () {
-    return pump([
-        gulp.src('dist/index.html'),
-        htmlreplace({
-            'css': 'css/styles.min.css',
-            'js': 'js/bundle.min.js'
-        }),
-        gulp.dest(DEST)
-    ]);
-});*/
 
 gulp.task('clean', function () {
     return del([
@@ -123,7 +144,7 @@ gulp.task('clean', function () {
 });
 
 gulp.task('build', function (callback) {
-    runSequence('clean','minify-css', 'minify-js', 'minify-html', 'other-files-copy','copy-imgs', function (error) {
+    runSequence('clean', 'browserify', 'minify-css', 'minify-js', 'minify-html', 'minify-html-c', 'other-files-copy', 'copy-imgs', function (error) {
             if (error) {
                 console.log(error.message);
             } else {
