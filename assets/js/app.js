@@ -142,7 +142,7 @@ const makeRequest = function (url, method, body, callback) {
 
 window.addEventListener("load", function () {
     // Access the form element...
-    $.getJSON("config.json", function(json) {
+    $.getJSON("/config.json", function(json) {
         if(json.HOST){
             URLS.HOST = json.HOST;
         }else{
