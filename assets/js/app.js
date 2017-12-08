@@ -47,7 +47,6 @@ const showTextMessage = (color, messsage) => {
 const subscribeUser = (name, email, captcha) => {
 
     if (name && email && captcha) {
-        console.log('All fields');
         let body = {
             name: name,
             email: email,
@@ -75,7 +74,6 @@ const subscribeUser = (name, email, captcha) => {
             }
         }, body);
     } else {
-        console.log('No fields');
         showTextMessage('red', 'Please fill out all fields');
         grecaptcha.reset();
         setTimeout(function () {
@@ -145,22 +143,24 @@ const makeRequest = function (url, method, body, callback) {
 window.addEventListener("load", function () {
     // Access the form element...
     $.getJSON("config.json", function(json) {
-        URLS.HOST = json.HOST;
-        console.log(URLS.HOST); // this will show the info it in firebug console
+        if(json.HOST){
+            URLS.HOST = json.HOST;
+        }else{
+            console.error("config.json must contain HOST variable");
+        }
+    }).fail(function() {
+        console.error( "Must have config.json file in root directoy" );
     });
 
     if (window.location.href.includes('confirm')) {
-        //console.log('In Confirm');
+
         let token = window.location.search.replace('?', '');
-        //console.log(token);
         confirmUser(token);
     } else {
-        console.log('In Index');
         var form = document.getElementById("suscribeForm");
         // ...and take over its submit event.
         form.addEventListener("submit", function (event) {
             event.preventDefault();
-            //console.log(form.elements);
             subscribeUser(form.elements["name"].value, form.elements["email"].value, form.elements["g-recaptcha-response"].value);
         });
     }

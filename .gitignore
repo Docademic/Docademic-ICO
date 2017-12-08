@@ -32,6 +32,9 @@ dist
 # Browserified app.js
 assets/js/main.js
 
+#Config file
+config.json
+
 # Debug log from npm
 npm-debug.log
 .idea
