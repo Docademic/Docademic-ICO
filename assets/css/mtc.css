@@ -373,10 +373,10 @@ tbody td:not(:nth-child(2)) {
 }
 
 #countdown .timer-container {
-    -webkit-flex: 0 0 290px;
-    -ms-flex: 0 0 290px;
-    flex: 0 0 290px;
-    max-width: 290px;
+    -webkit-flex: 0 0 310px;
+    -ms-flex: 0 0 310px;
+    flex: 0 0 310px;
+    max-width: 310px;
     padding: .5em 0;
 }
 
