@@ -34,6 +34,10 @@ body {
     visibility: visible;
 }
 
+.nav-link{
+    color: #034f84 ;
+}
+
 /* home */
 .bg-home {
     background: url(../img/bg-home.png) no-repeat;
