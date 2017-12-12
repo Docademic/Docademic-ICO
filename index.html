@@ -71,22 +71,46 @@
 	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 	    <ul class="navbar-nav mr-auto">
 	      <li class="nav-item active">
-	        <a class="nav-link" href="#healthcare">Healthcare</a>
+	        <a class="nav-link" href="#healthcare" onclick="ga('send', 'event', {
+    eventCategory: 'Section healthcare',
+    eventAction: 'click',
+    eventLabel: event.target.href
+  });">Healthcare</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="#solution">Solution</a>
+	        <a class="nav-link" href="#solution" onclick="ga('send', 'event', {
+    eventCategory: 'Section solution',
+    eventAction: 'click',
+    eventLabel: event.target.href
+  });">Solution</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="#features">Features</a>
+	        <a class="nav-link" href="#features" onclick="ga('send', 'event', {
+    eventCategory: 'Section features',
+    eventAction: 'click',
+    eventLabel: event.target.href
+  });">Features</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="#mtc">MTC</a>
+	        <a class="nav-link" href="#mtc" onclick="ga('send', 'event', {
+    eventCategory: 'Section mtc',
+    eventAction: 'click',
+    eventLabel: event.target.href
+  });">MTC</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="#roadmap">Roadmap</a>
+	        <a class="nav-link" href="#roadmap" onclick="ga('send', 'event', {
+    eventCategory: 'Section Roadmap',
+    eventAction: 'click',
+    eventLabel: event.target.href
+  });">Roadmap</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="#team">Team</a>
+	        <a class="nav-link" href="#team" onclick="ga('send', 'event', {
+    eventCategory: 'Section team',
+    eventAction: 'click',
+    eventLabel: event.target.href
+  });">Team</a>
 	      </li>
 	    </ul>
 	  </div>
@@ -153,12 +177,20 @@
 							</p>
 							<div class="row mt-md-5 mt-3 justify-content-center">
 								<div class="col-md-4">
-									<button class="btn blue tgl-show" data-show="#register-modal">
+									<button class="btn blue tgl-show" data-show="#register-modal" onclick="ga('send', 'event', {
+    eventCategory: 'Open Register Modal',
+    eventAction: 'click',
+    eventLabel: event.target.href
+  });">
 										Register for updates
 									</button>
 								</div>
 								<div class="col-md-4">
-									<a href="https://cdn.docademic.com/documents/Docademic+ICO+White+Paper.pdf" target="_blank" class="btn lblue">
+									<a href="https://cdn.docademic.com/documents/Docademic+ICO+White+Paper.pdf" target="_blank" class="btn lblue" onclick="ga('send', 'event', {
+    eventCategory: 'Whitepaper',
+    eventAction: 'click',
+    eventLabel: event.target.href
+  });">
 										Download Whitepaper
 									</a>
 								</div>
