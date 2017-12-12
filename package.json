@@ -30,6 +30,7 @@
     "run-sequence": "^2.2.0"
   },
   "dependencies": {
+    "query-string": "^5.0.1",
     "request": "^2.83.0"
   }
 }

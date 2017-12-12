@@ -8,6 +8,7 @@ const URLS = {
 };
 
 const request = require('request');
+const queryString = require('query-string');
 
 const resetForm = () => {
     var form = document.getElementById("suscribeForm");
@@ -44,6 +45,20 @@ const showTextMessage = (color, messsage) => {
     document.getElementById('messageText').innerHTML = messsage;
 };
 
+const showReferrerInput = () => {
+    document.getElementById("referrer").className =
+        document.getElementById("referrer").className.replace
+        (/(?:^|\s)hidden-input(?!\S)/g, '');
+    document.getElementById("referrer").className += 'input-animated mt-3';
+};
+
+const hideReferrerInput = () => {
+    document.getElementById("referrer").className =
+        document.getElementById("referrer").className.replace
+        (/(?:^|\s)input-animated mt-3(?!\S)/g, '');
+    document.getElementById("referrer").className += 'hidden-input';
+};
+
 const subscribeUser = (name, email, captcha) => {
 
     if (name && email && captcha) {
@@ -52,6 +67,17 @@ const subscribeUser = (name, email, captcha) => {
             email: email,
             captcha: captcha
         };
+
+        let params = queryString.parse(window.location.search);
+
+        if (params.ref) {
+            body['ref'] = params.ref;
+        } else {
+            let form = document.getElementById("suscribeForm");
+            if (form.elements["ref"].value) body['ref'] = form.elements["ref"].value;
+        }
+
+        console.log(body);
         subscribe((err, response, body) => {
             if (err) {
                 console.error(err.message);
@@ -84,21 +110,21 @@ const subscribeUser = (name, email, captcha) => {
 
 const confirmUser = (token) => {
     let title = $("#title");
-	let success = $("#success-card");
-	let error = $("#error-card");
-	let errorText = $("#error-text");
+    let success = $("#success-card");
+    let error = $("#error-card");
+    let errorText = $("#error-text");
     confirm((err, response, body) => {
         if (err) {
             console.error(err.message);
         } else {
             if (body.success) {
-                title.html("Thanks "+ body.data.user.name+"!");
+                title.html("Thanks " + body.data.user.name + "!");
                 success.show();
-                
+
             } else {
-	            title.html("Oops, something goes wrong");
-	            errorText.html(body.message);
-	            error.show();
+                title.html("Oops, something went wrong");
+                errorText.html(body.message);
+                error.show();
             }
         }
     }, token);
@@ -142,14 +168,19 @@ const makeRequest = function (url, method, body, callback) {
 
 window.addEventListener("load", function () {
     // Access the form element...
-    $.getJSON("/config.json", function(json) {
-        if(json.HOST){
+
+    $.getJSON("/config.json", function (json) {
+        if (json.HOST) {
             URLS.HOST = json.HOST;
             if (window.location.href.includes('confirm')) {
-
                 let token = window.location.search.replace('?', '');
                 confirmUser(token);
             } else {
+                let params = queryString.parse(window.location.search);
+                if (params.ref) {
+                    hideReferrerInput();
+                }
+
                 var form = document.getElementById("suscribeForm");
                 // ...and take over its submit event.
                 form.addEventListener("submit", function (event) {
@@ -157,11 +188,11 @@ window.addEventListener("load", function () {
                     subscribeUser(form.elements["name"].value, form.elements["email"].value, form.elements["g-recaptcha-response"].value);
                 });
             }
-        }else{
+        } else {
             console.error("config.json must contain HOST variable");
         }
-    }).fail(function() {
-        console.error( "Must have config.json file in root directoy" );
+    }).fail(function () {
+        console.error("Must have config.json file in root directoy");
     });
 });
 
