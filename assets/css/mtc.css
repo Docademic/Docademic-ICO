@@ -112,6 +112,13 @@ body {
     transition: .5s;
 }
 
+.hidden-input {
+    height: 0;
+    overflow-y: hidden;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
 /* Healthcare */
 #docademic,
 #doctors {
