@@ -3,6 +3,7 @@
  */
 const URLS = {
     subscribe: '/api/ico/subscribe',
+    subscribeBounty: '/api/ico/affiliate',
     confirm: '/api/ico/confirm/',
     HOST: ''
 };
@@ -12,6 +13,15 @@ const queryString = require('query-string');
 
 const resetForm = () => {
     var form = document.getElementById("suscribeForm");
+    form.elements["name"].value = '';
+    form.elements["email"].value = '';
+    form.elements["ref"].value = '';
+    form.elements["g-recaptcha-response"].value = '';
+    grecaptcha.reset();
+};
+
+const resetBountyForm = () => {
+    var form = document.getElementById("suscribeBountyForm");
     form.elements["name"].value = '';
     form.elements["email"].value = '';
     form.elements["g-recaptcha-response"].value = '';
@@ -40,16 +50,29 @@ const hideTextMessage = () => {
 
 };
 
+const hideBountyTextMessage = () => {
+    if (document.getElementById("bountyMessage").className.includes('green')) {
+        document.getElementById("bountyMessage").className =
+            document.getElementById("bountyMessage").className.replace
+            (/(?:^|\s)green(?!\S)/g, '');
+    }
+
+    if (document.getElementById("bountyMessage").className.includes('red')) {
+        document.getElementById("bountyMessage").className =
+            document.getElementById("bountyMessage").className.replace
+            (/(?:^|\s)red(?!\S)/g, '');
+    }
+
+};
+
 const showTextMessage = (color, messsage) => {
     document.getElementById("message").className += color;
     document.getElementById('messageText').innerHTML = messsage;
 };
 
-const showReferrerInput = () => {
-    document.getElementById("referrer").className =
-        document.getElementById("referrer").className.replace
-        (/(?:^|\s)hidden-input(?!\S)/g, '');
-    document.getElementById("referrer").className += 'input-animated mt-3';
+const showBountyTextMessage = (color, messsage) => {
+    document.getElementById("bountyMessage").className += color;
+    document.getElementById('bountyMessageText').innerHTML = messsage;
 };
 
 const hideReferrerInput = () => {
@@ -108,6 +131,46 @@ const subscribeUser = (name, email, captcha) => {
     }
 };
 
+const subscribeBountyUser = (name, email, captcha) => {
+
+    if (name && email && captcha) {
+        let body = {
+            name: name,
+            email: email,
+            captcha: captcha
+        };
+
+        console.log(body);
+        subscribeBounty((err, response, body) => {
+            if (err) {
+                console.error(err.message);
+            } else {
+                if (body.success) {
+                    showBountyTextMessage('green', body.message);
+                    setTimeout(function () {
+                        hideLightbox();
+                        resetBountyForm();
+                    }, 3000);
+
+                } else {
+                    showBountyTextMessage('red', body.message);
+                    grecaptcha.reset();
+                    setTimeout(function () {
+                        hideBountyTextMessage();
+                    }, 2000);
+
+                }
+            }
+        }, body);
+    } else {
+        showBountyTextMessage('red', 'Please fill out all fields');
+        grecaptcha.reset();
+        setTimeout(function () {
+            hideBountyTextMessage();
+        }, 2000);
+    }
+};
+
 const confirmUser = (token) => {
     let title = $("#title");
     let success = $("#success-card");
@@ -132,6 +195,12 @@ const confirmUser = (token) => {
 
 const subscribe = function (callback, body) {
     let url = URLS.HOST + URLS.subscribe;
+    let method = 'POST';
+    makeRequest(url, method, body, callback);
+};
+
+const subscribeBounty = function (callback, body) {
+    let url = URLS.HOST + URLS.subscribeBounty;
     let method = 'POST';
     makeRequest(url, method, body, callback);
 };
@@ -176,6 +245,23 @@ window.addEventListener("load", function () {
                 let token = window.location.search.replace('?', '');
                 confirmUser(token);
             } else {
+
+            }
+        } else {
+            console.error("config.json must contain HOST variable");
+        }
+    }).fail(function () {
+        console.error("Must have config.json file in root directoy");
+    });
+});
+
+$(document).ready(function () {
+    $('#register-button').click(function () {
+        console.log('register');
+        $.ajax({
+            url: "/register.html",
+            success: function (response) {
+                $('#modal-card').html(response);
                 let params = queryString.parse(window.location.search);
                 if (params.ref) {
                     hideReferrerInput();
@@ -187,12 +273,34 @@ window.addEventListener("load", function () {
                     event.preventDefault();
                     subscribeUser(form.elements["name"].value, form.elements["email"].value, form.elements["g-recaptcha-response"].value);
                 });
+
+                // input animated
+                $('.input-animated input').focus(function () {
+                    $(this).parent().addClass('active');
+                });
             }
-        } else {
-            console.error("config.json must contain HOST variable");
-        }
-    }).fail(function () {
-        console.error("Must have config.json file in root directoy");
+        });
+    });
+
+    $('#bounty-button').click(function () {
+        console.log('bounty');
+        $.ajax({
+            url: "/bounty.html",
+            success: function (response) {
+                $('#modal-card').html(response);
+                var bountyForm = document.getElementById("suscribeBountyForm");
+                // ...and take over its submit event.
+                bountyForm.addEventListener("submit", function (event) {
+                    event.preventDefault();
+                    subscribeBountyUser(bountyForm.elements["name"].value, bountyForm.elements["email"].value, bountyForm.elements["g-recaptcha-response"].value);
+                });
+
+                // input animated
+                $('.input-animated input').focus(function () {
+                    $(this).parent().addClass('active');
+                });
+            }
+        });
     });
 });
 

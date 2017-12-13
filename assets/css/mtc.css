@@ -95,7 +95,8 @@ body {
     max-width: 60px;
 }
 
-#register-modal #message {
+#register-modal #message,
+#register-modal #bountyMessage {
     height: 0;
     overflow-y: hidden;
     padding-left: 1em;
@@ -103,6 +104,8 @@ body {
 }
 
 #register-modal #message.green,
+#register-modal #bountyMessage.green,
+#register-modal #bountyMessage.red,
 #register-modal #message.red {
     height: 42px;
     color: #fff;

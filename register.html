@@ -1,0 +1,36 @@
+<div class="card-header bluegray">
+    <div class="logo-container">
+        <img src="assets/img/logo-modal.png" alt="Docademic">
+    </div>
+</div>
+<div class="card-container">
+    <h3 class="text-center t-blue">Register for updates</h3>
+    <form id="suscribeForm">
+        <div class="input-animated">
+            <input name="name" type="text">
+            <label for="">
+                Name
+            </label>
+        </div>
+        <div class="input-animated mt-3">
+            <input name="email" type="email">
+            <label for="">
+                Email
+            </label>
+        </div>
+        <div class="input-animated mt-3" id="referrer">
+            <input name="ref" type="text">
+            <label for="">
+                Referrer Code (Optional)
+            </label>
+        </div>
+        <div class="g-recaptcha mt-3" data-sitekey="6LefoTsUAAAAABDNmf1VWx4FRktl8kAKqfMC2KvA"></div>
+        <div id="message">
+            <p id="messageText">cool</p>
+        </div>
+        <button class="btn blue mt-3" type="submit" name="submit">
+            Register
+        </button>
+    </form>
+</div>
+<script src='https://www.google.com/recaptcha/api.js'></script>
