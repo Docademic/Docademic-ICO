@@ -85,6 +85,46 @@ body {
     }
 }
 
+#toHealthcare{
+    background: #aaa;
+    border-radius: 50%;
+    -webkit-box-shadow: 0 7px 14px rgba(0,0,0,.2);
+    box-shadow: 0 7px 14px rgba(0,0,0,.2);
+    color: #fafafa;
+    -webkit-flex: 0 0 50px;
+    -ms-flex: 0 0 50px;
+    flex: 0 0 50px;
+    font-size: 20px;
+    justify-content: center;
+    height: 50px;
+    max-width: 50px;
+    opacity: .8;
+    padding-top: 14px;
+    text-align: center;
+    -webkit-transition: .3s;
+    -o-transition: .3s;
+    transition: .3s;
+}
+#toHealthcare::before{
+    -webkit-animation: upDown 1.5s infinite;
+    -o-animation: upDown 1.5s infinite;
+    animation: upDown 1.5s infinite;
+}
+@keyframes upDown{
+    0%,100%{
+        -webkit-transform: translateY(-15%);
+        -ms-transform: translateY(-15%);
+        -o-transform: translateY(-15%);
+        transform: translateY(-15%);
+    }
+    15%{
+        -webkit-transform: translateY(15%);
+        -ms-transform: translateY(15%);
+        -o-transform: translateY(15%);
+        transform: translateY(15%);
+    }
+}
+
 /* modal */
 #register-modal {
     z-index: 99;

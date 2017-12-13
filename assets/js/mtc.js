@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-	$('a.nav-link[href*="#"]:not([href="#"])').click(function() {
+	$('a.nav-link[href*="#"]:not([href="#"]), #toHealthcare').click(function() {
 	    if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
 	      var target = $(this.hash);
 	      target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
