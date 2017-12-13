@@ -474,6 +474,14 @@ footer #social li a {
     display: none;
 }
 
+/* advisors */
+.advisor .img-container{
+    max-width: 120px;
+}
+.advisor .linkedin{
+    display: inline-block;
+}
+
 /* md */
 @media screen and (max-width: 992px) {
     .hidden-md-down{
