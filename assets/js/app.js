@@ -245,7 +245,10 @@ window.addEventListener("load", function () {
                 let token = window.location.search.replace('?', '');
                 confirmUser(token);
             } else {
-
+	            let params = queryString.parse(window.location.hash);
+	            console.log(params);
+	            if(params.subscribe===null)$('#register-button').click();
+	            if(params.bounty===null)$('#bounty-button').click();
             }
         } else {
             console.error("config.json must contain HOST variable");
