@@ -165,6 +165,9 @@ body {
     padding-left: 1em;
     padding-right: 1em;
 }
+#register-modal .lightbox-container{
+    max-width: 100%;
+}
 
 /* Healthcare */
 #docademic,
@@ -416,6 +419,12 @@ tbody td:not(:nth-child(2)) {
     z-index: 10;
 }
 
+#telegram{
+    position: absolute;
+    top: -35px;
+    right: 2em;
+}
+
 #countdown .title {
     -webkit-flex: 0 0 150px;
     -ms-flex: 0 0 150px;
@@ -523,6 +532,10 @@ footer #social li a {
         margin-top: 1em;
     }
 
+    #register-modal .lightbox-container{
+        margin-top: 50px;
+    }
+
     /* healthcare */
     #healthcare img {
         margin-top: 1em;
@@ -568,6 +581,11 @@ footer #social li a {
     .two-c {
         background: linear-gradient(to bottom, #fff 100px, #fff 100px, #fff 100px, #eff3f6 100px, #eff3f6 100%);
     }
+
+    #telegram{
+        right: 1em;
+    }
+
 
     footer {
         padding-bottom: 106px
