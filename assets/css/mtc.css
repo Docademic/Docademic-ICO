@@ -11,8 +11,8 @@ body {
 }
 
 .full {
-    overflow-x: hidden;
-    overflow-y: visible;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
 }
 
 .navbar {
