@@ -3,6 +3,7 @@ const pump = require('pump');
 const minhtml = require('gulp-htmlmin');
 const uglifyes = require('gulp-uglifyes');
 const mincss = require('gulp-clean-css');
+
 const htmlreplace = require('gulp-html-replace');
 const concat = require('gulp-concat');
 const sourcemaps = require('gulp-sourcemaps');
@@ -136,6 +137,13 @@ gulp.task('img-team-copy', function () {
     ]);
 });
 
+gulp.task('img-advisors-copy', function () {
+	return pump([
+		gulp.src(paths.assetImgs + '/advisors/*.png'),
+		gulp.dest(DEST + '/assets/img/advisors')
+	]);
+});
+
 gulp.task('img-fav-copy', function () {
     return pump([
         gulp.src([paths.assets + 'fav/*.png', paths.assets + 'fav/*.ico']),
@@ -168,7 +176,7 @@ gulp.task('browserify', function () {
         .pipe(gulp.dest('./assets/js'));
 });
 
-gulp.task('copy-imgs', ['img-copy', 'img-team-copy', 'img-fav-copy']);
+gulp.task('copy-imgs', ['img-copy', 'img-team-copy', 'img-advisors-copy', 'img-fav-copy']);
 
 gulp.task('clean', function () {
     return del([
