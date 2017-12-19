@@ -415,7 +415,6 @@ tbody td:not(:nth-child(2)) {
 #countdown {
     z-index: 10;
 }
-
 #countdown .title {
     -webkit-flex: 0 0 150px;
     -ms-flex: 0 0 150px;
@@ -425,7 +424,6 @@ tbody td:not(:nth-child(2)) {
     padding-top: 1em;
     max-width: 150px;
 }
-
 #countdown .timer-container {
     -webkit-flex: 0 0 310px;
     -ms-flex: 0 0 310px;
@@ -433,23 +431,31 @@ tbody td:not(:nth-child(2)) {
     max-width: 310px;
     padding: .5em 0;
 }
-
 .timer-container span {
     display: inline-block;
     text-align: center;
     width: 70px;
 }
-
-#timer-numbers {
-    font-size: 18px;
+#sell{
+    display: none;
+}
+#countdown .timer-container.selling{
+    -webkit-flex: 0 0 155px;
+    -ms-flex: 0 0 155px;
+    flex: 0 0 155px;
+    max-width: 155px;
+}
+.timer-container.selling ~ #sell{
+    display: flex;
+    -webkit-flex: 0 0 200px;
+    -ms-flex: 0 0 200px;
+    flex: 0 0 200px;
+    margin-top: 1em;
+    max-width: 200px;
+    padding: .5em 0;
 }
 
-#timer-numbers span {
-    display: inline-block;
-    text-align: center;
-    width: 70px;
-}
-
+/* footer */
 footer {
     background: #3d464d;
     padding: 1em 0 84px;
@@ -483,6 +489,24 @@ footer #social li a {
 }
 .advisor .linkedin{
     display: inline-block;
+}
+
+/* buy section */
+#buy-section{
+    background: url(../img/triangule.png) no-repeat;
+}
+#buy-steps{
+    max-width: 650px;
+    width: 100%;
+}
+#buy-steps .card{
+    border: none;
+}
+#buy-steps .card .card-header{
+    padding: 1em 0;
+}
+#buy-steps .card .card-header h3{
+    margin: 0;
 }
 
 /* md */

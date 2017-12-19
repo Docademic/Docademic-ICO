@@ -1124,28 +1124,11 @@
 <!-- countdown -->
 <div id="countdown" class="fixed-bottom blue t-white">
 	<div class="row justify-content-center">
-		<div class="title">
-			<p class="text-center">
-				ICO Launch in:
-			</p>
-		</div>
-		<div class="timer-container">
-			<p id="timer-text">
-					<span>
-						Days	
-					</span>
-				<span>
-						Hours	
-					</span>
-				<span>
-						Minutes
-					</span>
-				<span>
-						Seconds
-					</span>
-			</p>
-			<p id="timer-numbers"></p>
-		</div>
+		<div class="title text-center"></div>
+		<div class="timer-container"></div>
+		<button id="sell" class="btn green">
+			Buy now!
+		</button>
 	</div>
 </div>
 <!-- scripts -->
@@ -1158,6 +1141,8 @@
         crossorigin="anonymous"></script>
 <!-- build:js -->
 <script src="assets/js/main.js"></script>
+<script src="assets/js/moment.min.js"></script>
+<script src="assets/js/moment-timezone-with-data.js"></script>
 <script src="assets/js/jquery.countdown.min.js"></script>
 <script src="assets/js/mtc.js"></script>
 <!-- endbuild -->
