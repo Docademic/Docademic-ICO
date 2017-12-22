@@ -525,6 +525,11 @@ footer #social li a {
     margin: 0;
 }
 
+#notice-modal .img-container{
+    margin: 0 auto;
+    width: 80px;
+}
+
 /* md */
 @media screen and (max-width: 992px) {
     .hidden-md-down{
