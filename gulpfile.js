@@ -33,7 +33,7 @@ gulp.task('serve', function () {
                     baseDir: '.'
                 }
             });
-            gulp.watch('./assets/js/app.js', ['browserify', reload]);
+            gulp.watch(['./assets/js/app.js','./assets/js/mtc.js'], ['browserify', reload]);
             gulp.watch(['*.html', './confirm/*.html', './assets/js/main.js', paths.css], reload);
         }
     );
@@ -53,10 +53,8 @@ gulp.task('serve-b', function () {
 gulp.task('minify-css', function () {
     return pump([
         gulp.src(paths.css),
-        sourcemaps.init(),
         mincss(),
         concat('styles.min.css'),
-        sourcemaps.write(),
         gulp.dest(DEST + '/assets/css')
     ]);
 });
@@ -64,10 +62,8 @@ gulp.task('minify-css', function () {
 gulp.task('minify-js', function () {
     return pump([
         gulp.src([paths.js, '!./assets/js/app.js']),
-        sourcemaps.init(),
         uglifyes(),
         concat('bundle.min.js'),
-        sourcemaps.write(),
         gulp.dest(DEST + '/assets/js')
     ]);
 });

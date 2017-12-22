@@ -130,7 +130,7 @@
 <section id="home" class="full">
 	<div class="container-fluid full">
 		<div class="row">
-			<div class="col-md-4 bg-home d-flex align-items-center">
+			<div class="col-md-4 bg-home d-flex align-items-center hidden-md-down">
 				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" itemprop="image">
 					<g id="Layer_3" data-name="Layer 3">
 						<path class="cls-1"
@@ -1123,12 +1123,26 @@
 </footer>
 <!-- countdown -->
 <div id="countdown" class="fixed-bottom blue t-white">
+	<button class="df-warning-i tgl-show lblue" data-show="#notice-modal" id="notice"></button>
+	<a href="//t.me/joinchat/GWeOM0Nc_R_htbcpJha7mA" id="telegram" target="_blank" title="telegram">
+		<img src="assets/img/telegram.png" alt="telegram">
+	</a>
 	<div class="row justify-content-center">
 		<div class="title text-center"></div>
 		<div class="timer-container"></div>
 		<button id="sell" class="btn green">
 			Buy now!
 		</button>
+	</div>
+</div>
+<div class="lightbox full" id="notice-modal">
+	<div class="row align-items-center">
+		<div class="lightbox-container mx-auto no-border">
+			<button class="lbx-tgl x tgl-show" data-show="#notice-modal">
+				<i class="df-close"></i>
+			</button>
+			<div class="card" id="modal-card"></div>
+		</div>
 	</div>
 </div>
 <!-- scripts -->
@@ -1141,7 +1155,7 @@
         crossorigin="anonymous"></script>
 <!-- build:js -->
 <script src="assets/js/main.js"></script>
-<script src="assets/js/moment.min.js"></script>
+<script src="assets/js/moment-s.min.js"></script>
 <script src="assets/js/moment-timezone-with-data.js"></script>
 <script src="assets/js/jquery.countdown.min.js"></script>
 <script src="assets/js/mtc.js"></script>

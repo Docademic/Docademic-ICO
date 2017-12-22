@@ -415,6 +415,22 @@ tbody td:not(:nth-child(2)) {
 #countdown {
     z-index: 10;
 }
+#telegram{
+    position: absolute;
+    top: -35px;
+    right: 2em;
+}
+#notice{
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 36px;
+    height: 70px;
+    position: absolute;
+    top: -35px;
+    right: calc(2em + 50px);
+    width: 70px;
+}
 #countdown .title {
     -webkit-flex: 0 0 150px;
     -ms-flex: 0 0 150px;
@@ -512,7 +528,7 @@ footer #social li a {
 /* md */
 @media screen and (max-width: 992px) {
     .hidden-md-down{
-        display: none;
+        display: none!important;
     }
     .show-md-down{
         display: block;
@@ -592,6 +608,20 @@ footer #social li a {
     .two-c {
         background: linear-gradient(to bottom, #fff 100px, #fff 100px, #fff 100px, #eff3f6 100px, #eff3f6 100%);
     }
+
+    #telegram{
+        right: 1em;
+        top: -20px;
+        width: 40px;
+    }
+
+    #notice{
+    font-size: 18px;
+    height: 40px;
+    top: -20px;
+    left: .5em;
+    width: 40px;
+}
 
     footer {
         padding-bottom: 106px
