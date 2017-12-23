@@ -1,6 +1,5 @@
 $(document).ready(function () {
 
-
 	$('a.nav-link[href*="#"]:not([href="#"]), a#toHealthcare').click(function() {
 	    if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
 	      var target = $(this.hash);
@@ -35,16 +34,41 @@ $(document).ready(function () {
     });
 
     // countdown timer
-    $('#timer-numbers').countdown('2017/12/22').on('update.countdown', function (event) {
-        var $this = $(this).html(event.strftime(''
-            + '<span>%D</span>'
-            + '<span>%H</span>'
-            + '<span>%M</span>'
-            + '<span>%S</span>'));
-    });
+    var timerContainer = $('.timer-container');
+    var currentDate = moment().tz("America/Mexico_City").format('Y-MM-D H:m');
+    var sellStarts = moment.tz('2017-12-28 00:00', 'America/Mexico_City');
+    var sellEnds = moment.tz('2017-12-29 00:00', 'America/Mexico_City');
+    var countdownDate = '';
+    var args = '<span>Days<br/>%D</span>' + '<span>Hours<br/>%H</span>';
+    if (currentDate < sellStarts._i) {
+        $('#countdown .title').html('ICO Launch in:');
+        countdownDate = sellStarts;
+        args += '<span>Minutes<br/>%M</span>' + '<span>Seconds<br/>%S</span>';
+        sellCountdown(args);
+    } else if (currentDate > sellStarts._i && currentDate < sellEnds._i) {
+        timerContainer.addClass('selling');
+        $('#countdown .title').html('ICO selling:');
+        countdownDate = sellEnds;
+        sellCountdown(args);
+    }
+
+    function sellCountdown(args){
+        timerContainer.countdown(countdownDate.toDate(), function(event) {
+          $(this).html(event.strftime(args));
+        });
+    }
 
     // modal
     $('.tgl-show').click(function () {
         $($(this).data('show')).toggleClass('show');
+    });
+
+    // buy steps
+    $('#buy-steps').carousel({
+      interval: false
+    });
+    $('#first-step-submit, #second-step-submit').click(function(e){
+        e.preventDefault();
+        $('#buy-steps').carousel('next');
     });
 });
