@@ -1,6 +1,9 @@
 body {
 	font-size: 18px
 }
+h2 a{
+    display: inline-block;
+}
 
 .btn {
 	padding: 0;
