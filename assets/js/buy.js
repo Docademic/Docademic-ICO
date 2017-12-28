@@ -1,9 +1,16 @@
 /*const Web3 = require('web3');
 const web3 = new Web3(new Web3.providers.HttpProvider("https://rinkeby.infura.io/JoIGnMxHRlKZg956R086"));*/
+const URLS = {
+    buyTokens: '/api/ico/confirm/',
+    HOST: ''
+};
 
-const tokenAddress = "0xcd49A2c2FdB583647e48f61a2682864fA364D072";
-const multiSigAddress = "0x0BB7D8331defC91494689dB93cDA8C325AFe3077";
-const crowdSaleAddress = "0x23022508519EA24bCbBa4326992B095ABEC7c23d";
+const request = require('request');
+const queryString = require('query-string');
+
+const tokenAddress = "0x383b31De249444711dAF30646A538c8F8fba0ed5";
+const multiSigAddress = "0xFD053b5447cB0625464E6E277005fE8aDF3c8469";
+const crowdSaleAddress = "0x64fbBc973043FAb02B41E133AB351193D5D2BFfd";
 const contributors = new Set();
 class Buy{
 	
@@ -87,7 +94,19 @@ class Buy{
 }
 
 window.addEventListener("load", function () {
-	
+
+    $.getJSON("/config.json", function (json) {
+        if (json.HOST) {
+            URLS.HOST = json.HOST;
+            let params = queryString.parse(window.location.hash);
+            console.log(params);
+        } else {
+            console.error("config.json must contain HOST variable");
+        }
+    }).fail(function () {
+        console.error("Must have config.json file in root directoy");
+    });
+
 	if (typeof web3 !== 'undefined') {
 		let web = new Web3(web3.currentProvider);
 		let buy = new Buy(web,true);
@@ -353,5 +372,36 @@ const TokenABI = [
 		"type": "event"
 	}
 ];
+
+const buyTokens = function (callback, body) {
+    let url = URLS.HOST + URLS.buyTokens;
+    let method = 'POST';
+    makeRequest(url, method, body, callback);
+};
+
+const makeRequest = function (url, method, body, callback) {
+
+    let options = {};
+    options.url = url;
+    options.method = method;
+    options.json = true;
+
+    options.headers = {
+        'Content-type': 'application/json',
+        'accept-language': 'en'
+    };
+
+    if (body) options.body = body;
+
+    request(options, function (err, response, body) {
+
+        if (response && response.statusCode === 401) {
+            window.location.href = '/'
+        } else {
+            callback(err, response, body);
+        }
+    });
+};
+
 const MultiSigABI = [ { "constant": true, "inputs": [ { "name": "", "type": "uint256" } ], "name": "owners", "outputs": [ { "name": "", "type": "address", "value": "0x1a243fb648e173bd8408d97e727f1ff694ba0d5c" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "dailySpent", "outputs": [ { "name": "", "type": "uint256", "value": "0" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "owner", "type": "address" } ], "name": "removeOwner", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [ { "name": "transactionId", "type": "uint256" } ], "name": "revokeConfirmation", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "address" } ], "name": "isOwner", "outputs": [ { "name": "", "type": "bool", "value": false } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "uint256" }, { "name": "", "type": "address" } ], "name": "confirmations", "outputs": [ { "name": "", "type": "bool", "value": false } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "ethDailyLimit", "outputs": [ { "name": "", "type": "uint256", "value": "1000000000000000000" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [ { "name": "pending", "type": "bool" }, { "name": "executed", "type": "bool" } ], "name": "getTransactionCount", "outputs": [ { "name": "count", "type": "uint256", "value": "0" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [ { "name": "transactionId", "type": "uint256" } ], "name": "getTransactionDescription", "outputs": [ { "name": "description", "type": "string", "value": "" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "lastDay", "outputs": [ { "name": "", "type": "uint256", "value": "17526" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "owner", "type": "address" } ], "name": "addOwner", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [ { "name": "transactionId", "type": "uint256" } ], "name": "isConfirmed", "outputs": [ { "name": "", "type": "bool", "value": false } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [ { "name": "transactionId", "type": "uint256" } ], "name": "getConfirmationCount", "outputs": [ { "name": "count", "type": "uint256", "value": "0" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "uint256" } ], "name": "transactions", "outputs": [ { "name": "destination", "type": "address", "value": "0x0000000000000000000000000000000000000000" }, { "name": "value", "type": "uint256", "value": "0" }, { "name": "data", "type": "bytes", "value": "0x" }, { "name": "description", "type": "string", "value": "" }, { "name": "executed", "type": "bool", "value": false } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "getOwners", "outputs": [ { "name": "", "type": "address[]", "value": [ "0x1a243fb648e173bd8408d97e727f1ff694ba0d5c", "0x722bb9880e2011f4fc462731c038ff4555bd4b45", "0x4b07b99da4be0ef707e1c868a75f389785f28ebb" ] } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [ { "name": "from", "type": "uint256" }, { "name": "to", "type": "uint256" }, { "name": "pending", "type": "bool" }, { "name": "executed", "type": "bool" } ], "name": "getTransactionIds", "outputs": [ { "name": "_transactionIds", "type": "uint256[]", "value": [] } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [ { "name": "transactionId", "type": "uint256" } ], "name": "getConfirmations", "outputs": [ { "name": "_confirmations", "type": "address[]", "value": [] } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "transactionCount", "outputs": [ { "name": "", "type": "uint256", "value": "0" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "_required", "type": "uint256" } ], "name": "changeRequirement", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [ { "name": "transactionId", "type": "uint256" } ], "name": "confirmTransaction", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "MAX_OWNER_COUNT", "outputs": [ { "name": "", "type": "uint256", "value": "10" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "required", "outputs": [ { "name": "", "type": "uint256", "value": "2" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "owner", "type": "address" }, { "name": "newOwner", "type": "address" } ], "name": "replaceOwner", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [ { "name": "destination", "type": "address" }, { "name": "value", "type": "uint256" }, { "name": "description", "type": "string" }, { "name": "data", "type": "bytes" } ], "name": "submitTransaction", "outputs": [ { "name": "transactionId", "type": "uint256" } ], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [ { "name": "transactionId", "type": "uint256" } ], "name": "executeTransaction", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [ { "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" } ], "name": "softEthTransfer", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "inputs": [ { "name": "_owners", "type": "address[]", "index": 0, "typeShort": "address", "bits": "[]", "displayName": "&thinsp;<span class=\"punctuation\">_</span>&thinsp;owners", "template": "elements_input_json", "value": [] }, { "name": "_required", "type": "uint256", "index": 1, "typeShort": "uint", "bits": "256", "displayName": "&thinsp;<span class=\"punctuation\">_</span>&thinsp;required", "template": "elements_input_uint", "value": "2" }, { "name": "_ethDailyLimit", "type": "uint256", "index": 2, "typeShort": "uint", "bits": "256", "displayName": "&thinsp;<span class=\"punctuation\">_</span>&thinsp;eth Daily Limit", "template": "elements_input_uint", "value": "1" } ], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "payable": true, "stateMutability": "payable", "type": "fallback" }, { "anonymous": false, "inputs": [ { "indexed": true, "name": "sender", "type": "address" }, { "indexed": true, "name": "transactionId", "type": "uint256" } ], "name": "Confirmation", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": true, "name": "sender", "type": "address" }, { "indexed": true, "name": "transactionId", "type": "uint256" } ], "name": "Revocation", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": true, "name": "transactionId", "type": "uint256" } ], "name": "Submission", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": true, "name": "transactionId", "type": "uint256" } ], "name": "Execution", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": true, "name": "transactionId", "type": "uint256" } ], "name": "ExecutionFailure", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": true, "name": "sender", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" } ], "name": "Deposit", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": true, "name": "owner", "type": "address" } ], "name": "OwnerAddition", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": true, "name": "owner", "type": "address" } ], "name": "OwnerRemoval", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": false, "name": "required", "type": "uint256" } ], "name": "RequirementChange", "type": "event" } ];
 const CrowdSaleABI = [ { "constant": true, "inputs": [], "name": "deadline", "outputs": [ { "name": "", "type": "uint256", "value": "1514409599" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "beneficiary", "outputs": [ { "name": "", "type": "address", "value": "0x0bb7d8331defc91494689db93cda8c325afe3077" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "tokenReward", "outputs": [ { "name": "", "type": "address", "value": "0xcd49a2c2fdb583647e48f61a2682864fa364d072" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "address" } ], "name": "balanceOf", "outputs": [ { "name": "", "type": "uint256", "value": "0" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "startTime", "outputs": [ { "name": "", "type": "uint256", "value": "1514323199" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "fundingGoal", "outputs": [ { "name": "", "type": "uint256", "value": "5000000000000000000" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "amountRaised", "outputs": [ { "name": "", "type": "uint256", "value": "0" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [], "name": "closeCrowdsale", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "price", "outputs": [ { "name": "", "type": "uint256", "value": "1200000000000000000" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "crowdsaleClosed", "outputs": [ { "name": "", "type": "bool", "value": false } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [], "name": "safeWithdrawal", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "inputs": [ { "name": "ifSuccessfulSendTo", "type": "address", "index": 0, "typeShort": "address", "bits": "", "displayName": "if Successful Send To", "template": "elements_input_address", "value": "0x0BB7D8331defC91494689dB93cDA8C325AFe3077" }, { "name": "fundingGoalInEthers", "type": "uint256", "index": 1, "typeShort": "uint", "bits": "256", "displayName": "funding Goal In Ethers", "template": "elements_input_uint", "value": "5" }, { "name": "startTimeInSeconds", "type": "uint256", "index": 2, "typeShort": "uint", "bits": "256", "displayName": "start Time In Seconds", "template": "elements_input_uint", "value": "1514323199" }, { "name": "durationInMinutes", "type": "uint256", "index": 3, "typeShort": "uint", "bits": "256", "displayName": "duration In Minutes", "template": "elements_input_uint", "value": "1440" }, { "name": "szaboCostOfEachToken", "type": "uint256", "index": 4, "typeShort": "uint", "bits": "256", "displayName": "szabo Cost Of Each Token", "template": "elements_input_uint", "value": "1200" }, { "name": "addressOfTokenUsedAsReward", "type": "address", "index": 5, "typeShort": "address", "bits": "", "displayName": "address Of Token Used As Reward", "template": "elements_input_address", "value": "" } ], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "payable": true, "stateMutability": "payable", "type": "fallback" }, { "anonymous": false, "inputs": [ { "indexed": false, "name": "recipient", "type": "address" }, { "indexed": false, "name": "totalAmountRaised", "type": "uint256" } ], "name": "GoalReached", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": false, "name": "backer", "type": "address" }, { "indexed": false, "name": "amount", "type": "uint256" }, { "indexed": false, "name": "isContribution", "type": "bool" } ], "name": "FundTransfer", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": false, "name": "totalAmountRaised", "type": "uint256" }, { "indexed": false, "name": "fundingGoalReached", "type": "bool" } ], "name": "CrowdsaleClose", "type": "event" } ]
