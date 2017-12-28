@@ -27,13 +27,13 @@ gulp.task('default', function () {
 });
 
 gulp.task('serve', function () {
-    runSequence('browserify', function (error) {
+    runSequence(['browserify','browserify-buy'], function (error) {
             browserSync({
                 server: {
                     baseDir: '.'
                 }
             });
-            gulp.watch(['./assets/js/app.js','./assets/js/mtc.js'], ['browserify', reload]);
+            gulp.watch(['./assets/js/app.js','./assets/js/mtc.js', './assets/js/buy.js'], ['browserify','browserify-buy', reload]);
             gulp.watch(['*.html', './confirm/*.html', './assets/js/main.js', paths.css], reload);
         }
     );
@@ -61,11 +61,20 @@ gulp.task('minify-css', function () {
 
 gulp.task('minify-js', function () {
     return pump([
-        gulp.src([paths.js, '!./assets/js/app.js']),
+        gulp.src([paths.js, '!./assets/js/app.js', '!./assets/js/buy.js', '!./assets/js/buy-bundle.js']),
         uglifyes(),
         concat('bundle.min.js'),
         gulp.dest(DEST + '/assets/js')
     ]);
+});
+
+gulp.task('minify-buy-js', function () {
+	return pump([
+		gulp.src('./assets/js/buy-bundle.js'),
+		uglifyes(),
+		concat('buy-bundle.min.js'),
+		gulp.dest(DEST + '/assets/js')
+	]);
 });
 
 gulp.task('minify-html', function () {
@@ -74,7 +83,8 @@ gulp.task('minify-html', function () {
         minhtml({collapseWhitespace: true}),
         htmlreplace({
             'css': 'assets/css/styles.min.css',
-            'js': 'assets/js/bundle.min.js'
+            'js': 'assets/js/bundle.min.js',
+	        'jsbuy': '/assets/js/buy-bundle.min.js'
         }),
         gulp.dest(DEST)
     ]);
@@ -135,14 +145,22 @@ gulp.task('config-copy', function () {
 
 gulp.task('browserify', function () {
     return gulp.src('./assets/js/app.js')
-        .pipe(sourcemaps.init({loadMaps: true}))
         .pipe(browserify({
             insertGlobals: true,
             debug: false
         }))
-        .pipe(sourcemaps.write('./'))
         .pipe(rename('main.js'))
         .pipe(gulp.dest('./assets/js'));
+});
+
+gulp.task('browserify-buy', function () {
+	return gulp.src('./assets/js/buy.js')
+	.pipe(browserify({
+		insertGlobals: true,
+		debug: false
+	}))
+	.pipe(rename('buy-bundle.js'))
+	.pipe(gulp.dest('./assets/js'));
 });
 
 gulp.task('copy-imgs', ['img-copy', 'img-team-copy', 'img-advisors-copy', 'img-fav-copy']);
@@ -154,7 +172,7 @@ gulp.task('clean', function () {
 });
 
 gulp.task('build', function (callback) {
-    runSequence('clean', 'browserify', 'minify-css', 'minify-js', 'minify-html', 'minify-html-c', 'other-files-copy', 'config-copy', 'copy-imgs', function (error) {
+    runSequence('clean', 'browserify', 'browserify-buy', 'minify-css', 'minify-js','minify-buy-js', 'minify-html', 'minify-html-c', 'other-files-copy', 'config-copy', 'copy-imgs', function (error) {
             if (error) {
                 console.log(error.message);
             } else {

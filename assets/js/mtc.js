@@ -37,7 +37,7 @@ $(document).ready(function () {
     var timerContainer = $('.timer-container');
     var currentDate = moment().tz("America/Mexico_City").format('Y-MM-D H:m');
     var sellStarts = moment.tz('2017-12-28 00:00', 'America/Mexico_City');
-    var sellEnds = moment.tz('2017-12-29 00:00', 'America/Mexico_City');
+    var sellEnds = moment.tz('2018-01-28 00:00', 'America/Mexico_City');
     var countdownDate = '';
     var args = '<span>Days<br/>%D</span>' + '<span>Hours<br/>%H</span>';
     if (currentDate < sellStarts._i) {
@@ -63,12 +63,4 @@ $(document).ready(function () {
         $($(this).data('show')).toggleClass('show');
     });
 
-    // buy steps
-    $('#buy-steps').carousel({
-      interval: false
-    });
-    $('#first-step-submit, #second-step-submit').click(function(e){
-        e.preventDefault();
-        $('#buy-steps').carousel('next');
-    });
 });
