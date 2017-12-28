@@ -47,7 +47,6 @@ const hideTextMessage = () => {
             document.getElementById("message").className.replace
             (/(?:^|\s)red(?!\S)/g, '');
     }
-
 };
 
 const hideBountyTextMessage = () => {
@@ -62,7 +61,6 @@ const hideBountyTextMessage = () => {
             document.getElementById("bountyMessage").className.replace
             (/(?:^|\s)red(?!\S)/g, '');
     }
-
 };
 
 const showTextMessage = (color, messsage) => {

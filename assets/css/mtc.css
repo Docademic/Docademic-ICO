@@ -523,30 +523,86 @@ footer #social li a {
 }
 
 /* buy section */
-#buy-section {
+.buy{
 	background: url(../img/triangule.png) no-repeat;
+    background-attachment: fixed;
 }
-
-#buy-steps {
-	max-width: 650px;
-	width: 100%;
-}
-
-#buy-steps .card {
+.card.no-border {
 	border: none;
 }
-
+#buy-section .input-container.checkbox{
+    height: auto;
+}
+#buy-section .separator{
+    background: #ccc;
+    display: block;
+    height: 1px;
+    width: 100%;
+}
 #buy-steps .card .card-header {
 	padding: 1em 0;
 }
-
 #buy-steps .card .card-header h3 {
 	margin: 0;
 }
-
 #notice-modal .img-container {
 	margin: 0 auto;
 	width: 80px;
+}
+
+#accordion .card-header{
+    padding: .5em;
+}
+#accordion h5 a{
+    color: #fff;
+}
+.transaction{
+    border: 1px solid #ccc;
+    height: 135px;
+    overflow-y: scroll;
+    padding: 0 .5em .5em;
+}
+#first-step.inactive{
+    opacity: 0;
+    height: 0;
+}
+.copy{
+    border: 1px solid #ccc;
+    padding: .5em;
+    position: relative;
+}
+.copy button{
+    background: #fff;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    font-size: 11px;
+    position: absolute;
+    right: -1px;
+    top: -1em;
+}
+.copy button.copied{
+    background: #0288d1;
+    color: #fff;
+    -webkit-transition: .5s;
+    -o-transition: .5s;
+    transition: .5s;
+}
+#second-step{
+    visibility: hidden;
+    height: 0;
+    opacity: 0;
+}
+#second-step.show{
+    visibility: visible;
+    height: auto;
+    opacity: 1;
+    -webkit-transition: .5s;
+    -o-transition: .5s;
+    transition: .5s;
+}
+.input-container.inline input{
+    margin-left: 1em;
+    width: calc(100% - 1em - 50px);
 }
 
 /* md */
