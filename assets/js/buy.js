@@ -123,7 +123,7 @@ window.addEventListener("load", function () {
         let web = new Web3(web3.currentProvider);
         if (web.eth.defaultAccount) {
             //buy.printHexData();
-            let buy = new Buy(web, true);
+            let buy = new Buy(web, false);
             buy.checkNetwork(ok => {
                 if (ok) {
                     showBuyModule(true, '');
