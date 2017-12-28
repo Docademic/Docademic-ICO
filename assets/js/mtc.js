@@ -47,7 +47,7 @@ $(document).ready(function () {
         sellCountdown(args);
     } else if (currentDate > sellStarts._i && currentDate < sellEnds._i) {
         timerContainer.addClass('selling');
-        $('#countdown .title').html('ICO selling:');
+        $('#countdown .title').html('ICO ends in:');
         countdownDate = sellEnds;
         sellCountdown(args);
     }
