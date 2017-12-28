@@ -64,11 +64,27 @@ $(document).ready(function () {
     });
 
     // buy steps
-    $('#buy-steps').carousel({
-      interval: false
+    var copy = $('.copy button');
+    copy.click(function(){
+        var copyText = $('.copy p');
+        copyText.select();
+        document.execCommand("Copy");
+        copy.addClass('copied').text('copied!');
     });
-    $('#first-step-submit, #second-step-submit').click(function(e){
-        e.preventDefault();
-        $('#buy-steps').carousel('next');
+
+    var fStep = $('#first-step')
+    $('#first-step-submit').click(function(){
+        var checkboxes = fStep.find('.input-container input');
+        var empty = false;
+        checkboxes.each(function(){
+            if(!$(this).is(":checked")){
+                empty = true;
+                return false;
+            }
+        });
+        if(empty !== true){
+            fStep.addClass('inactive');
+            $('#second-step').addClass('show');
+        }
     });
 });
