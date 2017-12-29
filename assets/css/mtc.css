@@ -517,12 +517,47 @@ footer #social li a {
 }
 
 /* advisors */
+.advisor{
+    overflow: hidden;
+    margin-top: 1em;
+}
 .advisor .img-container {
 	max-width: 120px;
 }
 
 .advisor .linkedin {
 	display: inline-block;
+}
+.advisor .description{
+    text-align: left;
+}
+@media screen and (min-width: 768px){
+    .advisor .description{
+        background: rgba(3, 79, 132, .8);
+        color: #fff;
+        height: 100%;
+        left: 0;
+        padding: 1em;
+        visibility: hidden;
+        position: absolute;
+        top: 0;
+        -webkit-transform: translateY(100%);
+        -ms-transform: translateY(100%);
+        -o-transform: translateY(100%);
+        transform: translateY(100%);
+        -webkit-transition: .5s;
+        -o-transition: .5s;
+        transition: .5s;
+        width: 100%;
+    }
+    .advisor:hover .description{
+        visibility: visible;
+        position: absolute;
+        -webkit-transform: translateY(0%);
+        -ms-transform: translateY(0%);
+        -o-transform: translateY(0%);
+        transform: translateY(0%);
+    }  
 }
 
 /* buy section */
@@ -606,6 +641,10 @@ footer #social li a {
 .input-container.inline input{
     margin-left: 1em;
     width: calc(100% - 1em - 50px);
+}
+
+#partners img{
+    margin-top: 1em;
 }
 
 /* md */
