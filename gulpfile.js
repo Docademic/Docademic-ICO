@@ -123,6 +123,13 @@ gulp.task('img-advisors-copy', function () {
 	]);
 });
 
+gulp.task('img-partners-copy', function () {
+    return pump([
+        gulp.src(paths.assetImgs + '/partners/*.png'),
+        gulp.dest(DEST + '/assets/img/partners')
+    ]);
+});
+
 gulp.task('img-fav-copy', function () {
     return pump([
         gulp.src([paths.assets + 'fav/*.png', paths.assets + 'fav/*.ico']),
@@ -163,7 +170,7 @@ gulp.task('browserify-buy', function () {
 	.pipe(gulp.dest('./assets/js'));
 });
 
-gulp.task('copy-imgs', ['img-copy', 'img-team-copy', 'img-advisors-copy', 'img-fav-copy']);
+gulp.task('copy-imgs', ['img-copy', 'img-team-copy', 'img-advisors-copy', 'img-fav-copy', 'img-partners-copy']);
 
 gulp.task('clean', function () {
     return del([
