@@ -35,11 +35,12 @@ $(document).ready(function () {
 
     // countdown timer
     var timerContainer = $('.timer-container');
-    var currentDate = moment().tz("America/Mexico_City").format('Y-MM-D H:m');
-    var sellStarts = moment.tz('2017-12-28 00:00', 'America/Mexico_City');
-    var sellEnds = moment.tz('2018-01-28 00:00', 'America/Mexico_City');
+    var currentDate = moment().tz("America/Mexico_City").format('Y-MM-DD H:mm');
+    var sellStarts = moment.tz('2018-01-29 00:00', 'America/Mexico_City');
+    var sellEnds = moment.tz('2018-02-10 00:00', 'America/Mexico_City');
     var countdownDate = '';
     var args = '<span>Days<br/>%D</span>' + '<span>Hours<br/>%H</span>';
+    console.log(currentDate, sellStarts._i);
     if (currentDate < sellStarts._i) {
         $('#countdown .title').html('ICO Launch in:');
         countdownDate = sellStarts;
