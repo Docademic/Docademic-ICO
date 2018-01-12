@@ -40,7 +40,6 @@ $(document).ready(function () {
     var sellEnds = moment.tz('2018-02-10 00:00', 'America/Mexico_City');
     var countdownDate = '';
     var args = '<span>Days<br/>%D</span>' + '<span>Hours<br/>%H</span>';
-    console.log(currentDate, sellStarts._i);
     if (currentDate < sellStarts._i) {
         $('#countdown .title').html('ICO Launch in:');
         countdownDate = sellStarts;
