@@ -497,7 +497,7 @@ footer {
 footer #social {
 	margin: 0 auto;
 	padding: 0;
-	width: 100px;
+	width: 150px;
 }
 
 footer #social li {
@@ -510,6 +510,9 @@ footer #social li a {
 	font-size: 24px;
 	text-align: center;
 	width: 50px;
+}
+footer #social li:last-child a{
+	padding: 0 13px;
 }
 
 .show-md-down {
