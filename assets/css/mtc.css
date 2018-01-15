@@ -36,9 +36,27 @@ h2 a{
 	transform: translateY(0);
 	visibility: visible;
 }
-
 .nav-link {
 	color: #034f84;
+}
+.navbar-toggler{
+	position: relative;
+}
+.navbar-toggler span{
+	background: #034f84;
+	height: 3px;
+	left: 0;
+	position: absolute;
+	width: 20px;
+}
+.navbar-toggler span:nth-child(1){
+	top: -7px;
+}
+.navbar-toggler span:nth-child(2){
+	top: 3px;
+}
+.navbar-toggler span:nth-child(3){
+	top: 12px;
 }
 
 /* home */
