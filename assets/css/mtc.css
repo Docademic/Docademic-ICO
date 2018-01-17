@@ -193,6 +193,14 @@ h2 a{
 	max-width: 100%;
 }
 
+/* the news */
+#the-news{
+	background: #A2ACB4;
+}
+#the-news img{
+	margin-top: 1em;
+}
+
 /* Healthcare */
 #docademic,
 #doctors {
