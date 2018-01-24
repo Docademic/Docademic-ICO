@@ -632,6 +632,7 @@ footer #social li:last-child a{
 #first-step.inactive{
     opacity: 0;
     height: 0;
+    visibility: hidden;
 }
 .copy{
     border: 1px solid #ccc;
@@ -674,6 +675,47 @@ footer #social li:last-child a{
 
 #partners img{
     margin-top: 1em;
+}
+
+#second-step .nav-link{
+	background: #fff;
+	border: 1px solid #ccc;
+	color: #3d464d;
+	text-align: left;
+}
+#second-step .nav-item{
+	margin-right: 1em;
+}
+#second-step .nav-link.active{
+	background: #f2f2f2;
+	border: 2px solid #0288d1;
+}
+#second-step .nav-item:last-child{
+	margin-right: 0;
+}
+#second-step .nav-link img{
+	display: block;
+	width: 24px;
+}
+
+
+/* util bar */
+#util-bar label{
+	margin-right: 1em;
+	width: auto;
+}
+#util-bar input{
+	display: inline;
+	margin-right: 1em;
+	width: 100px;
+}
+#util-bar img{
+	display: inline;
+	margin-right: 1em;
+	width: 30px;
+}
+#util-bar p{
+	width: 100%;
 }
 
 /* md */

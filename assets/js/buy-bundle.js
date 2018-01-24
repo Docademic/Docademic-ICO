@@ -11,9 +11,9 @@ const request = require('request');
 const Web3R = require('web3');
 const queryString = require('query-string');
 
-const tokenAddress = "0x383b31De249444711dAF30646A538c8F8fba0ed5";
-const multiSigAddress = "0xFD053b5447cB0625464E6E277005fE8aDF3c8469";
-const crowdSaleAddress = "0x64fbBc973043FAb02B41E133AB351193D5D2BFfd";
+const tokenAddress = "";
+const multiSigAddress = "";
+const crowdSaleAddress = "";
 const contributors = new Set();
 
 class Buy {
@@ -1033,7 +1033,7 @@ const CrowdSaleABI = [{
     "name": "CrowdsaleClose",
     "type": "event"
 }]
-}).call(this,require("b55mWE"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_460b0c8.js","/")
+}).call(this,require("b55mWE"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_5fa4f116.js","/")
 },{"b55mWE":130,"buffer":110,"query-string":189,"request":191,"web3":253}],2:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 ;(function () {
