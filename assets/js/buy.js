@@ -9,9 +9,9 @@ const request = require('request');
 const Web3R = require('web3');
 const queryString = require('query-string');
 
-const tokenAddress = "0x383b31De249444711dAF30646A538c8F8fba0ed5";
-const multiSigAddress = "0xFD053b5447cB0625464E6E277005fE8aDF3c8469";
-const crowdSaleAddress = "0x64fbBc973043FAb02B41E133AB351193D5D2BFfd";
+const tokenAddress = "";
+const multiSigAddress = "";
+const crowdSaleAddress = "";
 const contributors = new Set();
 
 class Buy {
