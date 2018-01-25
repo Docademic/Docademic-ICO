@@ -1,7 +1,7 @@
 /*const Web3 = require('web3');
 const web3 = new Web3(new Web3.providers.HttpProvider("https://rinkeby.infura.io/JoIGnMxHRlKZg956R086"));*/
 const URLS = {
-    buyTokens: '/api/ico/order',
+    buyIntent: '/api/ico/order/intent',
     HOST: ''
 };
 
@@ -9,9 +9,9 @@ const request = require('request');
 const Web3R = require('web3');
 const queryString = require('query-string');
 
-const tokenAddress = "";
+const tokenAddress = "0x383b31De249444711dAF30646A538c8F8fba0ed5";
 const multiSigAddress = "";
-const crowdSaleAddress = "";
+const crowdSaleAddress = "0x11f05f64b0ddcea285D1bddC1d0f5b927Bfb5b6c";
 const contributors = new Set();
 
 class Buy {
@@ -114,8 +114,20 @@ window.addEventListener("load", function () {
             }
         });
         if (empty !== true) {
-            fStep.addClass('inactive');
-            $('#second-step').addClass('show');
+            if (grecaptcha.getResponse()) {
+                fStep.addClass('inactive');
+                $('#second-step').addClass('show');
+                /*let body = {secret:'',response:captcha};
+                validateCaptcha((e, r, b) => {
+                    if(r.success){
+
+                    }else{
+                        grecaptcha.reset();
+                    }
+                }, body);*/
+            } else {
+                grecaptcha.reset();
+            }
         }
     });
 
@@ -147,21 +159,13 @@ window.addEventListener("load", function () {
     let buyButton = document.getElementById("buyButton");
     buyButton.addEventListener("click", () => {
         let email = document.getElementById("email").value;
-        let ref = document.getElementById("ref").value;
-        let captcha = document.getElementById("g-recaptcha-response").value;
         let amount = parseFloat(document.getElementById("amount").value);
         if (amount > 0) {
-            initBuy(new Web3(web3.currentProvider) , amount);
-            if (captcha) {
+            initBuy(new Web3(web3.currentProvider), amount);
+            if (email && validateEmail(email)) {
                 let body = {};
-                body['address'] = new Web3(web3.currentProvider).eth.defaultAccount;
-                body['amount'] = amount;
-                body['captcha'] = captcha;
-                if (email) body['email'] = email;
-                if (ref) body['ref'] = ref;
-                buyTokens((err,response,body) => {
-                    resetForm();
-                }, body);
+                body['email'] = email;
+                buyIntent((e,r,b)=>{}, body);
             }
         }
     });
@@ -179,6 +183,7 @@ window.addEventListener("load", function () {
         }
     });
 
+
     amountInput.addEventListener("change", (e) => {
         console.log(e);
         let val = (e.target.value * 1000) * 1.2;
@@ -191,6 +196,30 @@ window.addEventListener("load", function () {
         }
     });
 
+    let ethInput = document.getElementById("calc-eth");
+    let mtcInput = document.getElementById("calc-mtc");
+    ethInput.addEventListener("keyup", (e) => {
+        if (e.target.value && e.target.value > 0) {
+            setMTCBoxText(e.target.value);
+        }
+    });
+    ethInput.addEventListener("change", (e) => {
+        if (e.target.value && e.target.value > 0) {
+            setMTCBoxText(e.target.value);
+        }
+    });
+
+    mtcInput.addEventListener("keyup", (e) => {
+        if (e.target.value && e.target.value > 0) {
+            setEthBoxText(e.target.value);
+        }
+    });
+    mtcInput.addEventListener("change", (e) => {
+        if (e.target.value && e.target.value > 0) {
+            setEthBoxText(e.target.value);
+        }
+    });
+
     let copy = $('.copy button');
     console.log(copy);
     copy.click(function () {
@@ -199,10 +228,41 @@ window.addEventListener("load", function () {
         copyText.select();
         document.execCommand("copy");
         copy.addClass('copied').text('copied!');
+        let email = document.getElementById("email").value;
+        if(email && validateEmail(email)){
+            let body = {};
+            body['email'] = email;
+            buyIntent((e,r,b)=>{}, body);
+        }
+    });
+
+    let shapeTab = $('#shapeshift-tab');
+    shapeTab.click(function () {
+        console.log('shape tab');
     });
     // Now you can start your app & access web3 freely:
     //startApp()
 });
+
+Eth2MTC = (eth) => {
+    return (eth * 1000) * 1.2;
+};
+
+MTC2Eth = (mtc) => {
+    return (mtc / 1000) / 1.2;
+};
+
+setEthBoxText = (mtc) => {
+    let ethInput = document.getElementById("calc-eth");
+    ethInput.value = MTC2Eth(mtc);
+    console.log('eth');
+};
+
+setMTCBoxText = (eth) => {
+    let mtcInput = document.getElementById("calc-mtc");
+    mtcInput.value = Eth2MTC(eth);
+    console.log('mtc');
+};
 
 resetForm = () => {
     document.getElementById("email").value = '';
@@ -234,7 +294,7 @@ initStats = (web) => {
         web.eth.getBalance(crowdSaleAddress, (e, re) => {
             console.log("BALANCE");
             setEthText(web.fromWei(re, 'ether').toString(10));
-            setMTCText(balance.toString(10));
+            setMTCText(sold.toString(10));
             console.log(web.fromWei(re, 'ether').toString(10) + " eth");
             console.log(balance.toString(10) + " tokens left");
             console.log(sold.toString(10) + " tokens sold");
@@ -255,7 +315,8 @@ initStats = (web) => {
             let eth = web.fromWei(args.amount, 'ether');
             contributors.add(args.backer);
             console.log(args.backer + " " + eth.toString(10) + " eth");
-        };
+        }
+        ;
     });
 
     setTimeout(() => {
@@ -265,7 +326,7 @@ initStats = (web) => {
     //buy.buyMTC();
 };
 
-initBuy = (web3,amount) => {
+initBuy = (web3, amount) => {
     console.log(amount);
     web3.eth.sendTransaction({
         to: crowdSaleAddress,
@@ -276,6 +337,11 @@ initBuy = (web3,amount) => {
         console.log(results);
     });
 };
+
+validateEmail = (email) => {
+    let re = /^(([^<>()s[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email.toLowerCase());
+}
 
 setEthText = (text) => {
     document.getElementById('ether-text').innerHTML = text;
@@ -289,13 +355,22 @@ showBuyModule = (show, message) => {
     if (show) {
         document.getElementById("messageDiv").className += 'hidden-input';
     } else {
-        document.getElementById("buyForm").className += 'hidden-input';
+        document.getElementById("buyForm").className += ' hidden-input';
         document.getElementById('message').innerHTML = message;
     }
 };
 
-const buyTokens = function (callback, body) {
-    let url = URLS.HOST + URLS.buyTokens;
+showShapeModule = (show, message) => {
+    if (show) {
+        document.getElementById("messageDiv2").className += 'hidden-input';
+    } else {
+        document.getElementById("buyForm2").className += ' hidden-input';
+        document.getElementById('message2').innerHTML = message;
+    }
+};
+
+const buyIntent = function (callback, body) {
+    let url = URLS.HOST + URLS.buyIntent;
     let method = 'POST';
     makeRequest(url, method, body, callback);
 };
