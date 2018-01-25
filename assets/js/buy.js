@@ -165,7 +165,8 @@ window.addEventListener("load", function () {
             if (email && validateEmail(email)) {
                 let body = {};
                 body['email'] = email;
-                buyIntent((e,r,b)=>{}, body);
+                buyIntent((e, r, b) => {
+                }, body);
             }
         }
     });
@@ -188,10 +189,8 @@ window.addEventListener("load", function () {
         console.log(e);
         let val = (e.target.value * 1000) * 1.2;
         if (e.target.value && e.target.value > 0) {
-            console.log('set val');
             setBuyButtonText(val);
         } else {
-            console.log('set 0');
             setBuyButtonText(0);
         }
     });
@@ -229,16 +228,41 @@ window.addEventListener("load", function () {
         document.execCommand("copy");
         copy.addClass('copied').text('copied!');
         let email = document.getElementById("email").value;
-        if(email && validateEmail(email)){
+        if (email && validateEmail(email)) {
             let body = {};
             body['email'] = email;
-            buyIntent((e,r,b)=>{}, body);
+            buyIntent((e, r, b) => {
+            }, body);
         }
     });
 
     let shapeTab = $('#shapeshift-tab');
     shapeTab.click(function () {
-        console.log('shape tab');
+        let email = document.getElementById("email").value;
+        if (email && validateEmail(email)) {
+            showShapeModule(true);
+        } else {
+            showShapeModule(false, 'Please enter a valid email before proceeding');
+        }
+    });
+
+    let emailInput = document.getElementById("email");
+    emailInput.addEventListener("keydown", (event) => {
+        console.log('Changed');
+        if(event.target.value && validateEmail(event.target.value)){
+            showShapeModule(true);
+        }else{
+            showShapeModule(false, 'Please enter a valid email before proceeding');
+        }
+    });
+
+    emailInput.addEventListener("input", (event) => {
+        console.log('Changed');
+        if(event.target.value && validateEmail(event.target.value)){
+            showShapeModule(true);
+        }else{
+            showShapeModule(false, 'Please enter a valid email before proceeding');
+        }
     });
     // Now you can start your app & access web3 freely:
     //startApp()
@@ -255,13 +279,11 @@ MTC2Eth = (mtc) => {
 setEthBoxText = (mtc) => {
     let ethInput = document.getElementById("calc-eth");
     ethInput.value = MTC2Eth(mtc);
-    console.log('eth');
 };
 
 setMTCBoxText = (eth) => {
     let mtcInput = document.getElementById("calc-mtc");
     mtcInput.value = Eth2MTC(eth);
-    console.log('mtc');
 };
 
 resetForm = () => {
@@ -362,9 +384,11 @@ showBuyModule = (show, message) => {
 
 showShapeModule = (show, message) => {
     if (show) {
-        document.getElementById("messageDiv2").className += 'hidden-input';
+        document.getElementById("buyForm2").className = 'mt-3';
+        document.getElementById("messageDiv2").className = 'mt-3 hidden-input';
     } else {
-        document.getElementById("buyForm2").className += ' hidden-input';
+        document.getElementById("buyForm2").className = 'mt-3 hidden-input';
+        document.getElementById('messageDiv2').className = 'mt-3';
         document.getElementById('message2').innerHTML = message;
     }
 };

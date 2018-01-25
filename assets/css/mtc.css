@@ -182,6 +182,35 @@ h2 a{
 	transition: .5s;
 }
 
+#second-step #message,
+#second-step #message2{
+	height: 0;
+	overflow-y: hidden;
+	padding-left: 1em;
+	padding-right: 1em;
+}
+
+#second-step #message.green,
+#second-step #message2.green,
+#second-step #message.red,
+#second-step #message2.red {
+	height: 42px;
+	color: #fff;
+	margin-top: 1em;
+	padding-bottom: .5em;
+	padding-top: .5em;
+	-webkit-transition: .5s;
+	-moz-transition: .5s;
+	-ms-transition: .5s;
+	-o-transition: .5s;
+	transition: .5s;
+}
+
+#second-step #message p ,
+#second-step #message2 p {
+	width: 100%;
+}
+
 .hidden-input {
 	height: 0;
 	overflow-y: hidden;
