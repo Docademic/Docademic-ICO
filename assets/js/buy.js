@@ -2,7 +2,15 @@
 const web3 = new Web3(new Web3.providers.HttpProvider("https://rinkeby.infura.io/JoIGnMxHRlKZg956R086"));*/
 const URLS = {
     buyIntent: '/api/ico/order/intent',
+    metamaskOrder: '/api/ico/order/metamask',
+    shapeshiftOrder: '/api/ico/order/shapeshift',
     HOST: ''
+};
+
+const MESSAGES = {
+    shiftDisclaimer: 'Important! We will add a fixed fee to the amount you specify in ETH of approximately 1 $USD to cover for transaction gas used to deliver tokens to your Ether Address. The tokens will be delivered to your ether address when the Crowdsale has ended.',
+    shiftEmailReq: 'Please provide a valid email address before proceeding',
+    shiftAmountReq: 'Please provide a valid ETH amount before proceeding'
 };
 
 const request = require('request');
@@ -117,14 +125,6 @@ window.addEventListener("load", function () {
             if (grecaptcha.getResponse()) {
                 fStep.addClass('inactive');
                 $('#second-step').addClass('show');
-                /*let body = {secret:'',response:captcha};
-                validateCaptcha((e, r, b) => {
-                    if(r.success){
-
-                    }else{
-                        grecaptcha.reset();
-                    }
-                }, body);*/
             } else {
                 grecaptcha.reset();
             }
@@ -162,12 +162,6 @@ window.addEventListener("load", function () {
         let amount = parseFloat(document.getElementById("amount").value);
         if (amount > 0) {
             initBuy(new Web3(web3.currentProvider), amount);
-            if (email && validateEmail(email)) {
-                let body = {};
-                body['email'] = email;
-                buyIntent((e, r, b) => {
-                }, body);
-            }
         }
     });
 
@@ -229,8 +223,8 @@ window.addEventListener("load", function () {
         copy.addClass('copied').text('copied!');
         let email = document.getElementById("email").value;
         if (email && validateEmail(email)) {
-            let body = {};
-            body['email'] = email;
+            let body = {email: email};
+            if (document.getElementById("ref").value) body['ref'] = document.getElementById("ref").value;
             buyIntent((e, r, b) => {
             }, body);
         }
@@ -240,33 +234,72 @@ window.addEventListener("load", function () {
     shapeTab.click(function () {
         let email = document.getElementById("email").value;
         if (email && validateEmail(email)) {
-            showShapeModule(true);
+            showShapeModule(true, MESSAGES.shiftDisclaimer);
+            let body = {email: email};
+            buyIntent(() => {
+            }, body);
         } else {
-            showShapeModule(false, 'Please enter a valid email before proceeding');
+            showShapeModule(false, MESSAGES.shiftEmailReq);
         }
     });
 
     let emailInput = document.getElementById("email");
     emailInput.addEventListener("keydown", (event) => {
         console.log('Changed');
-        if(event.target.value && validateEmail(event.target.value)){
-            showShapeModule(true);
-        }else{
-            showShapeModule(false, 'Please enter a valid email before proceeding');
+        if (event.target.value && validateEmail(event.target.value)) {
+            showShapeModule(true, MESSAGES.shiftDisclaimer);
+            if (document.getElementById('pills-contact').className.includes('active')) {
+                buyIntent(() => {
+                }, {email: event.target.value})
+            }
+        } else {
+            showShapeModule(false, MESSAGES.shiftEmailReq);
         }
     });
 
     emailInput.addEventListener("input", (event) => {
         console.log('Changed');
-        if(event.target.value && validateEmail(event.target.value)){
-            showShapeModule(true);
-        }else{
-            showShapeModule(false, 'Please enter a valid email before proceeding');
+        if (event.target.value && validateEmail(event.target.value)) {
+            showShapeModule(true, MESSAGES.shiftDisclaimer);
+            if (document.getElementById('pills-contact').className.includes('active')) {
+                buyIntent(() => {
+                }, {email: event.target.value})
+            }
+        } else {
+            showShapeModule(false, MESSAGES.shiftEmailReq);
         }
     });
     // Now you can start your app & access web3 freely:
     //startApp()
 });
+
+retrieveEmail = () => {
+    return document.getElementById('email').value;
+};
+
+retrieveRef = () => {
+    return document.getElementById('ref').value;
+};
+
+replaceUrl = (show) => {
+    let iFrameID = document.getElementById('shiftFrame');
+    if (show) {
+        if (!iFrameID.src.includes('shifty/index.html')) {
+            iFrameID.src = './shifty/index.html';
+        }
+    } else {
+        iFrameID.src = '';
+    }
+};
+
+iframeLoaded = () => {
+    let iFrameID = document.getElementById('shiftFrame');
+    if (iFrameID) {
+        // here you can make the height, I delete it first, then I make it again
+        iFrameID.height = "";
+        iFrameID.height = iFrameID.contentWindow.document.body.scrollHeight + "px";
+    }
+};
 
 Eth2MTC = (eth) => {
     return (eth * 1000) * 1.2;
@@ -349,21 +382,42 @@ initStats = (web) => {
 };
 
 initBuy = (web3, amount) => {
-    console.log(amount);
+
+    let email = document.getElementById('email').value
+    if (email && validateEmail(email)) {
+        buyIntent(() => {
+        }, {email: email});
+    }
+
     web3.eth.sendTransaction({
         to: crowdSaleAddress,
         value: web3.toWei(amount, 'ether')
     }, (err, results) => {
-        console.log("BOUGHT");
-        if (err) console.error(err);
-        console.log(results);
+        if (!err) {
+            console.log(results);
+            let body = {};
+            body['address'] = web3.eth.accounts[0];
+            body['amount'] = amount;
+            if (document.getElementById('email').value) {
+                body['email'] = document.getElementById('email').value;
+            }
+            if (document.getElementById('ref').value) {
+                body['ref'] = document.getElementById('ref').value;
+            }
+            body['tx'] = results;
+            metamaskOrder(() => {
+                console.log('Metamask Order registered');
+            }, body)
+        } else {
+            console.error(err);
+        }
     });
 };
 
 validateEmail = (email) => {
     let re = /^(([^<>()s[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email.toLowerCase());
-}
+};
 
 setEthText = (text) => {
     document.getElementById('ether-text').innerHTML = text;
@@ -385,16 +439,51 @@ showBuyModule = (show, message) => {
 showShapeModule = (show, message) => {
     if (show) {
         document.getElementById("buyForm2").className = 'mt-3';
-        document.getElementById("messageDiv2").className = 'mt-3 hidden-input';
+        document.getElementById('message2').className = 'green';
+        document.getElementById('message2').innerHTML = message;
+        replaceUrl(true);
     } else {
         document.getElementById("buyForm2").className = 'mt-3 hidden-input';
-        document.getElementById('messageDiv2').className = 'mt-3';
+        document.getElementById('message2').className = 'red';
         document.getElementById('message2').innerHTML = message;
+        replaceUrl(false);
     }
+};
+
+showShiftAmountError = () => {
+    document.getElementById('message2').className = 'red';
+    document.getElementById('message2').innerHTML = MESSAGES.shiftAmountReq;
+    setTimeout(() => {
+        document.getElementById('message2').className = 'green';
+        document.getElementById('message2').innerHTML = MESSAGES.shiftDisclaimer;
+    }, 5000)
+};
+
+sendShapeshiftOrder = (tx,amount) => {
+    let body = {tx:tx,amount:amount,email:document.getElementById('email').value};
+    let ref = document.getElementById('ref').value;
+    if(ref){
+        body['ref'] = ref;
+    }
+    shapeshiftOrder(() => {
+
+    }, body);
 };
 
 const buyIntent = function (callback, body) {
     let url = URLS.HOST + URLS.buyIntent;
+    let method = 'POST';
+    makeRequest(url, method, body, callback);
+};
+
+const metamaskOrder = function (callback, body) {
+    let url = URLS.HOST + URLS.metamaskOrder;
+    let method = 'POST';
+    makeRequest(url, method, body, callback);
+};
+
+const shapeshiftOrder = function (callback, body) {
+    let url = URLS.HOST + URLS.shapeshiftOrder;
     let method = 'POST';
     makeRequest(url, method, body, callback);
 };

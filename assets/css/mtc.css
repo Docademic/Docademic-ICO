@@ -82,6 +82,11 @@ h2 a{
 	background-size: cover;
 }
 
+#buyForm2 iframe {
+    border: none;
+    width:100%;
+}
+
 .logo-container {
 	max-width: 240px;
 }
@@ -194,7 +199,7 @@ h2 a{
 #second-step #message2.green,
 #second-step #message.red,
 #second-step #message2.red {
-	height: 42px;
+	height: auto;
 	color: #fff;
 	margin-top: 1em;
 	padding-bottom: .5em;
@@ -626,6 +631,11 @@ footer #social li:last-child a{
 .card.no-border {
 	border: none;
 }
+
+#buy-section {
+    margin-bottom: 70px;
+}
+
 #buy-section .input-container.checkbox{
     height: auto;
 }

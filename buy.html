@@ -116,14 +116,14 @@
                             </form>
                         </div>
                         <div id="second-step" class="show">
-                            <div class="">
-                                <div >
-                                    <div class="input-container" style="width: 100%">
-                                        <label for="">
-                                            Email
-                                        </label>
-                                        <input placeholder="Optional unless you use Shapeshift" id="email" type="email">
-                                    </div>
+                            <div class="row">
+                                <div class="mt-3 col-md-7">
+                                    <label for="">Email</label>
+                                    <input id="email" placeholder="Optional unless you use Shapeshift" type="email">
+                                </div>
+                                <div class="mt-3 col-md-5">
+                                    <label for="">Referral Code</label>
+                                    <input id="ref" placeholder="Optional" type="text">
                                 </div>
                             </div>
                             <span class="separator mt-4"></span>
@@ -198,13 +198,14 @@
                                 </div>
                                 <div class="tab-pane fade" id="pills-contact" role="tabpanel"
                                      aria-labelledby="pills-contact-tab">
-                                    <div id="buyForm2" class="mt-3">
-                                        <span>Qiubole</span>
-                                    </div>
                                     <div class="mt-3">
                                         <div id="messageDiv2" class="">
                                             <p id="message2" class="red"></p>
                                         </div>
+                                    </div>
+                                    <div id="buyForm2" class="mt-3">
+                                        <iframe id="shiftFrame" onload="iframeLoaded()"
+                                                src=""></iframe>
                                     </div>
                                 </div>
                             </div>
