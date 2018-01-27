@@ -216,6 +216,31 @@ h2 a{
 	width: 100%;
 }
 
+#shiftcontainer #message{
+	height: 0;
+	overflow-y: hidden;
+	padding-left: 1em;
+	padding-right: 1em;
+}
+
+#shiftcontainer #message.green,
+#shiftcontainer #message.red {
+	height: auto;
+	color: #fff;
+	margin-top: 1em;
+	padding-bottom: .5em;
+	padding-top: .5em;
+	-webkit-transition: .5s;
+	-moz-transition: .5s;
+	-ms-transition: .5s;
+	-o-transition: .5s;
+	transition: .5s;
+}
+
+#shiftcontainer #message p {
+	width: 100%;
+}
+
 .hidden-input {
 	height: 0;
 	overflow-y: hidden;

@@ -8,7 +8,7 @@ const URLS = {
 };
 
 const MESSAGES = {
-    shiftDisclaimer: 'Important! We will add a fixed fee of approximately 1 $USD, to the amount you specify in ETH to cover for transaction gas used to deliver tokens to your Ether Address. The tokens will be delivered to your ether address when the Crowdsale has ended.',
+    shiftDisclaimer: 'Important! We will add a fixed fee of 0.001 ETH (approximately 1 $USD) to the amount you specify in ETH to cover transaction gas used to deliver tokens to your Ether Address. We Recommend you provide a Return Address in case the ShapeShift transaction fails, this is NOT the address where you will receive your tokens. After your purchase you will receive an email from ShapeShift with your receipt and an email from Docademic with instructions to complete your purchase, so please make sure you have access to the email address you provided. Your tokens will be delivered to your ether address when the Crowdsale has ended.',
     shiftEmailReq: 'Please provide a valid email address before proceeding',
     shiftAmountReq: 'Please provide a valid ETH amount before proceeding'
 };
@@ -18,8 +18,8 @@ const Web3R = require('web3');
 const queryString = require('query-string');
 
 const tokenAddress = "0x383b31De249444711dAF30646A538c8F8fba0ed5";
-const multiSigAddress = "";
-const crowdSaleAddress = "0x11f05f64b0ddcea285D1bddC1d0f5b927Bfb5b6c";
+const multiSigAddress = "0xFD053b5447cB0625464E6E277005fE8aDF3c8469";
+const crowdSaleAddress = "0x1A243Fb648E173BD8408D97e727F1fF694BA0D5c";
 const contributors = new Set();
 
 class Buy {
@@ -28,7 +28,6 @@ class Buy {
         this.test = test;
         this.web3 = web3;
         let version = web3.version.api;
-        console.log(version); // "0.2.0"
         this.TokenContract = this.web3.eth.contract(TokenABI);
         this.token = this.TokenContract.at(tokenAddress);
         this.MultiSigContract = this.web3.eth.contract(MultiSigABI);
@@ -64,7 +63,6 @@ class Buy {
     }
 
     watchCrowdSaleFound(cb) {
-        console.log(this.crowdSale);
         let event = this.crowdSale.FundTransfer({}, {fromBlock: 0, toBlock: 'latest'});
         event.watch(function (error, result) {
             cb(error, result);
@@ -153,7 +151,6 @@ window.addEventListener("load", function () {
     }
 
     let web3RI = new Web3R(new Web3R.providers.HttpProvider("https://mainnet.infura.io/JoIGnMxHRlKZg956R086"));
-    console.log(web3RI);
     initStats(web3RI);
 
     let buyButton = document.getElementById("buyButton");
@@ -167,20 +164,16 @@ window.addEventListener("load", function () {
 
     let amountInput = document.getElementById("amount");
     amountInput.addEventListener("keyup", (e) => {
-        console.log(e);
         let val = (e.target.value * 1000) * 1.2;
         if (e.target.value && e.target.value > 0) {
-            console.log('set val');
             setBuyButtonText(val);
         } else {
-            console.log('set 0');
             setBuyButtonText(0);
         }
     });
 
 
     amountInput.addEventListener("change", (e) => {
-        console.log(e);
         let val = (e.target.value * 1000) * 1.2;
         if (e.target.value && e.target.value > 0) {
             setBuyButtonText(val);
@@ -214,9 +207,7 @@ window.addEventListener("load", function () {
     });
 
     let copy = $('.copy button');
-    console.log(copy);
     copy.click(function () {
-        console.log('copy click');
         let copyText = $('.copy input');
         copyText.select();
         document.execCommand("copy");
@@ -245,7 +236,6 @@ window.addEventListener("load", function () {
 
     let emailInput = document.getElementById("email");
     emailInput.addEventListener("keydown", (event) => {
-        console.log('Changed');
         if (event.target.value && validateEmail(event.target.value)) {
             showShapeModule(true, MESSAGES.shiftDisclaimer);
             if (document.getElementById('pills-contact').className.includes('active')) {
@@ -258,7 +248,6 @@ window.addEventListener("load", function () {
     });
 
     emailInput.addEventListener("input", (event) => {
-        console.log('Changed');
         if (event.target.value && validateEmail(event.target.value)) {
             showShapeModule(true, MESSAGES.shiftDisclaimer);
             if (document.getElementById('pills-contact').className.includes('active')) {
@@ -347,12 +336,11 @@ initStats = (web) => {
         let initialSupply = web.toBigNumber(150000000);
         let sold = initialSupply.sub(balance);
         web.eth.getBalance(crowdSaleAddress, (e, re) => {
-            console.log("BALANCE");
             setEthText(web.fromWei(re, 'ether').toString(10));
             setMTCText(sold.toString(10));
-            console.log(web.fromWei(re, 'ether').toString(10) + " eth");
-            console.log(balance.toString(10) + " tokens left");
-            console.log(sold.toString(10) + " tokens sold");
+            //console.log(web.fromWei(re, 'ether').toString(10) + " eth");
+            //console.log(balance.toString(10) + " tokens left");
+            //console.log(sold.toString(10) + " tokens sold");
         });
 
     });
@@ -362,22 +350,16 @@ initStats = (web) => {
         console.log(results);
     })*/
     buy.watchCrowdSaleFound((err, results) => {
-        console.log("Found");
         if (err) {
             console.error(err)
         } else {
             let args = results.args;
             let eth = web.fromWei(args.amount, 'ether');
             contributors.add(args.backer);
-            console.log(args.backer + " " + eth.toString(10) + " eth");
+            //console.log(args.backer + " " + eth.toString(10) + " eth");
         }
         ;
     });
-
-    setTimeout(() => {
-        console.log("Contributors");
-        console.log(contributors);
-    }, 5000)
     //buy.buyMTC();
 };
 
@@ -394,7 +376,6 @@ initBuy = (web3, amount) => {
         value: web3.toWei(amount, 'ether')
     }, (err, results) => {
         if (!err) {
-            console.log(results);
             let body = {};
             body['address'] = web3.eth.accounts[0];
             body['amount'] = amount;
@@ -406,7 +387,6 @@ initBuy = (web3, amount) => {
             }
             body['tx'] = results;
             metamaskOrder(() => {
-                console.log('Metamask Order registered');
             }, body)
         } else {
             console.error(err);

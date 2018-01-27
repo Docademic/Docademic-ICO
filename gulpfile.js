@@ -27,13 +27,13 @@ gulp.task('default', function () {
 });
 
 gulp.task('serve', function () {
-    runSequence(['browserify','browserify-buy'], function (error) {
+    runSequence(['browserify', 'browserify-buy', 'browserify-shape'], function (error) {
             browserSync({
                 server: {
                     baseDir: '.'
                 }
             });
-            gulp.watch(['./assets/js/app.js','./assets/js/mtc.js', './assets/js/buy.js'], ['browserify','browserify-buy', reload]);
+            gulp.watch(['./assets/js/app.js', './assets/js/mtc.js', './assets/js/buy.js', './assets/js/shape.js'], ['browserify', 'browserify-buy', 'browserify-shape', reload]);
             gulp.watch(['*.html', './confirm/*.html', './assets/js/main.js', paths.css], reload);
         }
     );
@@ -61,7 +61,7 @@ gulp.task('minify-css', function () {
 
 gulp.task('minify-js', function () {
     return pump([
-        gulp.src([paths.js, '!./assets/js/app.js', '!./assets/js/buy.js', '!./assets/js/buy-bundle.js']),
+        gulp.src([paths.js, '!./assets/js/app.js', '!./assets/js/buy.js', '!./assets/js/buy-bundle.js', '!./assets/js/shape.js', '!./assets/js/shape-bundle.js']),
         uglifyes(),
         concat('bundle.min.js'),
         gulp.dest(DEST + '/assets/js')
@@ -69,12 +69,21 @@ gulp.task('minify-js', function () {
 });
 
 gulp.task('minify-buy-js', function () {
-	return pump([
-		gulp.src('./assets/js/buy-bundle.js'),
-		uglifyes(),
-		concat('buy-bundle.min.js'),
-		gulp.dest(DEST + '/assets/js')
-	]);
+    return pump([
+        gulp.src('./assets/js/buy-bundle.js'),
+        uglifyes(),
+        concat('buy-bundle.min.js'),
+        gulp.dest(DEST + '/assets/js')
+    ]);
+});
+
+gulp.task('minify-shape-js', function () {
+    return pump([
+        gulp.src('./assets/js/shape-bundle.js'),
+        uglifyes(),
+        concat('shape-bundle.min.js'),
+        gulp.dest(DEST + '/assets/js')
+    ]);
 });
 
 gulp.task('minify-html', function () {
@@ -84,7 +93,8 @@ gulp.task('minify-html', function () {
         htmlreplace({
             'css': 'assets/css/styles.min.css',
             'js': 'assets/js/bundle.min.js',
-	        'jsbuy': '/assets/js/buy-bundle.min.js'
+            'jsbuy': '/assets/js/buy-bundle.min.js',
+            'jsshape': '/assets/js/shape-bundle.min.js'
         }),
         gulp.dest(DEST)
     ]);
@@ -102,6 +112,10 @@ gulp.task('minify-html-c', function () {
     ]);
 });
 
+gulp.task('shifty-copy', function () {
+    return gulp.src(['shifty/**/*']).pipe(gulp.dest(DEST+'shifty'));
+});
+
 gulp.task('img-copy', function () {
     return pump([
         gulp.src(paths.assetImgs + '/*.png'),
@@ -117,10 +131,10 @@ gulp.task('img-team-copy', function () {
 });
 
 gulp.task('img-advisors-copy', function () {
-	return pump([
-		gulp.src(paths.assetImgs + '/advisors/*.png'),
-		gulp.dest(DEST + '/assets/img/advisors')
-	]);
+    return pump([
+        gulp.src(paths.assetImgs + '/advisors/*.png'),
+        gulp.dest(DEST + '/assets/img/advisors')
+    ]);
 });
 
 gulp.task('img-partners-copy', function () {
@@ -161,13 +175,23 @@ gulp.task('browserify', function () {
 });
 
 gulp.task('browserify-buy', function () {
-	return gulp.src('./assets/js/buy.js')
-	.pipe(browserify({
-		insertGlobals: true,
-		debug: false
-	}))
-	.pipe(rename('buy-bundle.js'))
-	.pipe(gulp.dest('./assets/js'));
+    return gulp.src('./assets/js/buy.js')
+        .pipe(browserify({
+            insertGlobals: true,
+            debug: false
+        }))
+        .pipe(rename('buy-bundle.js'))
+        .pipe(gulp.dest('./assets/js'));
+});
+
+gulp.task('browserify-shape', function () {
+    return gulp.src('./assets/js/shape.js')
+        .pipe(browserify({
+            insertGlobals: true,
+            debug: false
+        }))
+        .pipe(rename('shape-bundle.js'))
+        .pipe(gulp.dest('./assets/js'));
 });
 
 gulp.task('copy-imgs', ['img-copy', 'img-team-copy', 'img-advisors-copy', 'img-fav-copy', 'img-partners-copy']);
@@ -179,7 +203,7 @@ gulp.task('clean', function () {
 });
 
 gulp.task('build', function (callback) {
-    runSequence('clean', 'browserify', 'browserify-buy', 'minify-css', 'minify-js','minify-buy-js', 'minify-html', 'minify-html-c', 'other-files-copy', 'config-copy', 'copy-imgs', function (error) {
+    runSequence('clean', 'browserify', 'browserify-buy', 'browserify-shape', 'minify-css', 'minify-js', 'minify-buy-js', 'minify-shape-js', 'minify-html', 'minify-html-c', 'other-files-copy', 'shifty-copy', 'config-copy', 'copy-imgs', function (error) {
             if (error) {
                 console.log(error.message);
             } else {

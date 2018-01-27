@@ -169,8 +169,9 @@ jQuery( document ).ready(function( $ ) {
                 }
                 var btc_deposit_limit = response.limit;
                 altcoin_deposit_limit = parseFloat(btc_deposit_limit).toFixed(4);
-                console.log("got rate for pair " + pair + " as " + rate + ", and btc_dep_limit : " + btc_deposit_limit)
+                console.log("got rate for pair " + pair + " as " + rate + ", and btc_dep_limit : " + btc_deposit_limit);
                 $(".deposit-limit p").text(altcoin_deposit_limit + " " + altcoin_symbol.toUpperCase());
+                $('#return-address').attr('placeholder',altcoin_symbol.toUpperCase()+' Return Address (recommended)');
                 $(".min-limit p").text(response.min + " " + altcoin_symbol.toUpperCase());
 	            if(altcoin_symbol.toUpperCase() == "BTC") {
 		            $('.depo-max').show();
@@ -510,9 +511,6 @@ jQuery( document ).ready(function( $ ) {
 
     function loadCoins() {
         getCoins(function () {
-            console.log('*************************');
-            console.log('LOAD COINS');
-            console.log('*************************');
             $.each(crypto_data, function (i, currCoin) {
                 if (currCoin.status == 'available' && currCoin.symbol !== output) {
                     $('.ssio-currency-dropdown').append('<option value="' + currCoin.symbol.toLowerCase() + '" data-image="' + currCoin.image + '">' + currCoin.name + '</option>');
@@ -549,6 +547,7 @@ jQuery( document ).ready(function( $ ) {
         loadCoins();
         if(curInput != '---') {
             getRates(curInput);
+            $('#return-address').attr('placeholder', 'Return '+curInput+' Address (Recommended)');
         }
 	});
     $('.form-submit').click(function(){

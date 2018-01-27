@@ -82,25 +82,40 @@
                             <img src="assets/img/mtc_w.png" alt="MTC">
                         </div>
                     </div>
-                    <div class="card-container">
+                    <div id="shiftcontainer" class="card-container">
                         <h2 class="text-center">
-                            Lorem ipsum dolor sit amet
+                            Last step
                         </h2>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad obcaecati rem ipsum tempore, quaerat odit consequuntur asperiores totam doloremque, aspernatur delectus maiores ex necessitatibus dolores explicabo in possimus quos.
+                            Please enter your Ether Address, this is the Ether address where we will send your tokens. Please make sure your information is correct, once set it cannot be changed. If your email or transaction ID are incorrect please contact support at ico@docademic.com
                         </p>
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="input-container mt-3"><label for="">zorra</label><input type="text"></div>
+                            <div class="col-md-12">
+                                <div class="input-container mt-3"><label for="">Email</label><input id="email" type="text" readonly>
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="input-container mt-3"><label for="">gorda</label><input type="text"></div>
+                            <div class="col-md-12">
+                                <div class="input-container mt-3"><label for="">Transaction ID</label><input
+                                        id="txid" type="text" readonly></div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="input-container mt-3"><label for="">Ether Address</label><input id="address" type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="input-container mt-3"><label for="">Confirm Ether Address</label><input id="conf-address"
+                                        type="text"></div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center mt-3">
+                            <div id="messageDiv" class="hidden-input">
+                                <p id="message" class=""></p>
                             </div>
                         </div>
                         <div class="row justify-content-center mt-3">
                             <div class="col-md-4">
-                                <button class="btn blue">
-                                    whatever
+                                <button id="send-button" class="btn blue">
+                                    Send
                                 </button>
                             </div>
                         </div>
@@ -110,29 +125,6 @@
         </div>
     </div>
 </section>
-<div id="util-bar" class="fixed-bottom bluegray py-2">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-4 hidden-md-down d-flex align-items-center">
-                <p class="ml-2">
-                    <strong>ETH:</strong> <span>48379038</span>
-                </p>
-            </div>
-            <div class="col-md-4 d-flex justify-content-center align-items-center">
-                <label for="">Ether raised</label>
-                <input type="text">
-                <img src="assets/img/change.png" alt="change">
-                <input type="text">
-                <label for="">MTC Available</label>
-            </div>
-            <div class="col-md-4 hidden-md-down d-flex align-items-center">
-                <p class="text-right mr-2">
-                    <strong>MTH:</strong> <span>5789435790</span>
-                </p>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- scripts -->
 <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -143,8 +135,8 @@
         integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
         crossorigin="anonymous"></script>
 <script src='https://www.google.com/recaptcha/api.js'></script>
-<!-- build:jsbuy -->
-<script src="assets/js/buy-bundle.js"></script>
+<!-- build:jsshape -->
+<script src="assets/js/shape-bundle.js"></script>
 <!-- endbuild -->
 
 </body>
