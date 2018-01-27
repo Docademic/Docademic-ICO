@@ -8,7 +8,7 @@ const URLS = {
 };
 
 const MESSAGES = {
-    shiftDisclaimer: 'Important! We will add a fixed fee to the amount you specify in ETH of approximately 1 $USD to cover for transaction gas used to deliver tokens to your Ether Address. The tokens will be delivered to your ether address when the Crowdsale has ended.',
+    shiftDisclaimer: 'Important! We will add a fixed fee of approximately 1 $USD, to the amount you specify in ETH to cover for transaction gas used to deliver tokens to your Ether Address. The tokens will be delivered to your ether address when the Crowdsale has ended.',
     shiftEmailReq: 'Please provide a valid email address before proceeding',
     shiftAmountReq: 'Please provide a valid ETH amount before proceeding'
 };
