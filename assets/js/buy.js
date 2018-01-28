@@ -19,7 +19,7 @@ const queryString = require('query-string');
 
 const tokenAddress = "0x383b31De249444711dAF30646A538c8F8fba0ed5";
 const multiSigAddress = "0xFD053b5447cB0625464E6E277005fE8aDF3c8469";
-const crowdSaleAddress = "0x1A243Fb648E173BD8408D97e727F1fF694BA0D5c";
+const crowdSaleAddress = "0x0E915b35cC269b2DfC8BbD8E4A88Ed4884a53EfC";
 const contributors = new Set();
 
 class Buy {
@@ -337,10 +337,10 @@ initStats = (web) => {
         let sold = initialSupply.sub(balance);
         web.eth.getBalance(crowdSaleAddress, (e, re) => {
             setEthText(web.fromWei(re, 'ether').toString(10));
-            setMTCText(sold.toString(10));
-            //console.log(web.fromWei(re, 'ether').toString(10) + " eth");
-            //console.log(balance.toString(10) + " tokens left");
-            //console.log(sold.toString(10) + " tokens sold");
+            setMTCText(balance.toString(10));
+            console.log(web.fromWei(re, 'ether').toString(10) + " eth");
+            console.log(balance.toString(10) + " tokens left");
+            console.log(sold.toString(10) + " tokens sold");
         });
 
     });

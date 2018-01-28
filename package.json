@@ -30,6 +30,7 @@
     "run-sequence": "^2.2.0"
   },
   "dependencies": {
+    "cross-fetch": "^1.1.1",
     "gulp-install": "^1.1.0",
     "gulp-minifier": "^0.2.2",
     "query-string": "^5.0.1",
