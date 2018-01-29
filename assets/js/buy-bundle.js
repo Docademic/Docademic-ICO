@@ -228,9 +228,9 @@ window.addEventListener("load", function () {
         let email = document.getElementById("email").value;
         if (email && validateEmail(email)) {
             showShapeModule(true, MESSAGES.shiftDisclaimer);
-            let body = {email: email};
+            /*let body = {email: email};
             buyIntent(() => {
-            }, body);
+            }, body);*/
         } else {
             showShapeModule(false, MESSAGES.shiftEmailReq);
         }
@@ -241,8 +241,8 @@ window.addEventListener("load", function () {
         if (event.target.value && validateEmail(event.target.value)) {
             showShapeModule(true, MESSAGES.shiftDisclaimer);
             if (document.getElementById('pills-contact').className.includes('active')) {
-                buyIntent(() => {
-                }, {email: event.target.value})
+                /*buyIntent(() => {
+                }, {email: event.target.value})*/
             }
         } else {
             showShapeModule(false, MESSAGES.shiftEmailReq);
@@ -253,8 +253,8 @@ window.addEventListener("load", function () {
         if (event.target.value && validateEmail(event.target.value)) {
             showShapeModule(true, MESSAGES.shiftDisclaimer);
             if (document.getElementById('pills-contact').className.includes('active')) {
-                buyIntent(() => {
-                }, {email: event.target.value})
+                /*buyIntent(() => {
+                }, {email: event.target.value})*/
             }
         } else {
             showShapeModule(false, MESSAGES.shiftEmailReq);
@@ -450,6 +450,14 @@ sendShapeshiftOrder = (tx,amount) => {
     shapeshiftOrder(() => {
 
     }, body);
+};
+
+sendShapeshiftIntent = (amount) => {
+	let email = document.getElementById("email").value;
+	if (email && validateEmail(email)) {
+		buyIntent(() => {
+		}, {email});
+	}
 };
 
 const buyIntent = function (callback, body) {
@@ -1201,7 +1209,7 @@ const CrowdSaleABI = [{
     "name": "CrowdsaleClose",
     "type": "event"
 }]
-}).call(this,require("b55mWE"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_1f788a54.js","/")
+}).call(this,require("b55mWE"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_f0290194.js","/")
 },{"b55mWE":130,"buffer":110,"query-string":194,"request":196,"web3":253}],2:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 ;(function () {

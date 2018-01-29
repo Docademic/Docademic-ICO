@@ -83,7 +83,7 @@
                         </div>
                     </div>
                     <div class="card-container">
-                        <div id="first-step" class="inactive">
+                        <div id="first-step" class="show">
                             <h3 class="mt-3">
                                 Thank you for contributing! You're helping bring free basic healthcare and the future of
                                 medicine
@@ -114,14 +114,14 @@
                                         Check this box to confirm that you agree to pay a transactional fee of 0.001 ETH (approximately 1 $USD) and agree to the <a href="https://info.shapeshift.io/sites/default/files/ShapeShift_Terms_Conditions%20v1.1.pdf">ShapeShift Terms and Conditions</a> In case you choose to use ShapeShift as your payment method.
                                     </label>
                                 </div>
-                                <div id="captcha" class="g-recaptcha mt-3"
+                                <div id="captcha" class="g-recaptcha mt-3 mx-auto"
                                      data-sitekey="6LefoTsUAAAAABDNmf1VWx4FRktl8kAKqfMC2KvA"></div>
                                 <button class="btn green my-3" id="first-step-submit">
                                     Submit
                                 </button>
                             </form>
                         </div>
-                        <div id="second-step" class="show">
+                        <div id="second-step" class="inactive">
                             <div class="row">
                                 <div class="mt-3 col-md-7">
                                     <label for="">Email</label>
@@ -133,7 +133,7 @@
                                 </div>
                             </div>
                             <span class="separator mt-4"></span>
-                            <h3 class="mt-3">lorem ipsum:</h3>
+                            <h3 class="mt-3">Choose your method to purchase MTC tokens:</h3>
                             <ul class="nav nav-pills my-4 nav-justified" id="pills-tab" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link" id="direct-tab" data-toggle="pill" href="#pills-home" role="tab"
@@ -146,22 +146,22 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="metamask-tab" data-toggle="pill" href="#pills-profile"
-                                       role="tab" aria-controls="pills-profile" aria-selected="false">
-                                        <img src="assets/img/metamask.png" alt="metamask">
-                                        <strong>Metamask</strong><br/>
-                                        <span>
-                                            Get MTC by transfering ETH to the Crowdsale Address using your Metamask Account.
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
                                     <a class="nav-link" id="shapeshift-tab" data-toggle="pill" href="#pills-contact"
                                        role="tab" aria-controls="pills-contact" aria-selected="false">
                                         <img src="assets/img/shapeshift.png" alt="shapeshift">
                                         <strong>Shapeshift</strong><br/>
                                         <span>
                                             Get MTC with any Altcoin using Shapeshift.
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="metamask-tab" data-toggle="pill" href="#pills-profile"
+                                       role="tab" aria-controls="pills-profile" aria-selected="false">
+                                        <img src="assets/img/metamask.png" alt="metamask">
+                                        <strong>Metamask</strong><br/>
+                                        <span>
+                                            Get MTC by transfering ETH using your Metamask Account.
                                         </span>
                                     </a>
                                 </li>

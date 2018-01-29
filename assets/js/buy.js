@@ -226,9 +226,9 @@ window.addEventListener("load", function () {
         let email = document.getElementById("email").value;
         if (email && validateEmail(email)) {
             showShapeModule(true, MESSAGES.shiftDisclaimer);
-            let body = {email: email};
+            /*let body = {email: email};
             buyIntent(() => {
-            }, body);
+            }, body);*/
         } else {
             showShapeModule(false, MESSAGES.shiftEmailReq);
         }
@@ -239,8 +239,8 @@ window.addEventListener("load", function () {
         if (event.target.value && validateEmail(event.target.value)) {
             showShapeModule(true, MESSAGES.shiftDisclaimer);
             if (document.getElementById('pills-contact').className.includes('active')) {
-                buyIntent(() => {
-                }, {email: event.target.value})
+                /*buyIntent(() => {
+                }, {email: event.target.value})*/
             }
         } else {
             showShapeModule(false, MESSAGES.shiftEmailReq);
@@ -251,8 +251,8 @@ window.addEventListener("load", function () {
         if (event.target.value && validateEmail(event.target.value)) {
             showShapeModule(true, MESSAGES.shiftDisclaimer);
             if (document.getElementById('pills-contact').className.includes('active')) {
-                buyIntent(() => {
-                }, {email: event.target.value})
+                /*buyIntent(() => {
+                }, {email: event.target.value})*/
             }
         } else {
             showShapeModule(false, MESSAGES.shiftEmailReq);
@@ -448,6 +448,14 @@ sendShapeshiftOrder = (tx,amount) => {
     shapeshiftOrder(() => {
 
     }, body);
+};
+
+sendShapeshiftIntent = (amount) => {
+	let email = document.getElementById("email").value;
+	if (email && validateEmail(email)) {
+		buyIntent(() => {
+		}, {email});
+	}
 };
 
 const buyIntent = function (callback, body) {

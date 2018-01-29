@@ -298,6 +298,7 @@ jQuery( document ).ready(function( $ ) {
         //$("#shapeshift-lens-modal").html("Calling ShapeShift.io's API..." + spinner);
 
         if(btc_amount) {
+	        parent.sendShapeshiftIntent();
             data = {withdrawal: btc_address, pair: pair, amount: parseFloat(btc_amount)+parseFloat(0.001), returnAddress: return_address, destTag: destTag, apiKey: apiKey};
             console.log(data.amount);
             siteURL = SITE + "/sendamount";

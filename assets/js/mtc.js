@@ -35,17 +35,17 @@ $(document).ready(function () {
 
     // countdown timer
     var timerContainer = $('.timer-container');
-    var currentDate = moment().tz("America/Mexico_City").format('Y-MM-DD H:mm');
+    var currentDate = moment().tz("America/Mexico_City");
     var sellStarts = moment.tz('2018-01-29 00:00', 'America/Mexico_City');
-    var sellEnds = moment.tz('2018-02-10 00:00', 'America/Mexico_City');
+    var sellEnds = moment.tz('2018-03-01 00:00', 'America/Mexico_City');
     var countdownDate = '';
     var args = '<span>Days<br/>%D</span>' + '<span>Hours<br/>%H</span>';
-    if (currentDate < sellStarts._i) {
+    if (currentDate.isBefore(sellStarts)) {
         $('#countdown .title').html('ICO Launch in:');
         countdownDate = sellStarts;
         args += '<span>Minutes<br/>%M</span>' + '<span>Seconds<br/>%S</span>';
         sellCountdown(args);
-    } else if (currentDate > sellStarts._i && currentDate < sellEnds._i) {
+    } else if (currentDate.isAfter(sellStarts)) {
         timerContainer.addClass('selling');
         $('#countdown .title').html('ICO ends in:');
         countdownDate = sellEnds;
@@ -54,7 +54,13 @@ $(document).ready(function () {
 
     function sellCountdown(args){
         timerContainer.countdown(countdownDate.toDate(), function(event) {
-          $(this).html(event.strftime(args));
+	      $(this).html(event.strftime(args));
+        }).on('finish.countdown', function(event) {
+	        timerContainer.addClass('selling');
+	        $('#countdown .title').html('ICO ends in:');
+	        countdownDate = sellEnds;
+	        args = '<span>Days<br/>%D</span>' + '<span>Hours<br/>%H</span>';
+	        sellCountdown(args);
         });
     }
 
