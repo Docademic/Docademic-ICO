@@ -29,8 +29,10 @@ node_modules
 # Build directory
 dist
 
-# Browserified app.js
+# Browserified
 assets/js/main.js
+assets/js/buy-bundle.js
+assets/js/shape-bundle.js
 
 #Config file
 config.json
