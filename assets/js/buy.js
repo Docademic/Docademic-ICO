@@ -7,8 +7,12 @@ const URLS = {
     HOST: ''
 };
 
+sendGAEvent = (event) => {
+    ga('send', 'event', event);
+};
+
 const MESSAGES = {
-    shiftDisclaimer: 'Important! We will add a fixed fee of 0.001 ETH (approximately 1 $USD) to the amount you specify in ETH to cover transaction gas used to deliver tokens to your Ether Address. We Recommend you provide a Return Address in case the ShapeShift transaction fails, this is NOT the address where you will receive your tokens. After your purchase you will receive an email from ShapeShift with your receipt and an email from Docademic with instructions to complete your purchase, so please make sure you have access to the email address you provided. Your tokens will be delivered to your ether address when the Crowdsale has ended.',
+    shiftDisclaimer: "When paying through ShapeShift you agree to the following: <a href=\"https://info.shapeshift.io/sites/default/files/ShapeShift_Terms_Conditions%20v1.1.pdf\">ShapeShiftTerms and Conditions</a> Also, we're adding a fixed fee of 0.001 ETH (approximately 1 $USD) to the amount you specify in ETH to cover transaction gas used to deliver tokens to your Ether Address. After your purchase you will receive an email from ShapeShift with your receipt and an email from Docademic with instructions for setting your Ether Address, so please make sure you have access to the email address you provided. Your tokens will be delivered to your ether address after the Crowdsale has ended. We Recommend you provide a Return Address in case the ShapeShift transaction fails, this is NOT the address where you will receive your tokens.",
     shiftEmailReq: 'Please provide a valid email address before proceeding',
     shiftAmountReq: 'Please provide a valid ETH amount before proceeding'
 };
@@ -212,6 +216,7 @@ window.addEventListener("load", function () {
         copyText.select();
         document.execCommand("copy");
         copy.addClass('copied').text('copied!');
+        sendGAEvent(GAEvents.directIntent);
         let email = document.getElementById("email").value;
         if (email && validateEmail(email)) {
             let body = {email: email};
@@ -261,6 +266,23 @@ window.addEventListener("load", function () {
     // Now you can start your app & access web3 freely:
     //startApp()
 });
+
+
+enableSubmitButton = (enable) => {
+    document.getElementById('first-step-submit').disabled = !enable;
+};
+
+captchaCheck = () => {
+    checkStepOne();
+};
+
+checkStepOne = () => {
+    let c1 = document.getElementById('check1').checked;
+    let c2 = document.getElementById('check2').checked;
+    let c3 = document.getElementById('g-recaptcha-response').value;
+    enableSubmitButton(c1 && c2 && c3);
+};
+
 
 retrieveEmail = () => {
     return document.getElementById('email').value;
@@ -338,9 +360,9 @@ initStats = (web) => {
         web.eth.getBalance(crowdSaleAddress, (e, re) => {
             setEthText(web.fromWei(re, 'ether').toString(10));
             setMTCText(balance.toString(10));
-            console.log(web.fromWei(re, 'ether').toString(10) + " eth");
-            console.log(balance.toString(10) + " tokens left");
-            console.log(sold.toString(10) + " tokens sold");
+            //console.log(web.fromWei(re, 'ether').toString(10) + " eth");
+            //console.log(balance.toString(10) + " tokens left");
+            //console.log(sold.toString(10) + " tokens sold");
         });
 
     });
@@ -371,11 +393,14 @@ initBuy = (web3, amount) => {
         }, {email: email});
     }
 
+    sendGAEvent(GAEvents.metamaskIntent);
+
     web3.eth.sendTransaction({
         to: crowdSaleAddress,
         value: web3.toWei(amount, 'ether')
     }, (err, results) => {
         if (!err) {
+            sendGAEvent(GAEvents.metamaskOrder);
             let body = {};
             body['address'] = web3.eth.accounts[0];
             body['amount'] = amount;
@@ -439,23 +464,25 @@ showShiftAmountError = () => {
     }, 5000)
 };
 
-sendShapeshiftOrder = (tx,amount) => {
-    let body = {tx:tx,amount:amount,email:document.getElementById('email').value};
+sendShapeshiftOrder = (tx, amount) => {
+    let body = {tx: tx, amount: amount, email: document.getElementById('email').value};
     let ref = document.getElementById('ref').value;
-    if(ref){
+    if (ref) {
         body['ref'] = ref;
     }
     shapeshiftOrder(() => {
 
     }, body);
+    sendGAEvent(GAEvents.shapeshiftOrder);
 };
 
 sendShapeshiftIntent = (amount) => {
-	let email = document.getElementById("email").value;
-	if (email && validateEmail(email)) {
-		buyIntent(() => {
-		}, {email});
-	}
+    let email = document.getElementById("email").value;
+    if (email && validateEmail(email)) {
+        buyIntent(() => {
+        }, {email});
+    }
+    sendGAEvent(GAEvents.shapeshiftIntent);
 };
 
 const buyIntent = function (callback, body) {
