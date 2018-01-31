@@ -698,6 +698,10 @@ footer #social li:last-child a{
     height: 0;
     visibility: hidden;
 }
+#first-step-submit.inactive{
+	cursor: default;
+	background-color: #7b8994;
+}
 .copy{
     border: 1px solid #ccc;
     padding: .5em;

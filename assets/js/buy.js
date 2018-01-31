@@ -25,7 +25,7 @@ const tokenAddress = "0x383b31De249444711dAF30646A538c8F8fba0ed5";
 const multiSigAddress = "0xFD053b5447cB0625464E6E277005fE8aDF3c8469";
 const crowdSaleAddress = "0x0E915b35cC269b2DfC8BbD8E4A88Ed4884a53EfC";
 const contributors = new Set();
-
+let web3R;
 class Buy {
 
     constructor(web3, test) {
@@ -155,6 +155,7 @@ window.addEventListener("load", function () {
     }
 
     let web3RI = new Web3R(new Web3R.providers.HttpProvider("https://mainnet.infura.io/JoIGnMxHRlKZg956R086"));
+	web3R = web3RI;
     initStats(web3RI);
 
     let buyButton = document.getElementById("buyButton");
@@ -270,6 +271,7 @@ window.addEventListener("load", function () {
 
 enableSubmitButton = (enable) => {
     document.getElementById('first-step-submit').disabled = !enable;
+    if(enable) $("#first-step-submit").removeClass('inactive');
 };
 
 captchaCheck = () => {
@@ -394,13 +396,15 @@ initBuy = (web3, amount) => {
     }
 
     sendGAEvent(GAEvents.metamaskIntent);
-
+	
     web3.eth.sendTransaction({
         to: crowdSaleAddress,
         value: web3.toWei(amount, 'ether')
     }, (err, results) => {
         if (!err) {
-            sendGAEvent(GAEvents.metamaskOrder);
+	        let eventData = Object.assign({},GAEvents.metamaskOrder);
+	        eventData.eventValue = web3R.toWei(amount, 'finney');
+	        sendGAEvent(eventData);
             let body = {};
             body['address'] = web3.eth.accounts[0];
             body['amount'] = amount;
@@ -473,7 +477,9 @@ sendShapeshiftOrder = (tx, amount) => {
     shapeshiftOrder(() => {
 
     }, body);
-    sendGAEvent(GAEvents.shapeshiftOrder);
+	let eventData = Object.assign({},GAEvents.shapeshiftOrder);
+	eventData.eventValue = web3R.toWei(amount, 'finney');
+    sendGAEvent(eventData);
 };
 
 sendShapeshiftIntent = (amount) => {
