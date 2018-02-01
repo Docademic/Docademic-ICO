@@ -702,6 +702,11 @@ footer #social li:last-child a{
 	cursor: default;
 	background-color: #7b8994;
 }
+
+#buyButton.inactive{
+    cursor: default;
+    background-color: #7b8994;
+}
 .copy{
     border: 1px solid #ccc;
     padding: .5em;
@@ -739,6 +744,11 @@ footer #social li:last-child a{
 .input-container.inline input{
     margin-left: 1em;
     width: calc(100% - 1em - 50px);
+}
+
+.input-amount.inline input{
+    margin-left: 1em;
+    width: calc(100% - 1em - 30px);
 }
 
 #partners img{

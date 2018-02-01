@@ -127,6 +127,7 @@ window.addEventListener("load", function () {
             if (grecaptcha.getResponse()) {
                 fStep.addClass('inactive');
                 $('#second-step').addClass('show');
+                sendGAEvent(GAEvents.disclaimerSubmit);
             } else {
                 grecaptcha.reset();
             }
@@ -172,18 +173,24 @@ window.addEventListener("load", function () {
         let val = (e.target.value * 1000) * 1.2;
         if (e.target.value && e.target.value > 0) {
             setBuyButtonText(val);
+            document.getElementById("buyButton").disabled = false;
+            document.getElementById("buyButton").className = "btn green";
         } else {
             setBuyButtonText(0);
+            document.getElementById("buyButton").disabled = true;
+            document.getElementById("buyButton").className = "btn green inactive";
         }
     });
-
-
     amountInput.addEventListener("change", (e) => {
         let val = (e.target.value * 1000) * 1.2;
         if (e.target.value && e.target.value > 0) {
             setBuyButtonText(val);
+            document.getElementById("buyButton").disabled = false;
+            document.getElementById("buyButton").className = "btn green";
         } else {
             setBuyButtonText(0);
+            document.getElementById("buyButton").disabled = true;
+            document.getElementById("buyButton").className = "btn green inactive";
         }
     });
 
