@@ -546,10 +546,8 @@ tbody td:not(:nth-child(2)) {
 	padding: .5em 0;
 }
 
-.timer-container span {
-	display: inline-block;
-	text-align: center;
-	width: 70px;
+.timer-container {
+	font-size: 24px;
 }
 
 #sell {
@@ -571,6 +569,23 @@ tbody td:not(:nth-child(2)) {
 	margin-top: 1em;
 	max-width: 200px;
 	padding: .5em 0;
+}
+.sell{
+	display: none;
+}
+.sell.selling{
+	display: flex;
+}
+#countdown .sell.selling{
+	display: none;
+}
+#countdown .sell.selling.affix{
+	display: flex;
+}
+@media screen and (max-width: 768px){
+	#countdown .whitepaper.affix{
+		display: none;
+	}
 }
 
 /* footer */
