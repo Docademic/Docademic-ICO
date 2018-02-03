@@ -209,11 +209,11 @@
 						<h2>
 						1 ETH = 1000 MTC 
 						</h2>
-						<h2 class="t-green mt-4">
+						<!-- <h2 class="t-green mt-4">
 							MTC sale is LIVE now! buy and get your 20% additional bonus!
-						</h2>
+						</h2> -->
 						<div class="row mt-3 justify-content-center">
-							<div class="col-md-4">
+							<!-- <div class="col-md-4">
 								<button class="btn blue tgl-show" id="register-button" data-show="#register-modal"
 								        onclick="ga('send', 'event', {
                                         eventCategory: 'Open Register Modal',
@@ -222,15 +222,18 @@
                                       });">
 									Register for news
 								</button>
-							</div>
-							<div class="col-md-4">
-								<a href="https://cdn.docademic.com/documents/ico/Docademic+White+Paper.pdf"
+							</div> -->
+							<div class="col-md-4 sell">
+								<!-- <a href="https://cdn.docademic.com/documents/ico/Docademic+White+Paper.pdf"
 								   target="_blank" class="btn lblue" onclick="ga('send', 'event', {
                                         eventCategory: 'Whitepaper',
                                         eventAction: 'click',
                                         eventLabel: event.target.href
                                       });">
 									Download Whitepaper
+								</a> -->
+								<a href="buy.html" class="btn green">
+									Buy now!
 								</a>
 							</div>
 							<div class="col-md-4">
@@ -249,6 +252,10 @@
 								</button>
 							</div> -->
 						</div>
+						<div class="title hidden-md-down mt-3">
+							<h2></h2>
+						</div>
+						<div class="timer-container hidden-md-down"></div>
 						<div class="row justify-content-center mt-5">
 							<a href="#proudly" id="toHealthcare" class="df-angle-down"></a>
 						</div>
@@ -313,7 +320,7 @@
 		</div>
 	</div>
 </section>
-<section class="py-md-5 py-3 two-c" id="proudly">
+<!-- <section class="py-md-5 py-3 two-c" id="proudly">
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-md-8">
@@ -571,7 +578,7 @@
 			</tbody>
 		</table>
 	</div>
-</section>
+</section> -->
 <section class="py-md-5 py-3 bluegray" id="mtc">
 	<div class="container">
 		<h2 class="text-center t-gray">
@@ -1325,12 +1332,24 @@
 	<a href="//t.me/joinchat/GWeOM0Nc_R_htbcpJha7mA" id="telegram" target="_blank" title="telegram">
 		<img src="assets/img/telegram.png" alt="telegram">
 	</a>
-	<div class="row justify-content-center pb-2">
-		<div class="title text-center hidden-md-down"></div>
-		<div class="timer-container hidden-md-down"></div>
-		<a href="buy.html" id="sell" class="btn green">
-			Buy now!
-		</a>
+	<div class="container">
+		<div class="row justify-content-center py-2">
+			<div class="col-8 col-md-3 whitepaper">
+				<a href="https://cdn.docademic.com/documents/ico/Docademic+White+Paper.pdf"
+				   target="_blank" class="btn lblue" onclick="ga('send', 'event', {
+		                eventCategory: 'Whitepaper',
+		                eventAction: 'click',
+		                eventLabel: event.target.href
+		              });">
+					Download Whitepaper
+				</a>
+			</div>
+			<div class="col-6 col-md-3 sell">
+				<a href="buy.html" class="btn green">
+					Buy now!
+				</a>
+			</div>
+		</div>
 	</div>
 </div>
 <div class="lightbox full" id="notice-modal">
