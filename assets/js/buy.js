@@ -21,9 +21,9 @@ const request = require('request');
 const Web3R = require('web3');
 const queryString = require('query-string');
 
-const tokenAddress = "0x383b31De249444711dAF30646A538c8F8fba0ed5";
-const multiSigAddress = "0xFD053b5447cB0625464E6E277005fE8aDF3c8469";
-const crowdSaleAddress = "0x0E915b35cC269b2DfC8BbD8E4A88Ed4884a53EfC";
+const tokenAddress = "0x905E337c6c8645263D3521205Aa37bf4d034e745";
+const multiSigAddress = "0x7A46C781b593068d5e987b191e9c2f7413E22aEE";
+const crowdSaleAddress = "0x0E8160745966D2109c568230Ef515B0ddDea1599";
 const contributors = new Set();
 let web3R;
 class Buy {
@@ -170,9 +170,9 @@ window.addEventListener("load", function () {
 
     let amountInput = document.getElementById("amount");
     amountInput.addEventListener("keyup", (e) => {
-        let val = (e.target.value * 1000) * 1.2;
+        let val = (e.target.value * (1/0.000035)) * 1.2;
         if (e.target.value && e.target.value > 0) {
-            setBuyButtonText(val);
+            setBuyButtonText('~'+val.toFixed(4));
             document.getElementById("buyButton").disabled = false;
             document.getElementById("buyButton").className = "btn green";
         } else {
@@ -182,9 +182,9 @@ window.addEventListener("load", function () {
         }
     });
     amountInput.addEventListener("change", (e) => {
-        let val = (e.target.value * 1000) * 1.2;
+        let val = (e.target.value * (1/0.000035)) * 1.2;
         if (e.target.value && e.target.value > 0) {
-            setBuyButtonText(val);
+            setBuyButtonText('~'+val.toFixed(4));
             document.getElementById("buyButton").disabled = false;
             document.getElementById("buyButton").className = "btn green";
         } else {
@@ -194,6 +194,7 @@ window.addEventListener("load", function () {
         }
     });
 
+    /*
     let ethInput = document.getElementById("calc-eth");
     let mtcInput = document.getElementById("calc-mtc");
     ethInput.addEventListener("keyup", (e) => {
@@ -216,7 +217,7 @@ window.addEventListener("load", function () {
         if (e.target.value && e.target.value > 0) {
             setEthBoxText(e.target.value);
         }
-    });
+    });*/
 
     let copy = $('.copy button');
     copy.click(function () {
@@ -363,12 +364,12 @@ setBuyButtonText = (value) => {
 initStats = (web) => {
     let buy = new Buy(web, true);
     buy.getMTCBalance((e, r) => {
-        let balance = web.fromWei(r, 'finney');
-        let initialSupply = web.toBigNumber(150000000);
+        let balance = web.fromWei(r, 'ether');
+        let initialSupply = web.toBigNumber(90000000);
         let sold = initialSupply.sub(balance);
         web.eth.getBalance(crowdSaleAddress, (e, re) => {
             setEthText(web.fromWei(re, 'ether').toString(10));
-            setMTCText(balance.toString(10));
+            setMTCText(sold.toString(10));
             //console.log(web.fromWei(re, 'ether').toString(10) + " eth");
             //console.log(balance.toString(10) + " tokens left");
             //console.log(sold.toString(10) + " tokens sold");
