@@ -40,7 +40,7 @@ jQuery( document ).ready(function( $ ) {
     var apiKey = 'd25c4906c1d15c6bb782f37e067cffdefac1d2f0beaa6c05e073fe78e80d884acea07200503ab09a2093a184e13bb968abe5336a32bdcd3950d6e478fb75b4ec';
     var destination = getUrlParameter('destination');
     // todo: change destination address for the shiftsale address
-    var destination = '0x6b1fB08639aCEc6ED415BaCaB6453B523AEc7D4B';
+    var destination = '0x06e0166F67c31EFda515B5C24d81F37ad722F564';
     //pre_amount = getUrlParameter('amount');
     var pre_amount = '';
     //apiKey = getUrlParameter('apiKey');
