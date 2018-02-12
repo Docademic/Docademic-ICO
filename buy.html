@@ -312,14 +312,22 @@
 <div id="util-bar" class="fixed-bottom bluegray py-2">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-6 hidden-md-down d-flex align-items-center">
+            <div class="col-md-3 hidden-md-down d-flex align-items-center">
                 <p class="ml-2">
                     <strong>ETH raised:</strong> <span id="ether-text">-</span>
                 </p>
             </div>
-            <div class="col-md-6 hidden-md-down d-flex align-items-center">
+            <div class="col-md-6">
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 0;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                        0%
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 hidden-md-down d-flex align-items-center">
                 <p class="text-right mr-2">
-                    <strong>MTC sold:</strong> <span id="mtc-text">-</span>
+                    <!--<strong>MTC sold:</strong> <span id="mtc-text">-</span>-->
+                    <strong>Soft cap:</strong> <span >525 ETH</span>
                 </p>
             </div>
         </div>

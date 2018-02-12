@@ -361,6 +361,7 @@ setBuyButtonText = (value) => {
     }
 };
 
+var progress = $('.progress-bar');
 initStats = (web) => {
     let buy = new Buy(web, true);
     buy.getMTCBalance((e, r) => {
@@ -368,6 +369,9 @@ initStats = (web) => {
         let initialSupply = web.toBigNumber(90000000);
         let sold = initialSupply.sub(balance);
         web.eth.getBalance(crowdSaleAddress, (e, re) => {
+            let eth = web.fromWei(re, 'ether');
+            let percent = Math.floor(eth.c[0] * 100 / 525);
+            progress.html(percent+'%').css('width', percent+'%').attr('aria-valuenow', percent);
             setEthText(web.fromWei(re, 'ether').toString(10));
             setMTCText(sold.toString(10));
             //console.log(web.fromWei(re, 'ether').toString(10) + " eth");
