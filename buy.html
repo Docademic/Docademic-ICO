@@ -260,19 +260,31 @@
                                     <div class="card-body">
                                         <p>
                                         <li>
-                                            Total supply: 1,000,000,000 MTC
+                                            Token address (Do not send ETH to this): 0x905E337c6c8645263D3521205Aa37bf4d034e745
                                         </li>
                                         <li>
-                                            Gas required: 88,000
-                                        </li>
-                                        <li>
-                                            Token address (Do not send ETH): 0x905E337c6c8645263D3521205Aa37bf4d034e745
+                                            Token name: Medical Token Currency
                                         </li>
                                         <li>
                                             Token symbol: MTC
                                         </li>
                                         <li>
                                             Token decimals: 18
+                                        </li>
+                                        <li>
+                                            Total supply: 1,000,000,000 MTC
+                                        </li>
+                                        <li>
+                                            Gas required: 88,000
+                                        </li>
+                                        <li>
+                                            Soft cap: 525 ETH
+                                        </li>
+                                        <li>
+                                            Hard cap: 1200 ETH
+                                        </li>
+                                        <li>
+                                            <a target="_blank" href="https://myetherwallet.github.io/knowledge-base/send/adding-new-token-and-sending-custom-tokens.html">Add the token to a my ether wallet</a>
                                         </li>
                                         </p>
                                     </div>
@@ -344,14 +356,22 @@
 <div id="util-bar" class="fixed-bottom bluegray py-2">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-6 hidden-md-down d-flex align-items-center">
+            <div class="col-md-3 hidden-md-down d-flex align-items-center">
                 <p class="ml-2">
                     <strong>ETH raised:</strong> <span id="ether-text">-</span>
                 </p>
             </div>
-            <div class="col-md-6 hidden-md-down d-flex align-items-center">
+            <div class="col-md-6">
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 0;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                        0%
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 hidden-md-down d-flex align-items-center">
                 <p class="text-right mr-2">
-                    <strong>MTC sold:</strong> <span id="mtc-text">-</span>
+                    <!--<strong>MTC sold:</strong> <span id="mtc-text">-</span>-->
+                    <strong>Soft cap:</strong> <span >525 ETH</span>
                 </p>
             </div>
         </div>

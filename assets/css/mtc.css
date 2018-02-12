@@ -790,6 +790,14 @@ footer #social li:last-child a{
 	display: block;
 	width: 24px;
 }
+.progress{
+	height: 50px;
+}
+.progress-bar{
+	font-size: 18px;
+	height: 50px;
+	padding-top: 14px;
+}
 
 
 /* util bar */

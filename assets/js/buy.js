@@ -172,7 +172,7 @@ window.addEventListener("load", function () {
     amountInput.addEventListener("keyup", (e) => {
         let val = (e.target.value * (1/0.000035)) * 1.2;
         if (e.target.value && e.target.value > 0) {
-            setBuyButtonText('~'+val.toFixed(4));
+            //setBuyButtonText('~'+val.toFixed(4));
             document.getElementById("buyButton").disabled = false;
             document.getElementById("buyButton").className = "btn green";
         } else {
@@ -184,7 +184,7 @@ window.addEventListener("load", function () {
     amountInput.addEventListener("change", (e) => {
         let val = (e.target.value * (1/0.000035)) * 1.2;
         if (e.target.value && e.target.value > 0) {
-            setBuyButtonText('~'+val.toFixed(4));
+            //setBuyButtonText('~'+val.toFixed(4));
             document.getElementById("buyButton").disabled = false;
             document.getElementById("buyButton").className = "btn green";
         } else {
@@ -361,20 +361,32 @@ setBuyButtonText = (value) => {
     }
 };
 
+var progress = $('.progress-bar');
+
+let getBalance = (web)=>{
+	web.eth.getBalance(crowdSaleAddress, (e, re) => {
+		let eth = web.fromWei(re, 'ether');
+		let percent = Math.floor(eth.c[0] * 100 / 525);
+		progress.html(percent+'%').css('width', percent+'%').attr('aria-valuenow', percent);
+		setEthText(web.fromWei(re, 'ether').toString(10));
+		//setMTCText(sold.toString(10));
+		//console.log(web.fromWei(re, 'ether').toString(10) + " eth");
+		//console.log(balance.toString(10) + " tokens left");
+		//console.log(sold.toString(10) + " tokens sold");
+	});
+}
+
 initStats = (web) => {
     let buy = new Buy(web, true);
     buy.getMTCBalance((e, r) => {
         let balance = web.fromWei(r, 'ether');
         let initialSupply = web.toBigNumber(90000000);
         let sold = initialSupply.sub(balance);
-        web.eth.getBalance(crowdSaleAddress, (e, re) => {
-         
-	        setEthText(web.fromWei(re, 'ether').toString(10));
-            setMTCText(sold.toString(10));
-            //console.log(web.fromWei(re, 'ether').toString(10) + " eth");
-            //console.log(balance.toString(10) + " tokens left");
-            //console.log(sold.toString(10) + " tokens sold");
-        });
+        getBalance(web);
+        setInterval(()=>{
+	        getBalance(web);
+        },5000);
+        
 
     });
     /*buy.watchMultiSigTransactionExecution((err,results,type) => {
