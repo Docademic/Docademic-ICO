@@ -368,7 +368,8 @@ initStats = (web) => {
         let initialSupply = web.toBigNumber(90000000);
         let sold = initialSupply.sub(balance);
         web.eth.getBalance(crowdSaleAddress, (e, re) => {
-            setEthText(web.fromWei(re, 'ether').toString(10));
+         
+	        setEthText(web.fromWei(re, 'ether').toString(10));
             setMTCText(sold.toString(10));
             //console.log(web.fromWei(re, 'ether').toString(10) + " eth");
             //console.log(balance.toString(10) + " tokens left");
