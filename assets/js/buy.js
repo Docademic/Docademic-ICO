@@ -4,6 +4,8 @@ const URLS = {
     buyIntent: '/api/ico/order/intent',
     metamaskOrder: '/api/ico/order/metamask',
     shapeshiftOrder: '/api/ico/order/shapeshift',
+    directOrder: '/api/ico/order/direct',
+    checkTransaction: 'https://www.etherchain.org/api/tx/{txid}',
     HOST: ''
 };
 
@@ -18,6 +20,7 @@ const MESSAGES = {
 };
 
 const request = require('request');
+const fetch = require('cross-fetch');
 const Web3R = require('web3');
 const queryString = require('query-string');
 
@@ -26,6 +29,8 @@ const multiSigAddress = "0x7A46C781b593068d5e987b191e9c2f7413E22aEE";
 const crowdSaleAddress = "0x0E8160745966D2109c568230Ef515B0ddDea1599";
 const contributors = new Set();
 let web3R;
+let selectedTab = 0;
+
 class Buy {
 
     constructor(web3, test) {
@@ -96,7 +101,6 @@ class Buy {
 }
 
 window.addEventListener("load", function () {
-
 
     $.getJSON("/config.json", function (json) {
         if (json.HOST) {
@@ -235,8 +239,40 @@ window.addEventListener("load", function () {
         }
     });
 
+    let directButton = $('#direct-button');
+    directButton.click(function () {
+        let txInput = document.getElementById("txid");
+        console.log('direct button click');
+        if(txInput.value && txInput.value.length === 66){
+            console.log('tx sent');
+            fetch('https://www.etherchain.org/api/tx/' + txInput.value ,{method: 'GET'}).then((r) => {
+                if (r && r.statusCode === 401) {
+                    window.location.href = '/'
+                } else {
+                    r.json().then((body) => {
+                        let tx = body.filter((tx) => {
+                            return tx.hash === txInput.value.substring(2) && tx.to === '0e8160745966d2109c568230ef515b0dddea1599'
+                        })[0];
+                        fetch(URLS.HOST+URLS.directOrder,{method: 'POST',body:JSON.stringify({tx:tx.hash,amount:tx.value,ref:document.getElementById("ref").value})}).then((r) => {
+                            r.json().then((body) => {
+                               console.log(body);
+                            });
+                        });
+                    });
+
+                }
+            });
+        }
+    });
+
+    let directTab = $('#direct-tab');
+    directTab.click(function () {
+        selectedTab = 1;
+    });
+
     let shapeTab = $('#shapeshift-tab');
     shapeTab.click(function () {
+        selectedTab = 2;
         let email = document.getElementById("email").value;
         if (email && validateEmail(email)) {
             showShapeModule(true, MESSAGES.shiftDisclaimer);
@@ -246,6 +282,11 @@ window.addEventListener("load", function () {
         } else {
             showShapeModule(false, MESSAGES.shiftEmailReq);
         }
+    });
+
+    let metamaskTab = $('#metamask-tab');
+    metamaskTab.click(function () {
+        selectedTab = 3;
     });
 
     let emailInput = document.getElementById("email");
@@ -272,10 +313,36 @@ window.addEventListener("load", function () {
             showShapeModule(false, MESSAGES.shiftEmailReq);
         }
     });
+
+    let directLink = $('#direct-link');
+    directLink.click(function () {
+        if($('#ref').val().length === 8){
+            showDirectForm(true)
+        }else{
+            showDirectForm(false,'Please enter a valid Referral Code to continue.')
+        }
+    });
+
+
+    let refInput = document.getElementById("ref");
+    refInput.addEventListener("keydown", (event) => {
+        if (event.target.value && event.target.value.length === 8 && selectedTab === 1) {
+            showDirectForm(true)
+        } else {
+            showDirectForm(false,'Please enter a valid Referral Code to continue.')
+        }
+    });
+
+    refInput.addEventListener("input", (event) => {
+        if (event.target.value && event.target.value.length === 8 && selectedTab === 1) {
+            showDirectForm(true)
+        } else {
+            showDirectForm(false,'Please enter a valid Referral Code to continue.')
+        }
+    });
     // Now you can start your app & access web3 freely:
     //startApp()
 });
-
 
 enableSubmitButton = (enable) => {
     document.getElementById('first-step-submit').disabled = !enable;
@@ -457,6 +524,18 @@ setMTCText = (text) => {
     document.getElementById('mtc-text').innerHTML = text;
 };
 
+showDirectForm = (show, message) => {
+    if (show) {
+        document.getElementById("direct-message").className = 'hidden-input';
+        document.getElementById("direct-form").className = 'mt-3';
+    } else {
+        document.getElementById("direct-message").className = 'mt-3';
+        document.getElementById('direct-messageText').className = 'red';
+        document.getElementById('direct-messageText').innerHTML = message;
+        document.getElementById("direct-form").className = 'hidden-input';
+    }
+};
+
 showBuyModule = (show, message) => {
     if (show) {
         document.getElementById("messageDiv").className += 'hidden-input';
@@ -530,6 +609,12 @@ const shapeshiftOrder = function (callback, body) {
     makeRequest(url, method, body, callback);
 };
 
+const directOrder = function (callback, body) {
+    let url = URLS.HOST + URLS.directOrder;
+    let method = 'POST';
+    makeRequest(url, method, body, callback);
+};
+
 const makeRequest = function (url, method, body, callback) {
 
     let options = {};
@@ -539,7 +624,8 @@ const makeRequest = function (url, method, body, callback) {
 
     options.headers = {
         'Content-type': 'application/json',
-        'accept-language': 'en'
+        'accept-language': 'en',
+        '':''
     };
 
     if (body) options.body = body;

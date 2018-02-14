@@ -153,6 +153,34 @@ h2 a{
 	}
 }
 
+#direct-container{
+    text-align: center;
+}
+
+#collapseDirect #direct-messageText{
+    height: 0;
+    overflow-y: hidden;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+#collapseDirect #direct-messageText.red{
+    height: auto;
+    color: #fff;
+    margin-top: 1em;
+    padding-bottom: .5em;
+    padding-top: .5em;
+    -webkit-transition: .5s;
+    -moz-transition: .5s;
+    -ms-transition: .5s;
+    -o-transition: .5s;
+    transition: .5s;
+}
+
+#collapseDirect #direct-messageText p {
+    width: 100%;
+}
+
 /* modal */
 #register-modal {
 	z-index: 99;
