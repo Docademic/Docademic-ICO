@@ -253,11 +253,24 @@ window.addEventListener("load", function () {
                         let tx = body.filter((tx) => {
                             return tx.hash === txInput.value.substring(2) && tx.to === '0e8160745966d2109c568230ef515b0dddea1599'
                         })[0];
-                        fetch(URLS.HOST+URLS.directOrder,{method: 'POST',body:JSON.stringify({tx:tx.hash,amount:tx.value,ref:document.getElementById("ref").value})}).then((r) => {
-                            r.json().then((body) => {
-                               console.log(body);
-                            });
-                        });
+                        if(tx) {
+                            /*fetch(URLS.HOST + URLS.directOrder, {
+                                method: 'POST',
+                                body: JSON.stringify({
+                                    tx: tx.hash,
+                                    amount: tx.value,
+                                    ref: document.getElementById("ref").value
+                                })
+                            }).then((r) => {
+                                r.json().then((body) => {
+                                    console.log(body);
+                                });
+                            });*/
+                            let amount = web3R.fromWei(tx.value, 'ether');
+                            directOrder((e,r,b) => {
+                                console.log(b);
+                            },{tx: '0x' + tx.hash, amount: parseFloat(amount), ref: document.getElementById("ref").value, address: '0x'+tx.from})
+                        }
                     });
 
                 }
