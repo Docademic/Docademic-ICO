@@ -442,12 +442,26 @@ setBuyButtonText = (value) => {
 };
 
 var progress = $('.progress-bar');
+var targetCap = $('#target-cap');
 
 let getBalance = (web)=>{
 	web.eth.getBalance(crowdSaleAddress, (e, re) => {
 		let eth = web.fromWei(re, 'ether');
-		let percent = Math.floor(eth.c[0] * 100 / 525);
-		progress.html(percent+'%').css('width', percent+'%').attr('aria-valuenow', percent);
+        let ethCount = eth.c[0];
+        let ethTarget = 525;
+        let targetText = '<strong>Soft cap:</strong> <span >525 ETH</span>';
+        function percentHtml(){
+            let percent = Math.floor(ethCount * 100 / ethTarget);
+            progress.html(percent+'%').css('width', percent+'%').attr('aria-valuenow', percent);
+            targetCap.html(targetText);
+        }
+        if(ethCount < ethTarget){
+            percentHtml();
+        } else{
+            ethTarget = 2100;
+            targetText = '<strong>Hard cap:</strong> <span >2100 ETH</span>';
+            percentHtml();
+        }
 		setEthText(web.fromWei(re, 'ether').toString(10));
 		//setMTCText(sold.toString(10));
 		//console.log(web.fromWei(re, 'ether').toString(10) + " eth");
@@ -525,7 +539,7 @@ initBuy = (web3, amount) => {
 };
 
 validateEmail = (email) => {
-    let re = /^(([^<>()s[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email.toLowerCase());
 };
 
