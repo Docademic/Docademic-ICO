@@ -386,23 +386,27 @@
 </section>
 <div id="util-bar" class="fixed-bottom bluegray py-2">
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-3 hidden-md-down d-flex align-items-center">
-                <p class="ml-2">
-                    <strong>ETH raised:</strong> <span id="ether-text">-</span>
-                </p>
-            </div>
+        <div class="row justify-content-center">
             <div class="col-md-6">
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 0;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                        0%
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>
+                            <strong>ETH raised:</strong> <span id="ether-text">-</span>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <p id="target-cap" class="text-md-right">
+                            <!--<strong>MTC sold:</strong> <span id="mtc-text">-</span>-->
+                        </p>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-3 hidden-md-down d-flex align-items-center">
-                <p class="text-right mr-2" id="target-cap">
-                    <!--<strong>MTC sold:</strong> <span id="mtc-text">-</span>-->
-                </p>
+                <div class="progress">
+                    <div class="percent-number"></div>
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="25">
+                        Soft cap
+                    </div>
+                    <div class="progress-bar hard-cap" role="progressbar" style="width: 0;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
             </div>
         </div>
     </div>

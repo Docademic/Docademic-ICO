@@ -444,8 +444,9 @@ setBuyButtonText = (value) => {
     }
 };
 
-var progress = $('.progress-bar');
+var progress = $('.progress-bar.hard-cap');
 var targetCap = $('#target-cap');
+var percentNumber = $('.percent-number');
 
 let getBalance = (web)=>{
 	web.eth.getBalance(crowdSaleAddress, (e, re) => {
@@ -455,7 +456,8 @@ let getBalance = (web)=>{
         let targetText = '<strong>Soft cap:</strong> <span >525 ETH</span>';
         function percentHtml(){
             let percent = Math.floor(ethCount * 100 / ethTarget);
-            progress.html(percent+'%').css('width', percent+'%').attr('aria-valuenow', percent);
+            progress.css('width', (percent - 25)+'%').attr('aria-valuenow', percent);
+            percentNumber.html(percent+'%');
             targetCap.html(targetText);
         }
         if(ethCount < ethTarget){
