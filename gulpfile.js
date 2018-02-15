@@ -27,13 +27,13 @@ gulp.task('default', function () {
 });
 
 gulp.task('serve', function () {
-    runSequence(['browserify', 'browserify-buy', 'browserify-shape'], function (error) {
+    runSequence(['browserify', 'browserify-buy', 'browserify-shape', 'browserify-refs'], function (error) {
             browserSync({
                 server: {
                     baseDir: '.'
                 }
             });
-            gulp.watch(['./assets/js/app.js', './assets/js/mtc.js', './assets/js/buy.js', './assets/js/shape.js'], ['browserify', 'browserify-buy', 'browserify-shape', reload]);
+            gulp.watch(['./assets/js/app.js', './assets/js/mtc.js', './assets/js/buy.js', './assets/js/shape.js', './assets/js/refs.js'], ['browserify', 'browserify-buy', 'browserify-shape', 'browserify-refs',reload]);
             gulp.watch(['*.html', './confirm/*.html', './assets/js/main.js', paths.css], reload);
         }
     );
@@ -86,6 +86,15 @@ gulp.task('minify-shape-js', function () {
     ]);
 });
 
+gulp.task('minify-refs-js', function () {
+    return pump([
+        gulp.src('./assets/js/refs-bundle.js'),
+        uglifyes(),
+        concat('refs-bundle.min.js'),
+        gulp.dest(DEST + '/assets/js')
+    ]);
+});
+
 gulp.task('minify-html', function () {
     return pump([
         gulp.src('./*.html'),
@@ -94,7 +103,8 @@ gulp.task('minify-html', function () {
             'css': 'assets/css/styles.min.css',
             'js': 'assets/js/bundle.min.js',
             'jsbuy': '/assets/js/buy-bundle.min.js',
-            'jsshape': '/assets/js/shape-bundle.min.js'
+            'jsshape': '/assets/js/shape-bundle.min.js',
+            'jsrefs': '/assets/js/refs-bundle.min.js'
         }),
         gulp.dest(DEST)
     ]);
@@ -194,6 +204,16 @@ gulp.task('browserify-shape', function () {
         .pipe(gulp.dest('./assets/js'));
 });
 
+gulp.task('browserify-refs', function () {
+    return gulp.src('./assets/js/refs.js')
+        .pipe(browserify({
+            insertGlobals: true,
+            debug: false
+        }))
+        .pipe(rename('refs-bundle.js'))
+        .pipe(gulp.dest('./assets/js'));
+});
+
 gulp.task('copy-imgs', ['img-copy', 'img-team-copy', 'img-advisors-copy', 'img-fav-copy', 'img-partners-copy']);
 
 gulp.task('clean', function () {
@@ -203,7 +223,7 @@ gulp.task('clean', function () {
 });
 
 gulp.task('build', function (callback) {
-    runSequence('clean', 'browserify', 'browserify-buy', 'browserify-shape', 'minify-css', 'minify-js', 'minify-buy-js', 'minify-shape-js', 'minify-html', 'minify-html-c', 'other-files-copy', 'shifty-copy', 'config-copy', 'copy-imgs', function (error) {
+    runSequence('clean', 'browserify', 'browserify-buy', 'browserify-shape', 'browserify-refs', 'minify-css', 'minify-js', 'minify-buy-js', 'minify-shape-js', 'minify-refs-js', 'minify-html', 'minify-html-c', 'other-files-copy', 'shifty-copy', 'config-copy', 'copy-imgs', function (error) {
             if (error) {
                 console.log(error.message);
             } else {

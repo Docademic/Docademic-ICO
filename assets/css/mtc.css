@@ -153,6 +153,33 @@ h2 a{
 	}
 }
 
+.table-header{
+	background: #0288d1;
+}
+
+.table-header p{
+	color: #fff;
+	font-weight: bold;
+}
+
+.table-bottom{
+    background: #c8c8c8;
+}
+
+.table-bottom p{
+
+}
+
+.table-entry{
+    overflow: hidden;
+    background: #fff;
+}
+
+.colored-entry{
+    overflow: hidden;
+    background: #f2f2f2;
+}
+
 #direct-container{
     text-align: center;
 }
