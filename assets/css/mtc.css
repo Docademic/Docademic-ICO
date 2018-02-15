@@ -798,6 +798,15 @@ footer #social li:last-child a{
 	height: 50px;
 	padding-top: 14px;
 }
+.percent-number{
+	align-items: center;
+	display: flex;
+	font-size: 18px;
+	left: calc(50% - 25px);
+	height: 50px;
+	position: absolute;
+	width: 50px;
+}
 
 
 /* util bar */
