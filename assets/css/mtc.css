@@ -191,7 +191,8 @@ h2 a{
     padding-right: 1em;
 }
 
-#collapseDirect #direct-messageText.red{
+#collapseDirect #direct-messageText.red,
+#collapseDirect #direct-messageText.green{
     height: auto;
     color: #fff;
     margin-top: 1em;

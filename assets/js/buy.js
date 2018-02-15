@@ -332,7 +332,8 @@ window.addEventListener("load", function () {
         if($('#ref').val().length === 8){
             showDirectForm(true)
         }else{
-            showDirectForm(false,'Please enter a valid Referral Code to continue.')
+            showDirectForm(false);
+            showDirectMessage(true,'Please enter a valid Referral Code to continue.');
         }
     });
 
@@ -340,17 +341,19 @@ window.addEventListener("load", function () {
     let refInput = document.getElementById("ref");
     refInput.addEventListener("keydown", (event) => {
         if (event.target.value && event.target.value.length === 8 && selectedTab === 1) {
-            showDirectForm(true)
+            showDirectForm(true);
         } else {
-            showDirectForm(false,'Please enter a valid Referral Code to continue.')
+            showDirectForm(false);
+            showDirectMessage(true,'Please enter a valid Referral Code to continue.');
         }
     });
 
     refInput.addEventListener("input", (event) => {
         if (event.target.value && event.target.value.length === 8 && selectedTab === 1) {
-            showDirectForm(true)
+            showDirectForm(true);
         } else {
-            showDirectForm(false,'Please enter a valid Referral Code to continue.')
+            showDirectForm(false);
+            showDirectMessage(true,'Please enter a valid Referral Code to continue.');
         }
     });
     // Now you can start your app & access web3 freely:
@@ -551,15 +554,21 @@ setMTCText = (text) => {
     document.getElementById('mtc-text').innerHTML = text;
 };
 
-showDirectForm = (show, message) => {
+showDirectForm = (show) => {
     if (show) {
-        document.getElementById("direct-message").className = 'hidden-input';
         document.getElementById("direct-form").className = 'mt-3';
     } else {
-        document.getElementById("direct-message").className = 'mt-3';
-        document.getElementById('direct-messageText').className = 'red';
-        document.getElementById('direct-messageText').innerHTML = message;
         document.getElementById("direct-form").className = 'hidden-input';
+    }
+};
+
+showDirectMessage = (show, success, message) =>{
+    if(show){
+        document.getElementById("direct-message").className = 'mt-3';
+        document.getElementById('direct-messageText').className = success ? 'green' : 'red';
+        document.getElementById('direct-messageText').innerHTML = message;
+    }else{
+        document.getElementById("direct-message").className = 'hidden-input';
     }
 };
 
