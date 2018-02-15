@@ -242,39 +242,44 @@ window.addEventListener("load", function () {
     let directButton = $('#direct-button');
     directButton.click(function () {
         let txInput = document.getElementById("txid");
-        console.log('direct button click');
         if(txInput.value && txInput.value.length === 66){
-            console.log('tx sent');
             fetch('https://www.etherchain.org/api/tx/' + txInput.value ,{method: 'GET'}).then((r) => {
-                if (r && r.statusCode === 401) {
-                    window.location.href = '/'
+                if (r.status !== 200) {
+                    showDirectMessage(true, false, 'There was an error validating that transaction, please review the transaction hash and try again');
+                    fadeDirectMessage();
                 } else {
                     r.json().then((body) => {
-                        let tx = body.filter((tx) => {
-                            return tx.hash === txInput.value.substring(2) && tx.to === '0e8160745966d2109c568230ef515b0dddea1599'
-                        })[0];
-                        if(tx) {
-                            /*fetch(URLS.HOST + URLS.directOrder, {
-                                method: 'POST',
-                                body: JSON.stringify({
-                                    tx: tx.hash,
-                                    amount: tx.value,
-                                    ref: document.getElementById("ref").value
-                                })
-                            }).then((r) => {
-                                r.json().then((body) => {
-                                    console.log(body);
-                                });
-                            });*/
-                            let amount = web3R.fromWei(tx.value, 'ether');
-                            directOrder((e,r,b) => {
-                                console.log(b);
-                            },{tx: '0x' + tx.hash, amount: parseFloat(amount), ref: document.getElementById("ref").value, address: '0x'+tx.from})
+                        if(body.length > 0){
+                            let tx = body.filter((tx) => {
+                                return tx.hash === txInput.value.substring(2) && tx.to === '0e8160745966d2109c568230ef515b0dddea1599'
+                            })[0];
+                            if(tx) {
+                                let amount = web3R.fromWei(tx.value, 'ether');
+                                directOrder((e,r,b) => {
+                                    if(b.success){
+                                        showDirectMessage(true, true, 'Done! Your bonus will be delivered after the Crowdsale has ended. Thank you for contributing!');
+                                        fadeDirectMessage();
+                                        txInput.value = '';
+                                    }else{
+                                        showDirectMessage(true, false, 'There was an error validating that transaction, please review the transaction hash and try again');
+                                        fadeDirectMessage();
+                                    }
+                                },{tx: '0x' + tx.hash, amount: parseFloat(amount), ref: document.getElementById("ref").value, address: '0x'+tx.from})
+                            }else{
+                                showDirectMessage(true, false, 'There was an error validating that transaction, please review the transaction hash and try again');
+                                fadeDirectMessage();
+                            }
+                        }else{
+                            showDirectMessage(true, false, 'There was an error validating that transaction, please review the transaction hash and try again');
+                            fadeDirectMessage();
                         }
                     });
 
                 }
             });
+        }else{
+            showDirectMessage(true, false, 'Invalid transaction hash');
+            fadeDirectMessage();
         }
     });
 
@@ -330,10 +335,11 @@ window.addEventListener("load", function () {
     let directLink = $('#direct-link');
     directLink.click(function () {
         if($('#ref').val().length === 8){
-            showDirectForm(true)
+            showDirectForm(true);
+            showDirectMessage(false);
         }else{
             showDirectForm(false);
-            showDirectMessage(true,'Please enter a valid Referral Code to continue.');
+            showDirectMessage(true, false, 'Please enter a valid Referral Code to continue.');
         }
     });
 
@@ -342,18 +348,20 @@ window.addEventListener("load", function () {
     refInput.addEventListener("keydown", (event) => {
         if (event.target.value && event.target.value.length === 8 && selectedTab === 1) {
             showDirectForm(true);
+            showDirectMessage(false);
         } else {
             showDirectForm(false);
-            showDirectMessage(true,'Please enter a valid Referral Code to continue.');
+            showDirectMessage(true, false, 'Please enter a valid Referral Code to continue.');
         }
     });
 
     refInput.addEventListener("input", (event) => {
         if (event.target.value && event.target.value.length === 8 && selectedTab === 1) {
             showDirectForm(true);
+            showDirectMessage(false);
         } else {
             showDirectForm(false);
-            showDirectMessage(true,'Please enter a valid Referral Code to continue.');
+            showDirectMessage(true, false, 'Please enter a valid Referral Code to continue.');
         }
     });
     // Now you can start your app & access web3 freely:
@@ -572,6 +580,12 @@ showDirectMessage = (show, success, message) =>{
     }else{
         document.getElementById("direct-message").className = 'hidden-input';
     }
+};
+
+fadeDirectMessage = () => {
+    setTimeout(() => {
+        document.getElementById("direct-message").className = 'hidden-input';
+    }, 3500)
 };
 
 showBuyModule = (show, message) => {
