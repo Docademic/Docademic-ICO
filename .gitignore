@@ -33,6 +33,7 @@ dist
 assets/js/main.js
 assets/js/buy-bundle.js
 assets/js/shape-bundle.js
+assets/js/refs-bundle.js
 
 #Config file
 config.json

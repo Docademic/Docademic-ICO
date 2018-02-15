@@ -153,6 +153,61 @@ h2 a{
 	}
 }
 
+.table-header{
+	background: #0288d1;
+}
+
+.table-header p{
+	color: #fff;
+	font-weight: bold;
+}
+
+.table-bottom{
+    background: #c8c8c8;
+}
+
+.table-bottom p{
+
+}
+
+.table-entry{
+    overflow: hidden;
+    background: #fff;
+}
+
+.colored-entry{
+    overflow: hidden;
+    background: #f2f2f2;
+}
+
+#direct-container{
+    text-align: center;
+}
+
+#collapseDirect #direct-messageText{
+    height: 0;
+    overflow-y: hidden;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+#collapseDirect #direct-messageText.red{
+    height: auto;
+    color: #fff;
+    margin-top: 1em;
+    padding-bottom: .5em;
+    padding-top: .5em;
+    -webkit-transition: .5s;
+    -moz-transition: .5s;
+    -ms-transition: .5s;
+    -o-transition: .5s;
+    transition: .5s;
+}
+
+#collapseDirect #direct-messageText p {
+    width: 100%;
+}
+
 /* modal */
 #register-modal {
 	z-index: 99;
