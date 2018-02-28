@@ -79,7 +79,7 @@ $(document).ready(function () {
             dateCheck();
         });
     }
-    dateCheck();
+    //dateCheck();
 
     // modal
     $('.tgl-show').click(function () {
