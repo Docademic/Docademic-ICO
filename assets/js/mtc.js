@@ -47,7 +47,7 @@ $(document).ready(function () {
     var args = '';
     if (currentDate.isBefore(sellEnds)) {
         $('.sell').addClass('selling');
-        $('#home-content .title h2').html('ICO ends on: 2018/02/28');
+        $('#home-content .title h2').html('Pre-Sale ends on: 2018/02/28');
         countdownDate = sellEnds;
         sellCountdown(args);
     }
