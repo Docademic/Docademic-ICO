@@ -55,7 +55,7 @@ $(document).ready(function () {
         $('.sell').removeClass('selling');
         offers.empty();
         countdownDate = sellStarts;
-        args = 'Sell stats at %D days and %H:%M:%S';
+        args = 'Sell starts at %D days and %H:%M:%S';
         sellCountdown(args);
     }
     function sellCountdown(args){
@@ -66,7 +66,7 @@ $(document).ready(function () {
             $('.sell').removeClass('selling');
             offers.empty();
             countdownDate = sellStarts;
-            args = 'Sell stats at %D days and %H:%M:%S';
+            args = 'Sell starts at %D days and %H:%M:%S';
             sellCountdown(args);
         });
     }
