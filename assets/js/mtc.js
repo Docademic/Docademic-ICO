@@ -1,5 +1,11 @@
 $(document).ready(function () {
 
+    $('.toggle').click(function(e){
+        e.preventDefault();
+        $(this).toggleClass('open');
+        $($(this).data('target')).toggleClass('show');
+    });
+
 	$('a.nav-link[href*="#"]:not([href="#"]), a#toHealthcare').click(function() {
 	    if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
 	      var target = $(this.hash);
@@ -16,23 +22,30 @@ $(document).ready(function () {
 
     // fixed navbar and roadmap
     var navbar = $('.navbar');
-    var homeHeight = $('#home').height() - 60;
+
+    var homeHeight = $('#home').height();
     var effect = $('.show-effect');
     $(window).on('scroll', function (event) {
         var scrollValue = $(window).scrollTop();
-        if (scrollValue >= homeHeight) {
-            $('.navbar').addClass('affix');
-            $('#countdown .sell').addClass('affix');
-            $('#countdown .whitepaper').addClass('affix');
+        if (scrollValue <= homeHeight) {
+            $('.parallax .col-4, .parallax .col-8').css({
+                'top': scrollValue/5 +'px'
+            });
         }
-        if (scrollValue < homeHeight) {
-            $('.navbar').removeClass('affix');
-            $('#countdown .sell').removeClass('affix');
-            $('#countdown .whitepaper').removeClass('affix');
+        if (scrollValue >= homeHeight/4) {
+            $('header').addClass('affix');
+            $('header img').attr('src', 'assets/img/mtc-blue.png');
+        } else{
+            $('header').removeClass('affix');
+            $('header img').attr('src', 'assets/img/mtc.png');
         }
         effect.each(function () {
             if ($(this).offset().top <= $(window).scrollTop() + $(window).height() * 0.75) {
-                $(this).addClass('go');
+                if ($(this).hasClass('invert')) {
+                    $('#docademic-info').addClass('go');
+                } else{
+                    $(this).addClass('go');
+                }
             }
         });
     });
@@ -71,19 +84,13 @@ $(document).ready(function () {
         });
     }
 
-    function offerCountdown(date){
-        offers.countdown(date, function(event) {
+    // function offerCountdown(date){
+    //     offers.countdown(date, function(event) {
           
-        }).on('finish.countdown', function(event) {
-            currentDate = moment().tz("America/Mexico_City");
-            dateCheck();
-        });
-    }
-    dateCheck();
-
-    // modal
-    $('.tgl-show').click(function () {
-        $($(this).data('show')).toggleClass('show');
-    });
-
+    //     }).on('finish.countdown', function(event) {
+    //         currentDate = moment().tz("America/Mexico_City");
+    //         dateCheck();
+    //     });
+    // }
+    // dateCheck();
 });
