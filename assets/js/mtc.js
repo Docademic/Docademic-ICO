@@ -6,11 +6,12 @@ $(document).ready(function () {
         $($(this).data('target')).toggleClass('show');
     });
 
-	$('a.nav-link[href*="#"]:not([href="#"]), a#toHealthcare').click(function() {
+	$('menu a[href*="#"]:not([href="#"])').click(function() {
 	    if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
 	      var target = $(this.hash);
 	      target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
 	      if (target.length) {
+            $('menu').removeClass('show');
 	        $('html, body').animate({
 	          scrollTop: (target.offset().top - 54)
 	        }, 1000);
@@ -18,10 +19,6 @@ $(document).ready(function () {
 	      }
 	    }
 	});
-
-
-    // fixed navbar and roadmap
-    var navbar = $('.navbar');
 
     var homeHeight = $('#home').height();
     var effect = $('.show-effect');
@@ -51,16 +48,14 @@ $(document).ready(function () {
     });
 
     // countdown timer
-    var timerContainer = $('.timer-container');
-    var offers = $('#home #offers');
+    var timerContainer = $('.timer');
     var currentDate = moment().tz("America/Mexico_City");
     var sellStarts = moment.tz('2018-03-06 12:00', 'America/Mexico_City');
-    var sellEnds = moment.tz('2018-03-01 00:00', 'America/Mexico_City');
+    var sellEnds = moment.tz('2018-03-10 12:00', 'America/Mexico_City');
     var countdownDate = '';
-    var args = '';
+    var args = '%D days and %H:%M:%S';
     if (currentDate.isBefore(sellEnds)) {
         $('.sell').addClass('selling');
-        $('#home-content .title h2').html('ICO ends on: 2018/02/28');
         countdownDate = sellEnds;
         sellCountdown(args);
     }
