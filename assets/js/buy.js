@@ -26,10 +26,13 @@ const queryString = require('query-string');
 
 const tokenAddress = "0x905E337c6c8645263D3521205Aa37bf4d034e745";
 const multiSigAddress = "0x7A46C781b593068d5e987b191e9c2f7413E22aEE";
-const crowdSaleAddress = "0x0E8160745966D2109c568230Ef515B0ddDea1599";
+const crowdSaleAddress = "0xB31209CaA95B4475AAE98A5c32dfA0129d154775";
+
 const contributors = new Set();
 let web3R;
 let selectedTab = 0;
+let presaleAmount = 0;
+let etherCap = 0;
 
 class Buy {
 
@@ -105,6 +108,13 @@ window.addEventListener("load", function () {
     $.getJSON("/config.json", function (json) {
         if (json.HOST) {
             URLS.HOST = json.HOST;
+            setGasText(json.gasLimit);
+            setMinPurchaseText(json.minPurchase);
+            setContractAddressText(json.contractAddress);
+            presaleAmount = json.presaleAmount;
+            etherCap = json.etherCap;
+            setCapListText(etherCap);
+            createPriceDatesList(json.prices);
             let params = queryString.parse(window.location.search);
             if (params.ref) {
                 setRefText(params.ref);
@@ -116,10 +126,21 @@ window.addEventListener("load", function () {
         console.error("Must have config.json file in root directoy");
     });
 
+    $('#help-btn').click(function (e) {
+        e.preventDefault();
+        $('html, body').animate({
+            scrollTop: $("#headingFour").offset().top
+        }, 2000);
+        sendGAEvent(GAEvents.helpButton);
+    });
+
     var fStep = $('#first-step')
     $('#first-step-submit').click(function (e) {
         e.preventDefault();
-        var checkboxes = fStep.find('.input-container input');
+        fStep.addClass('inactive');
+        $('#second-step').addClass('show');
+        sendGAEvent(GAEvents.disclaimerSubmit);
+        /*var checkboxes = fStep.find('.input-container input');
         var empty = false;
         checkboxes.each(function () {
             if (!$(this).is(":checked")) {
@@ -135,7 +156,7 @@ window.addEventListener("load", function () {
             } else {
                 grecaptcha.reset();
             }
-        }
+        }*/
     });
 
     if (typeof web3 !== 'undefined') {
@@ -160,7 +181,7 @@ window.addEventListener("load", function () {
     }
 
     let web3RI = new Web3R(new Web3R.providers.HttpProvider("https://mainnet.infura.io/JoIGnMxHRlKZg956R086"));
-	web3R = web3RI;
+    web3R = web3RI;
     initStats(web3RI);
 
     let buyButton = document.getElementById("buyButton");
@@ -174,7 +195,7 @@ window.addEventListener("load", function () {
 
     let amountInput = document.getElementById("amount");
     amountInput.addEventListener("keyup", (e) => {
-        let val = (e.target.value * (1/0.000035)) * 1.2;
+        let val = (e.target.value * (1 / 0.000035)) * 1.2;
         if (e.target.value && e.target.value > 0) {
             //setBuyButtonText('~'+val.toFixed(4));
             document.getElementById("buyButton").disabled = false;
@@ -186,7 +207,7 @@ window.addEventListener("load", function () {
         }
     });
     amountInput.addEventListener("change", (e) => {
-        let val = (e.target.value * (1/0.000035)) * 1.2;
+        let val = (e.target.value * (1 / 0.000035)) * 1.2;
         if (e.target.value && e.target.value > 0) {
             //setBuyButtonText('~'+val.toFixed(4));
             document.getElementById("buyButton").disabled = false;
@@ -242,34 +263,39 @@ window.addEventListener("load", function () {
     let directButton = $('#direct-button');
     directButton.click(function () {
         let txInput = document.getElementById("txid");
-        if(txInput.value && txInput.value.length === 66){
-            fetch('https://www.etherchain.org/api/tx/' + txInput.value ,{method: 'GET'}).then((r) => {
+        if (txInput.value && txInput.value.length === 66) {
+            fetch('https://www.etherchain.org/api/tx/' + txInput.value, {method: 'GET'}).then((r) => {
                 if (r.status !== 200) {
                     showDirectMessage(true, false, 'There was an error validating that transaction, please review the transaction hash and try again');
                     fadeDirectMessage();
                 } else {
                     r.json().then((body) => {
-                        if(body.length > 0){
+                        if (body.length > 0) {
                             let tx = body.filter((tx) => {
                                 return tx.hash === txInput.value.substring(2) && tx.to === '0e8160745966d2109c568230ef515b0dddea1599'
                             })[0];
-                            if(tx) {
+                            if (tx) {
                                 let amount = web3R.fromWei(tx.value, 'ether');
-                                directOrder((e,r,b) => {
-                                    if(b.success){
+                                directOrder((e, r, b) => {
+                                    if (b.success) {
                                         showDirectMessage(true, true, 'Done! Your bonus will be delivered after the Crowdsale has ended. Thank you for contributing!');
                                         fadeDirectMessage();
                                         txInput.value = '';
-                                    }else{
+                                    } else {
                                         showDirectMessage(true, false, 'There was an error validating that transaction, please review the transaction hash and try again');
                                         fadeDirectMessage();
                                     }
-                                },{tx: '0x' + tx.hash, amount: parseFloat(amount), ref: document.getElementById("ref").value, address: '0x'+tx.from})
-                            }else{
+                                }, {
+                                    tx: '0x' + tx.hash,
+                                    amount: parseFloat(amount),
+                                    ref: document.getElementById("ref").value,
+                                    address: '0x' + tx.from
+                                })
+                            } else {
                                 showDirectMessage(true, false, 'There was an error validating that transaction, please review the transaction hash and try again');
                                 fadeDirectMessage();
                             }
-                        }else{
+                        } else {
                             showDirectMessage(true, false, 'There was an error validating that transaction, please review the transaction hash and try again');
                             fadeDirectMessage();
                         }
@@ -277,7 +303,7 @@ window.addEventListener("load", function () {
 
                 }
             });
-        }else{
+        } else {
             showDirectMessage(true, false, 'Invalid transaction hash');
             fadeDirectMessage();
         }
@@ -334,10 +360,10 @@ window.addEventListener("load", function () {
 
     let directLink = $('#direct-link');
     directLink.click(function () {
-        if($('#ref').val().length === 8){
+        if ($('#ref').val().length === 8) {
             showDirectForm(true);
             showDirectMessage(false);
-        }else{
+        } else {
             showDirectForm(false);
             showDirectMessage(true, false, 'Please enter a valid Referral Code to continue.');
         }
@@ -370,7 +396,7 @@ window.addEventListener("load", function () {
 
 enableSubmitButton = (enable) => {
     document.getElementById('first-step-submit').disabled = !enable;
-    if(enable) $("#first-step-submit").removeClass('inactive');
+    if (enable) $("#first-step-submit").removeClass('inactive');
 };
 
 captchaCheck = () => {
@@ -452,35 +478,50 @@ setBuyButtonText = (value) => {
     }
 };
 
+createPriceDatesList = (data) => {
+    let container = document.getElementById('prices-list');
+    let pricesP = document.createElement('p');
+    //const moment = require('moment');
+    data.forEach((entry, index) => {
+        let liItem = document.createElement('li');
+        liItem.innerHTML = entry.price+' ETH from '+moment.unix(entry.start).format('YYYY/M/D, h:mm:ss a')+' to '+moment.unix(entry.end).format('YYYY/M/D, h:mm:ss a');
+        pricesP.appendChild(liItem);
+    });
+    container.appendChild(pricesP);
+};
+
 var progress = $('.progress-bar.hard-cap');
 var targetCap = $('#target-cap');
 var percentNumber = $('.percent-number');
 
-let getBalance = (web)=>{
-	web.eth.getBalance(crowdSaleAddress, (e, re) => {
-		let eth = web.fromWei(re, 'ether');
-        let ethCount = eth.c[0];
-        let ethTarget = 525;
-        let targetText = '<strong>Soft cap:</strong> <span >525 ETH</span>';
-        function percentHtml(){
+let getBalance = (web) => {
+    web.eth.getBalance(crowdSaleAddress, (e, re) => {
+        let eth = web.fromWei(re, 'ether');
+        let ethCount = eth.c[0] + presaleAmount;
+        let ethTarget = etherCap;
+        let targetText = '<strong>Cap:</strong> <span >'+etherCap+' ETH</span>';
+
+        function percentHtml() {
             let percent = Math.floor(ethCount * 100 / ethTarget);
-            progress.css('width', (percent - 25)+'%').attr('aria-valuenow', percent);
-            percentNumber.html(percent+'%');
+            progress.css('width', (percent - 25) + '%').attr('aria-valuenow', percent);
+            percentNumber.html(percent + '%');
             targetCap.html(targetText);
         }
-        if(ethCount < ethTarget){
+
+        percentHtml();
+        /*if (ethCount < ethTarget) {
             percentHtml();
-        } else{
+        } else {
             ethTarget = 2100;
             targetText = '<strong>Hard cap:</strong> <span >2100 ETH</span>';
             percentHtml();
-        }
-		setEthText(web.fromWei(re, 'ether').toString(10));
-		//setMTCText(sold.toString(10));
-		//console.log(web.fromWei(re, 'ether').toString(10) + " eth");
-		//console.log(balance.toString(10) + " tokens left");
-		//console.log(sold.toString(10) + " tokens sold");
-	});
+        }*/
+        setEthText(web.fromWei(re, 'ether').toString(10));
+        //setMTCText(sold.toString(10));
+        //console.log(web.fromWei(re, 'ether').toString(10) + " eth");
+        //console.log(balance.toString(10) + " tokens left");
+        //console.log(sold.toString(10) + " tokens sold");
+    });
 }
 
 initStats = (web) => {
@@ -490,10 +531,10 @@ initStats = (web) => {
         let initialSupply = web.toBigNumber(90000000);
         let sold = initialSupply.sub(balance);
         getBalance(web);
-        setInterval(()=>{
-	        getBalance(web);
-        },5000);
-        
+        setInterval(() => {
+            getBalance(web);
+        }, 5000);
+
 
     });
     /*buy.watchMultiSigTransactionExecution((err,results,type) => {
@@ -524,15 +565,15 @@ initBuy = (web3, amount) => {
     }
 
     sendGAEvent(GAEvents.metamaskIntent);
-	
+
     web3.eth.sendTransaction({
         to: crowdSaleAddress,
         value: web3.toWei(amount, 'ether')
     }, (err, results) => {
         if (!err) {
-	        let eventData = Object.assign({},GAEvents.metamaskOrder);
-	        eventData.eventValue = web3R.toWei(amount, 'finney');
-	        sendGAEvent(eventData);
+            let eventData = Object.assign({}, GAEvents.metamaskOrder);
+            eventData.eventValue = web3R.toWei(amount, 'finney');
+            sendGAEvent(eventData);
             let body = {};
             body['address'] = web3.eth.accounts[0];
             body['amount'] = amount;
@@ -564,6 +605,23 @@ setMTCText = (text) => {
     document.getElementById('mtc-text').innerHTML = text;
 };
 
+setGasText = (text) => {
+    document.getElementById('gas-limit').innerHTML = "Use " + text + " as your Gas Limit to guarantee a successful transaction";
+    document.getElementById('list-gas').innerHTML = "Gas required: " + text;
+};
+
+setCapListText = (text) => {
+    document.getElementById('list-cap').innerHTML = "Cap: " + text;
+};
+
+setMinPurchaseText = (text) => {
+    document.getElementById('min-purchase').innerHTML = "Minimum purchase is " + text;
+};
+
+setContractAddressText = (text) => {
+    document.getElementById('contract-address').value = text;
+};
+
 showDirectForm = (show) => {
     if (show) {
         document.getElementById("direct-form").className = 'mt-3';
@@ -572,12 +630,12 @@ showDirectForm = (show) => {
     }
 };
 
-showDirectMessage = (show, success, message) =>{
-    if(show){
+showDirectMessage = (show, success, message) => {
+    if (show) {
         document.getElementById("direct-message").className = 'mt-3';
         document.getElementById('direct-messageText').className = success ? 'green' : 'red';
         document.getElementById('direct-messageText').innerHTML = message;
-    }else{
+    } else {
         document.getElementById("direct-message").className = 'hidden-input';
     }
 };
@@ -629,8 +687,8 @@ sendShapeshiftOrder = (tx, amount) => {
     shapeshiftOrder(() => {
 
     }, body);
-	let eventData = Object.assign({},GAEvents.shapeshiftOrder);
-	eventData.eventValue = web3R.toWei(amount, 'finney');
+    let eventData = Object.assign({}, GAEvents.shapeshiftOrder);
+    eventData.eventValue = web3R.toWei(amount, 'finney');
     sendGAEvent(eventData);
 };
 
@@ -677,7 +735,7 @@ const makeRequest = function (url, method, body, callback) {
     options.headers = {
         'Content-type': 'application/json',
         'accept-language': 'en',
-        '':''
+        '': ''
     };
 
     if (body) options.body = body;

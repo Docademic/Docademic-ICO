@@ -72,64 +72,53 @@
     ga('create', 'UA-85629052-9', 'auto');
     ga('send', 'pageview');
 </script>
-<section id="buy-section" class="mt-4">
+<section id="buy-section" class="">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card no-border">
-                    <div class="card-header lblue xl">
-                        <div class="logo-container mx-auto">
-                            <a href="./index.html"><img src="assets/img/mtc_w.png" alt="MTC"></a>
+                <div class="card no-border mt-3">
+                    <div class="card-header">
+                        <div class="row rel">
+                            <div class="col text-center">
+                                <img src="assets/img/mtc-blue.png" alt="MTC" class="no-responsive">
+                                <button class="btn lblue text-white" id="help-btn">HELP</button>
+                            </div>
                         </div>
                     </div>
                     <div class="card-container">
                         <div id="first-step" class="show">
-                            <h3 class="mt-3">
-                                Thank you for contributing! You're helping bring free basic healthcare and the future of
-                                medicine
-                                to the world!
-                            </h3>
-                            <form action="#" class="mt-3">
-                                <div class="input-container checkbox mt-3">
-                                    <input type="checkbox" name="" id="check1" onchange="checkStepOne()">
-                                    <label for="">
-                                        Check this box to confirm that you have been provided the updated version of the
-                                        <a href="//cdn.docademic.com/documents/Docademic+ICO+White+Paper.pdf">Docademic
-                                            Whitepaper</a> and have read and understand the terms and conditions of the
-                                        MTC Token sale as described in section 4 of the whitepaper.
-                                    </label>
+                            <h2 class="mt-0 t-gray text-center">
+                                Thank you<br>for contributing!
+                            </h2>
+                            <p class="text-center">
+                                Upon proceeding you agree to the following:<br><br>
+                                You have been provided the updated version of the Docademic Whitepaper and have read and understand the terms and conditions of the MTC Token sale as described in section 4 of the whitepaper.
+                                You are not sending ETH from an exchange (Coinbase, Bitso, Kraken, Binance, Bittrex, etc...) you must use a real wallet, and if you do not have one, we recommend creating one on myetherwallet.
+                                <a href="https://myetherwallet.com">My ether wallet</a>
+                                <a href="//cdn.docademic.com/documents/Docademic+ICO+White+Paper.pdf">Docademic Whitepaper</a>
+                            </p>
+                            <div class="row justify-content-center">
+                                <div class="col-md-6">
+                                    <button class="btn green mt-4" id="first-step-submit">
+                                        Proceed
+                                    </button>
                                 </div>
-                                <div class="input-container checkbox mt-3">
-                                    <input type="checkbox" name="" id="check2" onchange="checkStepOne()">
-                                    <label for="">
-                                        Check this box to confirm that you are not sending ETH from an exchange like
-                                        Coinbase, Bitso or Kraken. You must use a real wallet, and if you do not have
-                                        one, we recommend creating one on <a href="//myetherwallet.com">my ether
-                                        wallet</a>
-                                    </label>
-                                </div>
-                                <div id="captcha" data-callback="captchaCheck" class="g-recaptcha mt-3 mx-auto"
-                                     data-sitekey="6LefoTsUAAAAABDNmf1VWx4FRktl8kAKqfMC2KvA"></div>
-                                <button class="btn green my-3 inactive" id="first-step-submit" disabled>
-                                    Submit
-                                </button>
-                            </form>
+                            </div>
                         </div>
                         <div id="second-step" class="inactive">
                             <div class="row">
-                                <div class="mt-3 col-md-7">
+                                <div class="mt-0 col-md-7">
                                     <label for="">Email</label>
                                     <input id="email" placeholder="Optional unless you use ShapeShift" type="email">
                                 </div>
-                                <div class="mt-3 col-md-5">
+                                <div class="mt-3 mt-md-0 col-md-5">
                                     <label for="">Referral Code</label>
                                     <input id="ref" placeholder="Optional" type="text">
                                 </div>
                             </div>
-                            <span class="separator mt-4"></span>
-                            <h3 class="mt-3">Choose your method to purchase MTC tokens:</h3>
-                            <h5 class="t-green">Minimum purchase is 0.01 ETH</h5>
-                            <h5 class="t-green">Use 150,000 as your Gas Limit to guarantee a successful transaction</h5>
+                            <h3 class="mt-3 t-lblue text-center">CHOOSE YOUR METHOD TO PURCHASE MTC TOKENS:</h3>
+                            <h5 id="min-purchase" class="t-green mt-3">Minimum purchase is 0.01 ETH</h5>
+                            <h5 id="gas-limit" class="t-green">Use 90,000 as your Gas Limit to guarantee a successful transaction</h5>
                             <ul class="nav nav-pills my-4 nav-justified" id="pills-tab" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link" id="direct-tab" data-toggle="pill" href="#pills-home" role="tab"
@@ -176,8 +165,7 @@
                                     </p>
                                     <div class="copy mt-3">
                                         <button>copy</button>
-                                        <input readonly style="text-align:center"
-                                               value="0x0E8160745966D2109c568230Ef515B0ddDea1599"/>
+                                        <input id="contract-address" readonly style="text-align:center" value="0x0E8160745966D2109c568230Ef515B0ddDea1599"/>
                                     </div>
                                     <div class="mt-3">
                                         <div id="direct-container" role="tab" id="headerDirect">
@@ -243,13 +231,16 @@
                                 </div>
                             </div>
                         </div>
-                        <span class="separator mt-3"></span>
-                        <h3 class="text-center mt-3">
+                    </div>
+                </div>
+                <div class="card mt-3" id="faq">
+                    <div class="card-container">
+                        <h3 class="text-center t-lblue">
                             F.A.Q.
                         </h3>
                         <div id="accordion" role="tablist">
                             <div class="card">
-                                <div class="card-header lblue" role="tab" id="headingThree">
+                                <div class="card-header lblue" role="tab" id="headingOne">
                                     <h5 class="mb-0">
                                         <a data-toggle="collapse" href="#collapseThree" aria-expanded="true"
                                            aria-controls="collapseOne" onclick="sendGAEvent(GAEvents.faqClick)">
@@ -260,6 +251,24 @@
                                 <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingOne"
                                      data-parent="#accordion">
                                     <div class="card-body">
+                                        <p>
+                                            <li>
+                                                Starting Date: March 6 18:00:00 GMT
+                                            </li>
+                                            <li>
+                                                Ending Date: April 6 18:00:00 GMT
+                                            </li>
+                                            <li id="list-gas">
+                                                Gas required: 100,000
+                                            </li >
+                                            <li>
+                                                ShapeShift transactions take a day to transfer the MTC tokens
+                                            </li>
+                                            <li id="list-cap">
+                                                Cap: 12250 ETH
+                                            </li>
+                                        </p>
+                                        <br/>
                                         <p>
                                             MetaMask video tutorial:<br/>
                                             <a href="https://youtu.be/OeiVQ45VCxI" target="_blank">https://youtu.be/OeiVQ45VCxI</a>
@@ -272,15 +281,16 @@
                                             Add MTC to MyEtherWallet tutorial:<br/>
                                             <a href="https://youtu.be/vm9FTc5LNhM" target="_blank">https://youtu.be/vm9FTc5LNhM</a>
                                         </p>
+
                                     </div>
                                 </div>
                             </div>
                             <div class="card">
-                                <div class="card-header lblue" role="tab" id="headingThree">
+                                <div class="card-header lblue" role="tab" id="headingTwo">
                                     <h5 class="mb-0">
                                         <a data-toggle="collapse" href="#collapseTwo" aria-expanded="true"
                                            aria-controls="collapseOne" onclick="sendGAEvent(GAEvents.faqClick)">
-                                            Details?
+                                            MTC Token Details?
                                         </a>
                                     </h5>
                                 </div>
@@ -303,52 +313,43 @@
                                         <li>
                                             Total supply: 1,000,000,000 MTC
                                         </li>
-                                        <li>
-                                            Gas required: 150,000
-                                        </li>
-                                        <li>
-                                            Soft cap: 525 ETH
-                                        </li>
-                                        <li>
-                                            Hard cap: 2100 ETH
-                                        </li>
-                                        <li>
-                                            ShapeShift transactions takes a day to transfer the MTC tokens
-                                        </li>
-                                        <li>
-                                            <a target="_blank" href="https://youtu.be/vm9FTc5LNhM">Add the MTC token to a my ether wallet</a>
-                                        </li>
                                         </p>
                                     </div>
                                 </div>
                             </div>
                             <div class="card">
-                                <div class="card-header lblue" role="tab" id="headingOne">
+                                <div class="card-header lblue" role="tab" id="headingThree">
                                     <h5 class="mb-0">
                                         <a data-toggle="collapse" href="#collapseOne" aria-expanded="true"
                                            aria-controls="collapseOne" onclick="sendGAEvent(GAEvents.faqClick)">
-                                            The first MTC Crowdsale
+                                            Price during the MTC Crowdsale
                                         </a>
                                     </h5>
                                 </div>
                                 <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne"
                                      data-parent="#accordion">
+                                    <div class="card-body" id="prices-list">
+                                        <p>
+                                            The MTC price will increase as the Crowdsale progresses, all dates are in GMT-6
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header lblue" role="tab" id="headingFour">
+                                    <h5 class="mb-0">
+                                        <a data-toggle="collapse" href="#collapseFour" aria-expanded="true"
+                                           aria-controls="collapseOne" onclick="sendGAEvent(GAEvents.faqClick)">
+                                            Bounty Program
+                                        </a>
+                                    </h5>
+                                </div>
+                                <div id="collapseFour" class="collapse" role="tabpanel" aria-labelledby="headingOne"
+                                     data-parent="#accordion">
                                     <div class="card-body">
                                         <p>
-                                            1 MTC = 0.000035 ETH
-                                            During the MTC Crowdsale period you can get:
-                                            <li>
-                                                +50% MTC tokens from 2018/02/05 to 2018/02/08    
-                                            </li>
-                                            <li>
-                                                +40% MTC tokens from 2018/02/09 to 2018/02/12    
-                                            </li>
-                                            <li>
-                                                +30% MTC tokens from 2018/02/13 to 2018/02/16
-                                            </li>
-                                            <li>
-                                                +20% MTC tokens from 2018/02/17 to 2018/02/28
-                                            </li>
+                                            All bounty questions will be answer on the bounty thread:<br/>
+                                            <a href="https://bitcointalk.org/index.php?topic=2770283.0" target="_blank">Bounty program</a>
                                         </p>
                                     </div>
                                 </div>
@@ -384,7 +385,7 @@
         </div>
     </div>
 </section>
-<div id="util-bar" class="fixed-bottom bluegray py-2">
+<div id="util-bar" class="fixed-bottom">
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-6">
@@ -401,11 +402,7 @@
                     </div>
                 </div>
                 <div class="progress">
-                    <div class="percent-number"></div>
-                    <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="25">
-                        Soft cap
-                    </div>
-                    <div class="progress-bar hard-cap" role="progressbar" style="width: 0;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar lblue" role="progressbar" style="width: 0;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
                 </div>
             </div>
         </div>
@@ -464,10 +461,17 @@
             eventCategory: 'Disclaimer',
             eventAction: 'Submit',
             eventLabel: 'Disclaimer Submit'
+        },
+        helpButton: {
+            eventCategory: 'Help',
+            eventAction: 'Click',
+            eventLabel: 'Help Button Click'
         }
     };
 </script>
 <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="assets/js/moment-s.min.js"></script>
+<script src="assets/js/moment-timezone-with-data.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
         integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
         crossorigin="anonymous"></script>
