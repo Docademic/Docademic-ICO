@@ -72,7 +72,7 @@
     ga('create', 'UA-85629052-9', 'auto');
     ga('send', 'pageview');
 </script>
-<section id="buy-section" class="mt-4 full">
+<section id="buy-section" class="full">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -90,9 +90,10 @@
                             <h2 class="mt-0 t-gray text-center">
                                 Thank you<br>for contributing!
                             </h2>
-                            <p class="small">
+                            <p class="small text-center">
                                 Upon proceeding you agree to the following:<br>
-                                You have been provided the updated version of the [Docademic Whitepaper](http://cdn.docademic.com/documents/Docademic+ICO+White+Paper.pdf) and have read and understand the terms and conditions of the MTC Token sale as described in section 4 of the whitepaper.
+                                You have been provided the updated version of the <a href="//cdn.docademic.com/documents/Docademic+ICO+White+Paper.pdf">Docademic
+                                Whitepaper</a> and have read and understand the terms and conditions of the MTC Token sale as described in section 4 of the whitepaper.
                                 You are not sending ETH from an exchange (Coinbase, Bitso, Kraken, Binance, Bittrex, etc...). You must use a real wallet, and if you do not have one, we recommend creating one on
                                 [my ether wallet](https://myetherwallet.com)
                             </p>
@@ -116,8 +117,8 @@
                                 </div>
                             </div>
                             <h3 class="mt-3 t-lblue text-center">CHOOSE YOUR METHOD TO PURCHASE MTC TOKENS:</h3>
-                            <h5 class="t-green mt-3">Minimum purchase is 0.01 ETH</h5>
-                            <h5 class="t-green">Use 150,000 as your Gas Limit to guarantee a successful transaction</h5>
+                            <h5 id="min-purchase" class="t-green mt-3">Minimum purchase is 0.01 ETH</h5>
+                            <h5 id="gas-limit" class="t-green">Use 90,000 as your Gas Limit to guarantee a successful transaction</h5>
                             <ul class="nav nav-pills my-4 nav-justified" id="pills-tab" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link" id="direct-tab" data-toggle="pill" href="#pills-home" role="tab"
@@ -164,8 +165,7 @@
                                     </p>
                                     <div class="copy mt-3">
                                         <button>copy</button>
-                                        <input readonly style="text-align:center"
-                                               value="0x0E8160745966D2109c568230Ef515B0ddDea1599"/>
+                                        <input id="contract-address" readonly style="text-align:center" value="0x0E8160745966D2109c568230Ef515B0ddDea1599"/>
                                     </div>
                                     <div class="mt-3">
                                         <div id="direct-container" role="tab" id="headerDirect">
@@ -252,6 +252,18 @@
                                      data-parent="#accordion">
                                     <div class="card-body">
                                         <p>
+                                            <li id="list-gas">
+                                                Gas required: 150,000
+                                            </li >
+                                            <li>
+                                                ShapeShift transactions take a day to transfer the MTC tokens
+                                            </li>
+                                            <li id="list-cap">
+                                                Cap: 12250 ETH
+                                            </li>
+                                        </p>
+                                        <br/>
+                                        <p>
                                             MetaMask video tutorial:<br/>
                                             <a href="https://youtu.be/OeiVQ45VCxI" target="_blank">https://youtu.be/OeiVQ45VCxI</a>
                                         </p>
@@ -263,6 +275,7 @@
                                             Add MTC to MyEtherWallet tutorial:<br/>
                                             <a href="https://youtu.be/vm9FTc5LNhM" target="_blank">https://youtu.be/vm9FTc5LNhM</a>
                                         </p>
+
                                     </div>
                                 </div>
                             </div>
@@ -271,7 +284,7 @@
                                     <h5 class="mb-0">
                                         <a data-toggle="collapse" href="#collapseTwo" aria-expanded="true"
                                            aria-controls="collapseOne" onclick="sendGAEvent(GAEvents.faqClick)">
-                                            Details?
+                                            MTC Token Details?
                                         </a>
                                     </h5>
                                 </div>
@@ -294,21 +307,6 @@
                                         <li>
                                             Total supply: 1,000,000,000 MTC
                                         </li>
-                                        <li>
-                                            Gas required: 150,000
-                                        </li>
-                                        <li>
-                                            Soft cap: 525 ETH
-                                        </li>
-                                        <li>
-                                            Hard cap: 2100 ETH
-                                        </li>
-                                        <li>
-                                            ShapeShift transactions takes a day to transfer the MTC tokens
-                                        </li>
-                                        <li>
-                                            <a target="_blank" href="https://youtu.be/vm9FTc5LNhM">Add the MTC token to a my ether wallet</a>
-                                        </li>
                                         </p>
                                     </div>
                                 </div>
@@ -318,7 +316,7 @@
                                     <h5 class="mb-0">
                                         <a data-toggle="collapse" href="#collapseOne" aria-expanded="true"
                                            aria-controls="collapseOne" onclick="sendGAEvent(GAEvents.faqClick)">
-                                            The first MTC Crowdsale
+                                            Price during the MTC Crowdsale
                                         </a>
                                     </h5>
                                 </div>
@@ -379,6 +377,18 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>
+                            <strong>ETH raised:</strong> <span id="ether-text">-</span>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <p id="target-cap" class="text-md-right">
+                            <!--<strong>MTC sold:</strong> <span id="mtc-text">-</span>-->
+                        </p>
+                    </div>
+                </div>
                 <div class="progress">
                     <div class="progress-bar lblue" role="progressbar" style="width: 0;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
                 </div>

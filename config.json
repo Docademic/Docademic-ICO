@@ -1,3 +1,15 @@
 {
-  "HOST":"https://labs.docademic.com:3020"
+  "HOST":"https://labs.docademic.com:3020",
+  "minPurchase":"0.01 ETH",
+  "gasLimit":"90,000",
+  "contractAddress":"0xB31209CaA95B4475AAE98A5c32dfA0129d154775",
+  "presaleAmount":1291,
+  "etherCap":12250,
+  "prices":[
+    {"price":0.000035,"start":1520359200,"end":1520704799},
+    {"price":0.000035,"start":"10 march 2018","end":"13 march 2018"},
+    {"price":0.000035,"start":"14 march 2018","end":"19 march 2018"},
+    {"price":0.000035,"start":"20 march 2018","end":"29 march 2018"},
+    {"price":0.000035,"start":"30 march 2018","end":"6 april 2018"}
+  ]
 }
