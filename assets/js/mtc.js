@@ -51,7 +51,7 @@ $(document).ready(function () {
     // countdown timer
     var timerContainer = $('.timer');
     var currentDate = moment().tz("America/Mexico_City");
-    var sellStarts = moment.tz('2018-03-05 12:00', 'America/Mexico_City');
+    var sellStarts = moment.tz('2018-03-06 12:00', 'America/Mexico_City');
     var sellEnds = moment.tz('2018-03-10 12:00', 'America/Mexico_City');
     var countdownDate = '';
     var args = '%D days and %H:%M:%S';
