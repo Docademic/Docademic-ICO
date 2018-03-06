@@ -60,21 +60,21 @@ gulp.task('minify-css', function () {
 });
 
 gulp.task('minify-js', function () {
-    return pump([
-        gulp.src([paths.js, '!./assets/js/app.js', '!./assets/js/buy.js', '!./assets/js/buy-bundle.js', '!./assets/js/shape.js', '!./assets/js/shape-bundle.js']),
-        uglifyes(),
-        concat('bundle.min.js'),
-        gulp.dest(DEST + '/assets/js')
-    ]);
+	return pump([
+		gulp.src(['./assets/js/jquery-3.2.1.min.js','./assets/js/moment-s.min.js','./assets/js/moment-timezone-with-data.js','./assets/js/jquery.countdown.min.js', './assets/js/mtc.js', './assets/js/main.js']),
+		uglifyes(),
+		concat('bundle.min.js'),
+		gulp.dest(DEST + '/assets/js')
+	]);
 });
 
 gulp.task('minify-buy-js', function () {
-    return pump([
-        gulp.src('./assets/js/buy-bundle.js'),
-        uglifyes(),
-        concat('buy-bundle.min.js'),
-        gulp.dest(DEST + '/assets/js')
-    ]);
+	return pump([
+		gulp.src(['./assets/js/moment-s.min.js','./assets/js/moment-timezone-with-data.js','./assets/js/buy-bundle.js']),
+		uglifyes(),
+		concat('buy-bundle.min.js'),
+		gulp.dest(DEST + '/assets/js')
+	]);
 });
 
 gulp.task('minify-shape-js', function () {

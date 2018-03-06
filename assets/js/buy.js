@@ -490,7 +490,7 @@ createPriceDatesList = (data) => {
     container.appendChild(pricesP);
 };
 
-var progress = $('.progress-bar.hard-cap');
+var progress = $('.progress-bar');
 var targetCap = $('#target-cap');
 var percentNumber = $('.percent-number');
 
@@ -500,11 +500,10 @@ let getBalance = (web) => {
         let ethCount = eth.c[0] + presaleAmount;
         let ethTarget = etherCap;
         let targetText = '<strong>Cap:</strong> <span >'+etherCap+' ETH</span>';
-
         function percentHtml() {
             let percent = Math.floor(ethCount * 100 / ethTarget);
-            progress.css('width', (percent - 25) + '%').attr('aria-valuenow', percent);
-            percentNumber.html(percent + '%');
+	        progress.css('width', percent + '%').attr('aria-valuenow', percent);
+	        progress.html(percent + '%');
             targetCap.html(targetText);
         }
 

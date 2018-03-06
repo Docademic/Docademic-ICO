@@ -57,7 +57,7 @@ header .buy{
 	display: none;
 }
 header.affix .buy.selling{
-	display: flex;
+	display: flex !important;
 }
 .col.menu{
 	-ms-flex: 0 0 70px;
@@ -931,10 +931,10 @@ menu.show .df-close{
 	padding: .5em 0;
 }
 header .sell, .sell{
-	display: none;
+	display: none !important;
 }
 header.affix .sell.selling, #home .sell.selling{
-	display: flex;
+	display: flex !important;
 }
 #countdown .sell.selling{
 	display: none;
