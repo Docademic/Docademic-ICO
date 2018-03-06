@@ -61,7 +61,7 @@ gulp.task('minify-css', function () {
 
 gulp.task('minify-js', function () {
 	return pump([
-		gulp.src(['./assets/js/jquery-3.2.1.min.js','./assets/js/moment-s.min.js','./assets/js/moment-timezone-with-data.js','./assets/js/jquery.countdown.min.js', './assets/js/mtc.js', './assets/js/main.js']),
+		gulp.src(['./assets/js/jquery-3.2.1.min.js','./assets/js/bootstrap.min.js','./assets/js/moment-s.min.js','./assets/js/moment-timezone-with-data.js','./assets/js/jquery.countdown.min.js', './assets/js/mtc.js', './assets/js/main.js']),
 		uglifyes(),
 		concat('bundle.min.js'),
 		gulp.dest(DEST + '/assets/js')

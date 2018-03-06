@@ -21,11 +21,6 @@ h2 a{
 .big {
 	font-size: 24px;
 }
-
-.full {
-	overflow-x: hidden !important;
-	overflow-y: visible !important;
-}
 .no-responsive{
 	max-width: 100%;
 	width: auto;
@@ -225,7 +220,7 @@ menu.show .df-close{
 }
 
 /* home */
-#home, #buy-section{
+#home{
 	background: url('../img/bg.png') no-repeat;
 	background-attachment: fixed;
 	-webkit-background-size: cover;
@@ -637,6 +632,19 @@ menu.show .df-close{
 }
 
 /* buy */
+.ov-v{
+	overflow-y: scroll;
+	background: url('../img/bg.png') no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+	-webkit-background-size: cover;
+	background-size: cover;
+}
+#buy-section{
+	min-height: 100%;
+	overflow: visible;
+	padding-bottom: 5em;
+}
 #buy-section .card-header{
 	background: #f1f9ff;
 	padding: .5em 0;
@@ -871,9 +879,14 @@ menu.show .df-close{
 }
 
 #telegram {
-	position: absolute;
-	top: -35px;
+	border-radius: 50%;
+	bottom: 1em;
+	-webkit-box-shadow: 0 10px 10px rgba(0,0,0,.2);
+	box-shadow: 0 10px 10px rgba(0,0,0,.2);
+	position: fixed;
 	right: 2em;
+	width: 60px;
+	z-index: 15;
 }
 
 #notice {
@@ -1009,16 +1022,8 @@ footer #social li:last-child a{
 }
 
 /* buy section */
-.buy{
-	/*background: url(../img/triangule.png) no-repeat;*/
-    background-attachment: fixed;
-}
 .card.no-border {
 	border: none;
-}
-
-#buy-section {
-    margin-bottom: 70px;
 }
 #buy-section .input-container.checkbox{
     height: auto;
@@ -1219,6 +1224,7 @@ footer #social li:last-child a{
 	/* home */
 	#home {
 		height: auto;
+		min-height: 100%;
 	}
 	#home h2{
 		color: #fff;
@@ -1248,6 +1254,7 @@ footer #social li:last-child a{
 		font-size: 18px;
 
 	}
+
 
 	/* docademic info */
 	#docademic-info img.no-responsive{
@@ -1296,11 +1303,16 @@ footer #social li:last-child a{
 	}
 
 	#telegram {
-		right: 1em;
-		top: -20px;
+		right: .25em;
+		bottom: .5em;
 		width: 40px;
 	}
 	.token-exp{
 		font-size: 32px;
 	}
+}
+.container.full,
+.row.full{
+	min-height: 100%;
+	overflow-y: visible;
 }

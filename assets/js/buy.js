@@ -484,7 +484,7 @@ createPriceDatesList = (data) => {
     //const moment = require('moment');
     data.forEach((entry, index) => {
         let liItem = document.createElement('li');
-        liItem.innerHTML = entry.price+' ETH from '+moment.unix(entry.start).format('YYYY/M/D, h:mm:ss a')+' to '+moment.unix(entry.end).format('YYYY/M/D, h:mm:ss a');
+        liItem.innerHTML = entry.price+' ETH from '+moment.unix(entry.start).utc().format('YYYY/M/D, h:mm:ss a')+' to '+moment.unix(entry.end).utc().format('YYYY/M/D, h:mm:ss a');
         pricesP.appendChild(liItem);
     });
     container.appendChild(pricesP);
@@ -515,7 +515,7 @@ let getBalance = (web) => {
             targetText = '<strong>Hard cap:</strong> <span >2100 ETH</span>';
             percentHtml();
         }*/
-        setEthText(web.fromWei(re, 'ether').toString(10));
+        setEthText(parseFloat(web.fromWei(re, 'ether')) + presaleAmount );
         //setMTCText(sold.toString(10));
         //console.log(web.fromWei(re, 'ether').toString(10) + " eth");
         //console.log(balance.toString(10) + " tokens left");
