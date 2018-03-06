@@ -24,7 +24,7 @@ h2 a{
 
 .full {
 	overflow-x: hidden !important;
-	/*overflow-y: visible !important;*/
+	overflow-y: visible !important;
 }
 .no-responsive{
 	max-width: 100%;
@@ -146,9 +146,9 @@ menu::after{
 	width: 10px;
 }
 menu.show::after{
-	-webkit-animation: circleOverlay 1.5s forwards;
-	-o-animation: circleOverlay 1.5s forwards;
-	animation: circleOverlay 1.5s forwards;
+	-webkit-animation: circleOverlay 1s forwards;
+	-o-animation: circleOverlay 1s forwards;
+	animation: circleOverlay 1s forwards;
 }
 @keyframes circleOverlay{
 	0%{
@@ -225,7 +225,7 @@ menu.show .df-close{
 }
 
 /* home */
-#home{
+#home, #buy-section{
 	background: url('../img/bg.png') no-repeat;
 	background-attachment: fixed;
 	-webkit-background-size: cover;
@@ -238,9 +238,6 @@ menu.show .df-close{
 	left: 0;
 	position: absolute;
 	top: 0;
-}
-#home .parallax{
-	overflow: hidden;
 }
 #home h2{
 	color: #fff;
@@ -421,11 +418,11 @@ menu.show .df-close{
 	-o-transform: translateX(50%);
 	transform: translateX(50%);
 }
-.show-effect .col-md-6 {
+#roadmap .show-effect .col-md-6 {
 	padding: 1em;
 	position: relative;
 }
-.show-effect .col-md-6::after{
+#roadmap .show-effect .col-md-6::after{
 	background: #2699fb;
 	content: '';
 	height: 0;
@@ -436,13 +433,13 @@ menu.show .df-close{
 	transition: .274s;
 	width: 1px;
 }
-.show-effect.left .col-md-6::after{
+#roadmap .show-effect.left .col-md-6::after{
 	right: -1px;
 }
-.show-effect.right .col-md-6::after{
+#roadmap .show-effect.right .col-md-6::after{
 	left: 0;
 }
-.show-effect .col-md-6::before{
+#roadmap .show-effect .col-md-6::before{
 	background: #2699fb;
 	border: 1px solid #2699fb;
 	border-radius: 50%;
@@ -639,8 +636,20 @@ menu.show .df-close{
     text-align: left;
 }
 
-
-
+/* buy */
+#buy-section .card-header{
+	background: #f1f9ff;
+	padding: .5em 0;
+}
+#buy-section .rel{
+	position: relative;
+}
+#buy-section #help-btn{
+	position: absolute;
+	right: 32px;
+	top: calc(50% - 20px);
+	width: 100px;
+}
 
 
 
@@ -692,9 +701,6 @@ menu.show .df-close{
     border: none;
     width:100%;
 }
-
-
-
 .table-header{
 	background: #0288d1;
 }
@@ -1017,7 +1023,6 @@ footer #social li:last-child a{
 #buy-section {
     margin-bottom: 70px;
 }
-
 #buy-section .input-container.checkbox{
     height: auto;
 }
@@ -1037,13 +1042,26 @@ footer #social li:last-child a{
 	margin: 0 auto;
 	width: 80px;
 }
-
+#faq{
+	background: #f1f9ff;
+}
+#accordion .card{
+	margin-top: 1em;
+}
 #accordion .card-header{
     padding: .5em;
 }
 #accordion h5 a{
     color: #fff;
+    font-size: 18px!important;
+    font-weight: 600;
+    text-align: center!important;
 }
+#accordion h5 a .df-close{
+	position: absolute;
+	right: 15px;
+}
+
 .transaction{
     border: 1px solid #ccc;
     height: 135px;
@@ -1120,7 +1138,7 @@ footer #social li:last-child a{
 }
 #second-step .nav-link.active{
 	background: #f2f2f2;
-	border: 2px solid #0288d1;
+	border: 2px solid #2699fb;
 }
 #second-step .nav-item:last-child{
 	margin-right: 0;
@@ -1130,6 +1148,8 @@ footer #social li:last-child a{
 	width: 24px;
 }
 .progress{
+	background: #f1f9ff;
+	border: 1px solid #ddd;
 	height: 50px;
 }
 .progress-bar{
@@ -1146,29 +1166,21 @@ footer #social li:last-child a{
 	position: absolute;
 	width: 50px;
 }
+#buy-section .small{
+	font-size: 11px;
+	line-height: 14px;
+	margin-top: 2em;
+}
 
 
 /* util bar */
-#util-bar label{
-	margin-right: 1em;
-	width: auto;
-}
-#util-bar input{
-	display: inline;
-	margin-right: 1em;
-	width: 100px;
-}
-#util-bar img{
-	display: inline;
-	margin-right: 1em;
-	width: 30px;
-}
-#util-bar p{
-	width: 100%;
+#util-bar{
+	background: #fff;
+	padding: .5em 0;
 }
 
 /* md */
-@media screen and (min-width: 768px ) {
+@media screen and (min-width: 769px ) {
 	.hidden-md-up{
 		display: none;
 	}
@@ -1197,7 +1209,6 @@ footer #social li:last-child a{
 	h2 {
 		font-size: 24px;
 	}
-
 	menu ul li a{
 		font-size: 24px;
 	}
@@ -1291,5 +1302,8 @@ footer #social li:last-child a{
 		right: 1em;
 		top: -20px;
 		width: 40px;
+	}
+	.token-exp{
+		font-size: 32px;
 	}
 }

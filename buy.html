@@ -72,63 +72,51 @@
     ga('create', 'UA-85629052-9', 'auto');
     ga('send', 'pageview');
 </script>
-<section id="buy-section" class="mt-4">
+<section id="buy-section" class="mt-4 full">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card no-border">
-                    <div class="card-header lblue xl">
-                        <div class="logo-container mx-auto">
-                            <a href="./index.html"><img src="assets/img/mtc_w.png" alt="MTC"></a>
+                <div class="card no-border mt-3">
+                    <div class="card-header">
+                        <div class="row rel">
+                            <div class="col text-center">
+                                <img src="assets/img/mtc-blue.png" alt="MTC" class="no-responsive">
+                                <button class="btn lblue text-white" id="help-btn">HELP</button>
+                            </div>
                         </div>
                     </div>
                     <div class="card-container">
                         <div id="first-step" class="show">
-                            <h3 class="mt-3">
-                                Thank you for contributing! You're helping bring free basic healthcare and the future of
-                                medicine
-                                to the world!
-                            </h3>
-                            <form action="#" class="mt-3">
-                                <div class="input-container checkbox mt-3">
-                                    <input type="checkbox" name="" id="check1" onchange="checkStepOne()">
-                                    <label for="">
-                                        Check this box to confirm that you have been provided the updated version of the
-                                        <a href="//cdn.docademic.com/documents/Docademic+ICO+White+Paper.pdf">Docademic
-                                            Whitepaper</a> and have read and understand the terms and conditions of the
-                                        MTC Token sale as described in section 4 of the whitepaper.
-                                    </label>
+                            <h2 class="mt-0 t-gray text-center">
+                                Thank you<br>for contributing!
+                            </h2>
+                            <p class="small">
+                                Upon proceeding you agree to the following:<br>
+                                You have been provided the updated version of the [Docademic Whitepaper](http://cdn.docademic.com/documents/Docademic+ICO+White+Paper.pdf) and have read and understand the terms and conditions of the MTC Token sale as described in section 4 of the whitepaper.
+                                You are not sending ETH from an exchange (Coinbase, Bitso, Kraken, Binance, Bittrex, etc...). You must use a real wallet, and if you do not have one, we recommend creating one on
+                                [my ether wallet](https://myetherwallet.com)
+                            </p>
+                            <div class="row justify-content-center">
+                                <div class="col-md-6">
+                                    <button class="btn green mt-4" id="first-step-submit">
+                                        Submit
+                                    </button>
                                 </div>
-                                <div class="input-container checkbox mt-3">
-                                    <input type="checkbox" name="" id="check2" onchange="checkStepOne()">
-                                    <label for="">
-                                        Check this box to confirm that you are not sending ETH from an exchange like
-                                        Coinbase, Bitso or Kraken. You must use a real wallet, and if you do not have
-                                        one, we recommend creating one on <a href="//myetherwallet.com">my ether
-                                        wallet</a>
-                                    </label>
-                                </div>
-                                <div id="captcha" data-callback="captchaCheck" class="g-recaptcha mt-3 mx-auto"
-                                     data-sitekey="6LefoTsUAAAAABDNmf1VWx4FRktl8kAKqfMC2KvA"></div>
-                                <button class="btn green my-3 inactive" id="first-step-submit" disabled>
-                                    Submit
-                                </button>
-                            </form>
+                            </div>
                         </div>
                         <div id="second-step" class="inactive">
                             <div class="row">
-                                <div class="mt-3 col-md-7">
+                                <div class="mt-0 col-md-7">
                                     <label for="">Email</label>
                                     <input id="email" placeholder="Optional unless you use ShapeShift" type="email">
                                 </div>
-                                <div class="mt-3 col-md-5">
+                                <div class="mt-3 mt-md-0 col-md-5">
                                     <label for="">Referral Code</label>
                                     <input id="ref" placeholder="Optional" type="text">
                                 </div>
                             </div>
-                            <span class="separator mt-4"></span>
-                            <h3 class="mt-3">Choose your method to purchase MTC tokens:</h3>
-                            <h5 class="t-green">Minimum purchase is 0.01 ETH</h5>
+                            <h3 class="mt-3 t-lblue text-center">CHOOSE YOUR METHOD TO PURCHASE MTC TOKENS:</h3>
+                            <h5 class="t-green mt-3">Minimum purchase is 0.01 ETH</h5>
                             <h5 class="t-green">Use 150,000 as your Gas Limit to guarantee a successful transaction</h5>
                             <ul class="nav nav-pills my-4 nav-justified" id="pills-tab" role="tablist">
                                 <li class="nav-item">
@@ -243,8 +231,11 @@
                                 </div>
                             </div>
                         </div>
-                        <span class="separator mt-3"></span>
-                        <h3 class="text-center mt-3">
+                    </div>
+                </div>
+                <div class="card mt-3" id="faq">
+                    <div class="card-container">
+                        <h3 class="text-center t-lblue">
                             F.A.Q.
                         </h3>
                         <div id="accordion" role="tablist">
@@ -384,28 +375,12 @@
         </div>
     </div>
 </section>
-<div id="util-bar" class="fixed-bottom bluegray py-2">
+<div id="util-bar" class="fixed-bottom">
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <div class="row">
-                    <div class="col-md-6">
-                        <p>
-                            <strong>ETH raised:</strong> <span id="ether-text">-</span>
-                        </p>
-                    </div>
-                    <div class="col-md-6">
-                        <p id="target-cap" class="text-md-right">
-                            <!--<strong>MTC sold:</strong> <span id="mtc-text">-</span>-->
-                        </p>
-                    </div>
-                </div>
                 <div class="progress">
-                    <div class="percent-number"></div>
-                    <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="25">
-                        Soft cap
-                    </div>
-                    <div class="progress-bar hard-cap" role="progressbar" style="width: 0;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar lblue" role="progressbar" style="width: 0;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
                 </div>
             </div>
         </div>

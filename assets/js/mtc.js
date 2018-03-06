@@ -24,11 +24,6 @@ $(document).ready(function () {
     var effect = $('.show-effect');
     $(window).on('scroll', function (event) {
         var scrollValue = $(window).scrollTop();
-        if (scrollValue <= homeHeight) {
-            $('.parallax .col-4, .parallax .col-8').css({
-                'top': scrollValue/5 +'px'
-            });
-        }
         if (scrollValue >= homeHeight/4) {
             $('header').addClass('affix');
             $('header img').attr('src', 'assets/img/mtc-blue.png');
@@ -78,7 +73,6 @@ $(document).ready(function () {
             sellCountdown(args);
         });
     }
-
     // function offerCountdown(date){
     //     offers.countdown(date, function(event) {
           
