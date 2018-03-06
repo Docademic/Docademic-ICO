@@ -470,12 +470,15 @@ setBuyButtonText = (value) => {
 };
 
 createPriceDatesList = (data) => {
-    let container = document.findElementById('prices-list');
+    let container = document.getElementById('prices-list');
     let pricesP = document.createElement('p');
     //const moment = require('moment');
     data.forEach((entry, index) => {
-
+        let liItem = document.createElement('li');
+        liItem.innerHTML = entry.price+' ETH from '+moment.unix(entry.start).format('YYYY/M/D, h:mm:ss a')+' to '+moment.unix(entry.end).format('YYYY/M/D, h:mm:ss a');
+        pricesP.appendChild(liItem);
     });
+    container.appendChild(pricesP);
 };
 
 var progress = $('.progress-bar.hard-cap');
