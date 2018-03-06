@@ -26,9 +26,11 @@ $(document).ready(function () {
         var scrollValue = $(window).scrollTop();
         if (scrollValue >= homeHeight/4) {
             $('header').addClass('affix');
+	        $('#bounty-button').parent().hide();
             $('header img').attr('src', 'assets/img/mtc-blue.png');
         } else{
             $('header').removeClass('affix');
+	        $('#bounty-button').parent().show();
             $('header img').attr('src', 'assets/img/mtc.png');
         }
         effect.each(function () {
@@ -82,4 +84,7 @@ $(document).ready(function () {
     //     });
     // }
     // dateCheck();
+	$('.tgl-show').click(function () {
+		$($(this).data('show')).toggleClass('show');
+	});
 });

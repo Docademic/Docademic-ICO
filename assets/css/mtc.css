@@ -418,11 +418,11 @@ menu.show .df-close{
 	-o-transform: translateX(50%);
 	transform: translateX(50%);
 }
-#roadmap .show-effect .col-md-6 {
+.show-effect .col-md-6 {
 	padding: 1em;
 	position: relative;
 }
-#roadmap .show-effect .col-md-6::after{
+.show-effect .col-md-6::after{
 	background: #2699fb;
 	content: '';
 	height: 0;
@@ -433,13 +433,13 @@ menu.show .df-close{
 	transition: .274s;
 	width: 1px;
 }
-#roadmap .show-effect.left .col-md-6::after{
+.show-effect.left .col-md-6::after{
 	right: -1px;
 }
-#roadmap .show-effect.right .col-md-6::after{
+.show-effect.right .col-md-6::after{
 	left: 0;
 }
-#roadmap .show-effect .col-md-6::before{
+.show-effect .col-md-6::before{
 	background: #2699fb;
 	border: 1px solid #2699fb;
 	border-radius: 50%;
@@ -861,12 +861,9 @@ menu.show .df-close{
 	margin-top: 1em;
 }
 
-
-
-
-
-
-
+#advisors .col-md-6::before{
+	opacity: 0!important;
+}
 
 /* countdown */
 #countdown {

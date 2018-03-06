@@ -74,11 +74,16 @@
 	<div class="col pl-4">
 		<img src="assets/img/mtc.png" alt="mtc" class="no-responsive">
 	</div>
-	<div class="col-md-2">
+    <div class="col-md-2">
 		<button class="btn green buy sell">
-			BUY<span class="hidden-md-down">  NOW</span>
+			BUY<span class="hidden-md-down ml-1">NOW</span>
 		</button>
 	</div>
+    <div class="col-md-2 hidden-md-down">
+        <button class="btn trans tgl-show" id="bounty-button" data-show="#register-modal">
+            REFERRALS
+        </button>
+    </div>
 	<div class="col-md-2 hidden-md-down">
 		<a class="btn trans" href="https://cdn.docademic.com/documents/ico/Docademic+White+Paper.pdf" target="_blank">
 			WHITEPAPER
@@ -1114,7 +1119,16 @@
 		</p>
 	</div>
 </footer>
-
+<div class="lightbox full" id="register-modal">
+    <div class="row align-items-center">
+        <div class="lightbox-container mx-auto no-border">
+            <button class="lbx-tgl x tgl-show" data-show="#register-modal">
+                <i class="df-close"></i>
+            </button>
+            <div class="card" id="modal-card"></div>
+        </div>
+    </div>
+</div>
 <script src="https://www.marcoguglie.it/Codepen/AnimatedHeaderBg/demo-1/js/EasePack.min.js"></script>
 <script src="https://www.marcoguglie.it/Codepen/AnimatedHeaderBg/demo-1/js/rAF.js"></script>
 <script src="https://www.marcoguglie.it/Codepen/AnimatedHeaderBg/demo-1/js/TweenLite.min.js"></script>
