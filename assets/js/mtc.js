@@ -43,36 +43,37 @@ $(document).ready(function () {
             }
         });
     });
+	
+	$('.sell').click(() => {
+		window.location='/buy.html';
+	});
 
     // countdown timer
     var timerContainer = $('.timer');
     var currentDate = moment().tz("America/Mexico_City");
-    var sellStarts = moment.tz('2018-03-06 12:00', 'America/Mexico_City');
+    var sellStarts = moment.tz('2018-03-05 12:00', 'America/Mexico_City');
     var sellEnds = moment.tz('2018-03-10 12:00', 'America/Mexico_City');
     var countdownDate = '';
     var args = '%D days and %H:%M:%S';
-    if (currentDate.isBefore(sellEnds)) {
+	if (currentDate.isBefore(sellStarts)) {
+		countdownDate = sellStarts;
+		args = "Sale starts in %H:%M:%S hrs";
+		sellCountdown(args);
+	}
+    if (currentDate.isAfter(sellStarts)) {
         $('.sell').addClass('selling');
+	    args = "Next price 0.00004 in %D days and %H:%M:%S hrs";
         countdownDate = sellEnds;
-        sellCountdown(args);
-    }
-    if (currentDate.isAfter(sellEnds)) {
-        $('.sell').removeClass('selling');
-        offers.empty();
-        countdownDate = sellStarts;
-        args = 'Sell stats at %D days and %H:%M:%S';
         sellCountdown(args);
     }
     function sellCountdown(args){
         timerContainer.countdown(countdownDate.toDate(), function(event) {
           $(this).html(event.strftime(args));
         }).on('finish.countdown', function(event) {
-            $('#home-content .title h2').empty('');
-            $('.sell').removeClass('selling');
-            offers.empty();
-            countdownDate = sellStarts;
-            args = 'Sell stats at %D days and %H:%M:%S';
-            sellCountdown(args);
+	        $('.sell').addClass('selling');
+	        args = "Next price 0.00004 in %D days and %H:%M:%S hrs";
+	        countdownDate = sellEnds;
+	        sellCountdown(args);
         });
     }
     // function offerCountdown(date){
