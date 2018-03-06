@@ -27,6 +27,7 @@ const queryString = require('query-string');
 const tokenAddress = "0x905E337c6c8645263D3521205Aa37bf4d034e745";
 const multiSigAddress = "0x7A46C781b593068d5e987b191e9c2f7413E22aEE";
 const crowdSaleAddress = "0xB31209CaA95B4475AAE98A5c32dfA0129d154775";
+
 const contributors = new Set();
 let web3R;
 let selectedTab = 0;
@@ -123,6 +124,14 @@ window.addEventListener("load", function () {
         }
     }).fail(function () {
         console.error("Must have config.json file in root directoy");
+    });
+
+    $('#help-btn').click(function (e) {
+        e.preventDefault();
+        $('html, body').animate({
+            scrollTop: $("#headingFour").offset().top
+        }, 2000);
+        sendGAEvent(GAEvents.helpButton);
     });
 
     var fStep = $('#first-step')
