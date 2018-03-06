@@ -7,9 +7,9 @@
   "etherCap":12250,
   "prices":[
     {"price":0.000035,"start":1520359200,"end":1520704799},
-    {"price":0.000035,"start":"10 march 2018","end":"13 march 2018"},
-    {"price":0.000035,"start":"14 march 2018","end":"19 march 2018"},
-    {"price":0.000035,"start":"20 march 2018","end":"29 march 2018"},
-    {"price":0.000035,"start":"30 march 2018","end":"6 april 2018"}
+    {"price":0.000040,"start":1520704800,"end":1521050399},
+    {"price":0.000045,"start":1521050400,"end":1521568799},
+    {"price":0.000060,"start":1521568800,"end":1522432799},
+    {"price":0.000100,"start":1522432800,"end":1523034000}
   ]
 }

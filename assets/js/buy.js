@@ -113,6 +113,7 @@ window.addEventListener("load", function () {
             presaleAmount = json.presaleAmount;
             etherCap = json.etherCap;
             setCapListText(etherCap);
+            createPriceDatesList(json.prices);
             let params = queryString.parse(window.location.search);
             if (params.ref) {
                 setRefText(params.ref);
@@ -466,6 +467,15 @@ setBuyButtonText = (value) => {
     } else {
         buyButton.innerHTML = "Buy";
     }
+};
+
+createPriceDatesList = (data) => {
+    let container = document.findElementById('prices-list');
+    let pricesP = document.createElement('p');
+    //const moment = require('moment');
+    data.forEach((entry, index) => {
+
+    });
 };
 
 var progress = $('.progress-bar.hard-cap');
