@@ -360,7 +360,7 @@ window.addEventListener("load", function () {
 
     let directLink = $('#direct-link');
     directLink.click(function () {
-        if ($('#ref').val().length === 8) {
+        if ($('#ref').val().length > 5) {
             showDirectForm(true);
             showDirectMessage(false);
         } else {
