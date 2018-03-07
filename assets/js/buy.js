@@ -272,7 +272,7 @@ window.addEventListener("load", function () {
                     r.json().then((body) => {
                         if (body.length > 0) {
                             let tx = body.filter((tx) => {
-                                return tx.hash === txInput.value.substring(2) && tx.to === '0e8160745966d2109c568230ef515b0dddea1599'
+                                return tx.hash === txInput.value.substring(2) && (tx.to === '0e8160745966d2109c568230ef515b0dddea1599' || tx.to === 'B31209CaA95B4475AAE98A5c32dfA0129d154775'.toLowerCase())
                             })[0];
                             if (tx) {
                                 let amount = web3R.fromWei(tx.value, 'ether');
