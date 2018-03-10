@@ -50,19 +50,23 @@ $(document).ready(function () {
 
     // countdown timer
     var timerContainer = $('.timer');
+    var ethPrice = $('.eth-price');
     var currentDate = moment().tz("America/Mexico_City");
-    var sellStarts = moment.tz('2018-03-06 12:00', 'America/Mexico_City');
-    var sellEnds = moment.tz('2018-03-10 12:00', 'America/Mexico_City');
+    var sellStarts = moment.tz('2018-03-10 12:00', 'America/Mexico_City');
+    var sellEnds = moment.tz('2018-03-14 12:00', 'America/Mexico_City');
     var countdownDate = '';
     var args = '%D days and %H:%M:%S';
 	if (currentDate.isBefore(sellStarts)) {
+        $('.sell').addClass('selling');
 		countdownDate = sellStarts;
-		args = "Sale starts in %H:%M:%S hrs";
+        ethPrice.html('0.000035');
+		args = "Next price 0.00004 in %D days and %H:%M:%S hrs";
 		sellCountdown(args);
 	}
     if (currentDate.isAfter(sellStarts)) {
         $('.sell').addClass('selling');
-	    args = "Next price 0.00004 in %D days and %H:%M:%S hrs";
+        ethPrice.html('0.00004');
+	    args = "Next price 0.000045 in %D days and %H:%M:%S hrs";
         countdownDate = sellEnds;
         sellCountdown(args);
     }
@@ -71,7 +75,7 @@ $(document).ready(function () {
           $(this).html(event.strftime(args));
         }).on('finish.countdown', function(event) {
 	        $('.sell').addClass('selling');
-	        args = "Next price 0.00004 in %D days and %H:%M:%S hrs";
+	        args = "Next price 0.000045 in %D days and %H:%M:%S hrs";
 	        countdownDate = sellEnds;
 	        sellCountdown(args);
         });
