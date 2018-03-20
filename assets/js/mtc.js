@@ -85,7 +85,7 @@ $(document).ready(function () {
         if (currentDate.isAfter(d20) && currentDate.isBefore(d30)) {
             $('.sell').addClass('selling');
             ethPrice.html('0.00006');
-            args = "Next price 0.00001 in %D days and %H:%M:%S hrs";
+            args = "Next price 0.0001 in %D days and %H:%M:%S hrs";
             countdownDate = d30;
             sellCountdown();
         }
