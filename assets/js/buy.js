@@ -372,7 +372,7 @@ window.addEventListener("load", function () {
 
     let refInput = document.getElementById("ref");
     refInput.addEventListener("keydown", (event) => {
-        if (event.target.value && event.target.value.length === 8 && selectedTab === 1) {
+        if (event.target.value && event.target.value.length > 5 && selectedTab === 1) {
             showDirectForm(true);
             showDirectMessage(false);
         } else {
@@ -382,7 +382,7 @@ window.addEventListener("load", function () {
     });
 
     refInput.addEventListener("input", (event) => {
-        if (event.target.value && event.target.value.length === 8 && selectedTab === 1) {
+        if (event.target.value && event.target.value.length > 5 && selectedTab === 1) {
             showDirectForm(true);
             showDirectMessage(false);
         } else {
