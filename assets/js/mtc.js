@@ -56,6 +56,7 @@ $(document).ready(function () {
     var d20 = moment.tz('2018-03-20 12:00', 'America/Mexico_City');
     var d30 = moment.tz('2018-03-30 12:00', 'America/Mexico_City');
     var d6A = moment.tz('2018-04-06 12:00', 'America/Mexico_City');
+    var d13A = moment.tz('2018-04-13 13:00', 'America/Mexico_City');
     var countdownDate = '';
     var args = '';
     function dateCheck(){
@@ -96,7 +97,14 @@ $(document).ready(function () {
             countdownDate = d6A;
             sellCountdown();
         }
-        if (currentDate.isAfter(d6A)) {
+        if (currentDate.isAfter(d6A) && currentDate.isBefore(d13A)) {
+            $('.sell').addClass('selling');
+            ethPrice.html('0.0001');
+            args = "Crowdsale has been extended one more week to provide new buyers the opportunity to buy MTC at the ICO price<br/>Sell ends in %D days and %H:%M:%S hrs";
+            countdownDate = d13A;
+            sellCountdown();
+        }
+        if (currentDate.isAfter(d13A)) {
             $('.sell').removeClass('selling');
             $('#timer-p').css('display', 'none');
         }
