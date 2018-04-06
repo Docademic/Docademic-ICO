@@ -55,8 +55,8 @@ $(document).ready(function () {
     var sellEnds = moment.tz('2018-03-14 12:00', 'America/Mexico_City');
     var d20 = moment.tz('2018-03-20 12:00', 'America/Mexico_City');
     var d30 = moment.tz('2018-03-30 12:00', 'America/Mexico_City');
-    var d6A = moment.tz('2018-04-06 12:00', 'America/Mexico_City');
-    var d13A = moment.tz('2018-04-13 13:00', 'America/Mexico_City');
+    var d6A = moment.tz('2018-04-06 13:00', 'America/Mexico_City');
+    var d13A = moment.tz('2018-04-15 13:00', 'America/Mexico_City');
     var countdownDate = '';
     var args = '';
     function dateCheck(){
