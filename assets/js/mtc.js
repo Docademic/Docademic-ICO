@@ -100,7 +100,7 @@ $(document).ready(function () {
         if (currentDate.isAfter(d6A) && currentDate.isBefore(d13A)) {
             $('.sell').addClass('selling');
             ethPrice.html('0.0001');
-            args = "Crowdsale has been extended one more week to provide new buyers the opportunity to buy MTC at the ICO price<br/>Sell ends in %D days and %H:%M:%S hrs";
+            args = "Sell ends in %D days and %H:%M:%S hrs";
             countdownDate = d13A;
             sellCountdown();
         }
