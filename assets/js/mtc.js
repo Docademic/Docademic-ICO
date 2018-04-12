@@ -121,4 +121,15 @@ $(document).ready(function () {
 	$('.tgl-show').click(function () {
 		$($(this).data('show')).toggleClass('show');
 	});
+
+    function modalTimer(){
+        setTimeout(function(){
+            $('#modal').addClass('show');
+        }, 2000);
+    }
+    modalTimer();
+    $('#modal .df-close').click(function(e){
+        e.preventDefault();
+        $('#modal').removeClass('show');
+    });
 });

@@ -1316,3 +1316,35 @@ footer #social li:last-child a{
 	min-height: 100%;
 	overflow-y: visible;
 }
+
+#modal{
+	background: rgba(0,0,0,.4);
+	height: 100%;
+	opacity: 0;
+	position: fixed;
+	top: 0;
+	-webkit-transition: .5s;
+	-o-transition: .5s;
+	transition: .5s;
+	visibility: hidden;
+	width: 100%;
+	z-index: 99;
+}
+#modal.show{
+	opacity: 1;
+	visibility: visible;
+}
+.modal-container{
+	max-width: 600px;
+	position: relative;
+}
+.modal-container .df-close{
+	background: transparent;
+	border: none;
+	color: #fff;
+	cursor: pointer;
+	font-size: 32px;
+	right: 0;
+	position: absolute;
+	top: -32px;
+}
