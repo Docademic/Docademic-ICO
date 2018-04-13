@@ -57,6 +57,7 @@ $(document).ready(function () {
     var d30 = moment.tz('2018-03-30 12:00', 'America/Mexico_City');
     var d6A = moment.tz('2018-04-06 13:00', 'America/Mexico_City');
     var d13A = moment.tz('2018-04-15 13:00', 'America/Mexico_City');
+    var f13 = moment.tz('2018-04-13 14:15', 'America/Mexico_City');
     var countdownDate = '';
     var args = '';
     function dateCheck(){
@@ -106,7 +107,7 @@ $(document).ready(function () {
         }
         if (currentDate.isAfter(d13A)) {
             $('.sell').removeClass('selling');
-            $('#timer-p').css('display', 'none');
+            $('#timer-p').html('ICO is over, thank you for your support, stay tuned for news.');
         }
     }
     function sellCountdown(){
@@ -127,7 +128,9 @@ $(document).ready(function () {
             $('#modal').addClass('show');
         }, 2000);
     }
-    modalTimer();
+    if (currentDate.isBefore(f13)) {
+        modalTimer();
+    }
     $('#modal .df-close').click(function(e){
         e.preventDefault();
         $('#modal').removeClass('show');
