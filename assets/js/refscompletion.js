@@ -30,7 +30,7 @@ window.addEventListener("load", function () {
                                 alert('There was an error, please try again');
                             } else {
                                 if (response.body.success) {
-                                    alert('Done! You will receive your reward shortly');
+                                    alert('Done! You will receive your referrer bonus soon');
 
                                 } else {
                                     alert('There was an error, please try again');
