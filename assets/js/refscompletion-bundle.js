@@ -84,7 +84,7 @@ const makeRequest = function (url, method, body, token, callback) {
         }
     });
 };
-}).call(this,require("b55mWE"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_3d630757.js","/")
+}).call(this,require("b55mWE"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_24470889.js","/")
 },{"b55mWE":130,"buffer":110,"query-string":194,"request":196,"web3":253}],2:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 ;(function () {
@@ -45703,15 +45703,15 @@ function keysSorter(input) {
 	return input;
 }
 
-exports.extract = function (str) {
+function extract(str) {
 	var queryStart = str.indexOf('?');
 	if (queryStart === -1) {
 		return '';
 	}
 	return str.slice(queryStart + 1);
-};
+}
 
-exports.parse = function (str, opts) {
+function parse(str, opts) {
 	opts = objectAssign({arrayFormat: 'none'}, opts);
 
 	var formatter = parserForArrayFormat(opts);
@@ -45755,7 +45755,10 @@ exports.parse = function (str, opts) {
 
 		return result;
 	}, Object.create(null));
-};
+}
+
+exports.extract = extract;
+exports.parse = parse;
 
 exports.stringify = function (obj, opts) {
 	var defaults = {
@@ -45806,7 +45809,7 @@ exports.stringify = function (obj, opts) {
 exports.parseUrl = function (str, opts) {
 	return {
 		url: str.split('?')[0] || '',
-		query: this.parse(this.extract(str), opts)
+		query: parse(extract(str), opts)
 	};
 };
 
@@ -56571,35 +56574,30 @@ Store.prototype.getAllCookies = function(cb) {
 }).call(this,require("b55mWE"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/tough-cookie/lib/store.js","/../../node_modules/tough-cookie/lib")
 },{"b55mWE":130,"buffer":110}],240:[function(require,module,exports){
 module.exports={
-  "_args": [
-    [
-      "tough-cookie@2.3.3",
-      "/home/enrique/Documents/Docademic/Code/ICO"
-    ]
-  ],
-  "_from": "tough-cookie@2.3.3",
+  "_from": "tough-cookie@~2.3.3",
   "_id": "tough-cookie@2.3.3",
   "_inBundle": false,
   "_integrity": "sha1-C2GKVWW23qkL80JdBNVe3EdadWE=",
   "_location": "/tough-cookie",
   "_phantomChildren": {},
   "_requested": {
-    "type": "version",
+    "type": "range",
     "registry": true,
-    "raw": "tough-cookie@2.3.3",
+    "raw": "tough-cookie@~2.3.3",
     "name": "tough-cookie",
     "escapedName": "tough-cookie",
-    "rawSpec": "2.3.3",
+    "rawSpec": "~2.3.3",
     "saveSpec": null,
-    "fetchSpec": "2.3.3"
+    "fetchSpec": "~2.3.3"
   },
   "_requiredBy": [
     "/localtunnel/request",
     "/request"
   ],
   "_resolved": "https://registry.npmjs.org/tough-cookie/-/tough-cookie-2.3.3.tgz",
-  "_spec": "2.3.3",
-  "_where": "/home/enrique/Documents/Docademic/Code/ICO",
+  "_shasum": "0b618a5565b6dea90bf3425d04d55edc475a7561",
+  "_spec": "tough-cookie@~2.3.3",
+  "_where": "/home/enrique/Documents/Docademic/Code/ICO/node_modules/request",
   "author": {
     "name": "Jeremy Stashewsky",
     "email": "jstashewsky@salesforce.com"
@@ -56607,6 +56605,7 @@ module.exports={
   "bugs": {
     "url": "https://github.com/salesforce/tough-cookie/issues"
   },
+  "bundleDependencies": false,
   "contributors": [
     {
       "name": "Alexander Savin"
@@ -56630,6 +56629,7 @@ module.exports={
   "dependencies": {
     "punycode": "^1.4.1"
   },
+  "deprecated": false,
   "description": "RFC6265 Cookies and Cookie Jar for node.js",
   "devDependencies": {
     "async": "^1.4.2",
@@ -59309,7 +59309,7 @@ nacl.setPRNG = function(fn) {
 }).call(this,require("b55mWE"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/tweetnacl/nacl-fast.js","/../../node_modules/tweetnacl")
 },{"b55mWE":130,"buffer":106,"crypto":106}],243:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
-/*! https://mths.be/utf8js v2.0.0 by @mathias */
+/*! https://mths.be/utf8js v2.1.2 by @mathias */
 ;(function(root) {
 
 	// Detect free variables `exports`
@@ -59468,7 +59468,7 @@ nacl.setPRNG = function(fn) {
 
 		// 2-byte sequence
 		if ((byte1 & 0xE0) == 0xC0) {
-			var byte2 = readContinuationByte();
+			byte2 = readContinuationByte();
 			codePoint = ((byte1 & 0x1F) << 6) | byte2;
 			if (codePoint >= 0x80) {
 				return codePoint;
@@ -59495,7 +59495,7 @@ nacl.setPRNG = function(fn) {
 			byte2 = readContinuationByte();
 			byte3 = readContinuationByte();
 			byte4 = readContinuationByte();
-			codePoint = ((byte1 & 0x0F) << 0x12) | (byte2 << 0x0C) |
+			codePoint = ((byte1 & 0x07) << 0x12) | (byte2 << 0x0C) |
 				(byte3 << 0x06) | byte4;
 			if (codePoint >= 0x010000 && codePoint <= 0x10FFFF) {
 				return codePoint;
@@ -59523,7 +59523,7 @@ nacl.setPRNG = function(fn) {
 	/*--------------------------------------------------------------------------*/
 
 	var utf8 = {
-		'version': '2.0.0',
+		'version': '2.1.2',
 		'encode': utf8encode,
 		'decode': utf8decode
 	};
