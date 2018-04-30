@@ -1246,13 +1246,15 @@ footer #social li:last-child a{
 	#mcafee .card{
 		-webkit-box-shadow:  0 10px 10px rgba(38,153,251,.2);
 		box-shadow:  0 10px 10px rgba(38,153,251,.2);
-		margin-top: -100px;
+		/*margin-top: -100px;*/
 		z-index: 4;
 
 	}
 	#mcafee h2{
 		font-size: 18px;
-
+	}
+	#blockchains a{
+		margin-top: .5em;
 	}
 
 
