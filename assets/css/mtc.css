@@ -277,9 +277,9 @@ menu.show .df-close{
 }
 #mcafee .card{
 	border: none;
-	-webkit-box-shadow:  0 20px 20px rgba(38,153,251,.2);
-	box-shadow:  0 20px 20px rgba(38,153,251,.2);
-	margin-top: -200px;
+	-webkit-box-shadow:  0 0 30px rgba(38,153,251,.3);
+	box-shadow:  0 0 30px rgba(38,153,251,.3);
+	
 	z-index: 4;
 }
 #mcafee h2{
