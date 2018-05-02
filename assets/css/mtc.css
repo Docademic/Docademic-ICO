@@ -221,13 +221,19 @@ menu.show .df-close{
 
 /* home */
 #home{
+	align-items: center;
 	background: url('../img/bg.png') no-repeat;
 	background-attachment: fixed;
 	-webkit-background-size: cover;
 	background-size: cover;
+	display: flex;
+	min-height: 100%;
 	padding-bottom: 3em;
 	position: relative;
 	z-index: 1;
+}
+#home .container{
+	height: 100%;
 }
 #docademic-canvas{
 	left: 0;
@@ -1225,6 +1231,7 @@ footer #social li:last-child a{
 	#home {
 		height: auto;
 		min-height: 100%;
+		padding: 80px 0 80px 0;
 	}
 	#home h2{
 		color: #fff;
@@ -1253,7 +1260,7 @@ footer #social li:last-child a{
 	#mcafee h2{
 		font-size: 18px;
 	}
-	#blockchains a{
+	.blockchains a{
 		margin-top: .5em;
 	}
 
